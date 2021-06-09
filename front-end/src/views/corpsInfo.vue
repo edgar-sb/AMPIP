@@ -21,7 +21,11 @@
 
       <!-- Nave nueva-->
       <v-dialog v-model="addNav" width="700">
-        <plus-card :dialogs="1" :id="this.$store.state.id_corp" @close="closePlusCard"></plus-card>
+        <plus-card
+          :dialogs="1"
+          :id="this.$store.state.id_corp"
+          @close="closePlusCard"
+        ></plus-card>
       </v-dialog>
     </v-card-title>
 
@@ -54,7 +58,11 @@
                     <v-icon> mdi-eye </v-icon>
                   </v-btn>
                   <v-dialog width="700" v-model="cards.infoUser">
-                    <info-card :id="propsToComponents.user" :type="'user'" @closeInfo="closeInfo"/>
+                    <info-card
+                      :id="propsToComponents.user"
+                      :type="'user'"
+                      @closeInfo="closeInfo"
+                    />
                   </v-dialog>
                   <v-btn icon @click="inactive('i', 'u', i.id)">
                     <v-icon> mdi-delete</v-icon>
@@ -228,8 +236,47 @@
               </v-text-field>
             </v-col>
             <v-col sm="12">
-              <v-btn text color="green"  v-if="id.habilitar == 0"  @click="saveInfoCorp">habilitar</v-btn>
-              <v-btn text color="red" v-if="id.habilitar == 0"  >No Guardar</v-btn>
+              <span>Redes Sociales:</span>
+            </v-col>
+            <v-col sm="12">
+              <v-text-field
+                label="Facebook"
+                v-model="social.facebook"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <v-text-field
+                label="Twiter"
+                v-model="social.twiter"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <v-text-field
+                label="LinkdIn"
+                v-model="social.linkdin"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <v-text-field
+                label="Instagram"
+                v-model="social.instagram"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <v-btn
+                text
+                color="green"
+                v-if="id.habilitar == 0"
+                @click="saveInfoCorp"
+                >habilitar</v-btn
+              >
+              <v-btn text color="red" v-if="id.habilitar == 0"
+                >No Guardar</v-btn
+              >
             </v-col>
           </v-row>
         </v-container>
@@ -270,6 +317,12 @@ export default {
         park: 0,
         nave: 0,
       },
+      social:{
+        facebook: null,
+        twiter: null,
+        instagram:null,
+        linkdin:null
+      }
     };
   },
   components: {
@@ -277,27 +330,28 @@ export default {
     infoCard,
   },
   methods: {
-    saveInfoCorp(){
+    saveInfoCorp() {
       let params = new URLSearchParams();
-      params.append("id",this.id.id);
-      params.append("nombre_es",this.id.nombre_es);
-      params.append("nombre_en",this.id.nombre_en);
-      params.append("direccion",this.id.direccion);
-      params.append("cp",this.id.cp);
-      params.append("colonia",this.id.colonia);
-      params.append("estado",this.id.estado);
-      params.append("municipio",this.id.municipio);
-      params.append("telefono",this.id.celular);
-      params.append("inversionAnualSiguiente",this.id.inversionAnualSiguiente);
-      params.append("habilitar",1);
+      params.append("id", this.id.id);
+      params.append("nombre_es", this.id.nombre_es);
+      params.append("nombre_en", this.id.nombre_en);
+      params.append("direccion", this.id.direccion);
+      params.append("cp", this.id.cp);
+      params.append("colonia", this.id.colonia);
+      params.append("estado", this.id.estado);
+      params.append("municipio", this.id.municipio);
+      params.append("telefono", this.id.celular);
+      params.append("inversionAnualSiguiente", this.id.inversionAnualSiguiente);
+      params.append("habilitar", 1);
 
-      axios.post(`${this.$store.state.url}/updatecorp`,params)
-      .then(() => {
-        this.$router.push("/");       
-      })
-      .catch((e) => console.log(e));
+      axios
+        .post(`${this.$store.state.url}/updatecorp`, params)
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((e) => console.log(e));
     },
-    
+
     close() {
       this.$router.push("/");
     },

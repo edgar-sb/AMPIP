@@ -122,7 +122,7 @@ class parqueEntity
                     /**
                      * @ORM\Column(name="edit")
                      */
-                    protected $dates;
+                    protected $edit;
     
                         /**
                          * Returns id.
@@ -142,7 +142,7 @@ class parqueEntity
                          * Returns edit.
                          * @return date
                          */
-                        public function getdates(){ return $this->dates;}
+                        public function getedit(){ return $this->edit;}
                         
                         /**
                          * Returns key_user.
@@ -475,7 +475,7 @@ class parqueEntity
                          * Sets edit
                          * @param date $dates
                          */
-                        public function setdates($dates){$this->dates = $dates;}
+                        public function setedit($edit){$this->edit = $edit;}
                         
 
 }

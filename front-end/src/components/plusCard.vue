@@ -527,37 +527,7 @@
             ></v-text-field>
           </v-col>
 
-          <v-col sm="12">
-            <span>Redes Sociales:</span>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              label="Facebook"
-              v-model="social.facebook"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              label="Twiter"
-              v-model="social.twiter"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              label="LinkdIn"
-              v-model="social.linkdin"
-              outlined
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              label="Instagram"
-              v-model="social.instagram"
-              outlined
-            ></v-text-field>
-          </v-col>
+          
           <v-col sm="12">
             <span>Clasificación</span>
           </v-col>
@@ -1161,12 +1131,7 @@ export default {
       ],
       society: "",
       parks: ["Modelo"],
-      social: {
-        facebook: "",
-        twiter: "",
-        linkdin: "",
-        instagram: "",
-      },
+     
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],

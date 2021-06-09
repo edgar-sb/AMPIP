@@ -66,7 +66,11 @@
                     <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
                       <v-card>
                         <v-card-actions>
-                          <v-btn icon @click="getInfoCorpAction(i.id)" v-if="i.habilitar == 0">
+                          <v-btn
+                            icon
+                            @click="getInfoCorpAction(i.id)"
+                            v-if="i.habilitar == 0"
+                          >
                             <v-badge
                               content="Requiere habilitar"
                               value="Requiere habilitar"
@@ -78,12 +82,19 @@
                               </v-icon>
                             </v-badge>
                           </v-btn>
-                          <v-btn icon @click="getInfoCorpAction(i.id)" v-if="i.habilitar != 0">
-                              <v-icon large>
-                                mdi-eye
-                              </v-icon>
+                          <v-btn
+                            icon
+                            @click="getInfoCorpAction(i.id)"
+                            v-if="i.habilitar != 0"
+                          >
+                            <v-icon large>
+                              mdi-eye
+                            </v-icon>
                           </v-btn>
-                          <span>Ultima actualizacion:<br/> {{i.fechaDeValidacion}}</span>
+                          <span
+                            >Ultima actualizacion:<br />
+                            {{ i.fechaDeValidacion }}</span
+                          >
                         </v-card-actions>
                         <v-img
                           :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
@@ -123,8 +134,34 @@
                 <v-col sm="12" md="4" v-for="i in allPat" :key="i">
                   <v-card>
                     <v-card-actions>
-                      <v-btn icon @click="getInfoCorpAction(i.id)"
-                        ><v-icon> mdi-eye </v-icon></v-btn
+                      <v-btn
+                        icon
+                        @click="getInfoCorpAction(i.id)"
+                        v-if="i.habilitar == 0"
+                      >
+                        <v-badge
+                          content="Requiere habilitar"
+                          value="Requiere habilitar"
+                          color="green"
+                          overlap
+                        >
+                          <v-icon large>
+                            mdi-eye
+                          </v-icon>
+                        </v-badge>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        @click="getInfoCorpAction(i.id)"
+                        v-if="i.habilitar != 0"
+                      >
+                        <v-icon large>
+                          mdi-eye
+                        </v-icon>
+                      </v-btn>
+                      <span
+                        >Ultima actualizacion:<br />
+                        {{ i.fechaDeValidacion }}</span
                       >
                     </v-card-actions>
                     <v-img
@@ -199,7 +236,7 @@ export default {
   },
   data() {
     return {
-      update:0,
+      update: 0,
       imgViewer: false,
       addNewCorp: false,
       config: false,

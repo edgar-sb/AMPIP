@@ -864,7 +864,7 @@ class apiController extends AbstractActionController
                 $newpark->setplanMaestro($planMaestro);
                 $newpark->setcontactName($contactName);
                 $newpark->setcontactEmail($contactEmail);
-                $newpark->setdates($dates);
+                $newpark->setedit($dates);
                 $this->entityManager->persist($newpark);
                 $this->entityManager->flush();
                 return new JsonModel(["message" => "Listo"]);
@@ -892,9 +892,8 @@ class apiController extends AbstractActionController
             $mercado = $this->params()->fromPost("mercado");
             $tipoDeIndustria = $this->params()->fromPost("tipoDeIndustria");
             $superficieTotal = $this->params()->fromPost("superficieTotal");
-            $superficieUrban = $this->params()->fromPost("superficieUrban");
-            $superficieOcup = $this->params()->fromPost("superficieOcup");
-            $superficieDisp = $this->params()->fromPost("superficieDisp");
+            
+ 
             $tipoDePropiedad = $this->params()->fromPost("tipoDePropiedad");
             $numEmpleados = $this->params()->fromPost("numEmpleados");
             $reconocimientoPracticas = $this->params()->fromPost("reconocimientoPracticas");
@@ -905,8 +904,7 @@ class apiController extends AbstractActionController
             $planMaestro = $this->params()->fromPost("planMaestro");
             $contactName = $this->params()->fromPost("contactName");
             $contactEmail = $this->params()->fromPost("contactEmail");
-            $dates = date("Y-m-d");
-
+            $date= $this->params()->fromPost("date", date("Y-m-d"));
 
             $user = $this->entityManager->getRepository(parqueEntity::class)->findById($id);
             $permiso = $this->getPermision($key_id);
@@ -921,9 +919,6 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".mercado", $mercado, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".tipoDeIndustria", $tipoDeIndustria, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".superficieTotal", $superficieTotal, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".superficieUrban", $superficieUrban, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".superficieOcup", $superficieOcup, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".superficieDisp", $superficieDisp, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".tipoDePropiedad", $tipoDePropiedad, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".numEmpleados", $numEmpleados, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".reconocimientoPracticas", $reconocimientoPracticas, $id);
@@ -934,7 +929,7 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".planMaestro", $planMaestro, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".contactName", $contactName, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".contactEmail", $contactEmail, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".dates", $dates,$id);
+                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".edit", $date,$id);
                     return new JsonModel(["message" => "echo"]);
                 } else {
                     return new JsonModel(["message" => "El id no existe"]);
@@ -986,7 +981,7 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
-                    $roleList["edit"] = $role->getdates();
+                    $roleList["edit"] = $role->getedit();
                     if($role->getkey_corp() != "" ){
                     array_push($arr, $roleList);
                     }

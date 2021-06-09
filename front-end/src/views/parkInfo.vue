@@ -142,7 +142,7 @@
                 <v-text-field
                   label="Nombre del parque en (Ingles)"
                   outlined
-                  v-model="parque.nombre_es"
+                  v-model="parque.nombre_en"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -159,14 +159,6 @@
                   v-model="parque.parqProp"
                 ></v-text-field>
               </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Ubicacion"
-                  outlined
-                  v-model="parque.parqIntoParq"
-                  @focus="focs"
-                ></v-text-field>
-              </v-col>
               <v-col sm="12" md="6" v-if="editUb">
                 <v-text-field
                   label="Ubicacion"
@@ -176,20 +168,23 @@
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field
+                <v-select
+                  :items="regiones"
                   label="Region"
                   outlined
                   v-model="parque.region"
-                ></v-text-field>
+                ></v-select>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field
+                <v-select
+                  :items="mercados"
                   label="Mercado"
                   outlined
                   v-model="parque.mercado"
-                ></v-text-field>
+                  :value="Mercados"
+                ></v-select>
               </v-col>
-              <v-col sm="12" md="6">
+              <v-col sm="12">
                 <v-text-field
                   label="Tipo de industria"
                   outlined
@@ -207,41 +202,14 @@
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field
-                  label="Superficie urbanizada"
-                  outlined
-                  v-model="parque.superficieUrban"
-                ></v-text-field>
-              </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Superficie ocupada"
-                  outlined
-                  v-model="parque.superficieOcup"
-                ></v-text-field>
-              </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Superficie disponible"
-                  outlined
-                  v-model="parque.superficieDisp"
-                ></v-text-field>
-              </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Tipo de propiedad"
+                <v-select
+                  :items="items"
+                  label="Tipo de Propiedad"
                   outlined
                   v-model="parque.tipoDePropiedad"
-                ></v-text-field>
+                ></v-select>
               </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Inicio de operaciones"
-                  outlined
-                  v-model="parque.inicioOperaciones"
-                ></v-text-field>
-              </v-col>
-              <v-col sm="12" md="6">
+              <v-col sm="12">
                 <v-text-field
                   label="Numero de empleados"
                   outlined
@@ -251,19 +219,37 @@
               <v-col sm="12">
                 <span>Detalles</span>
               </v-col>
-              <v-col sm="12" md="6">
-                <v-text-field
-                  label="Reconocimientos"
-                  outlined
-                  v-model="parque.reconocimientoPracticas"
-                ></v-text-field>
+
+              <v-col sm="6">
+                <span
+                  >Reconocimientos: {{ parque.reconocimientoPracticas }}</span
+                >
+              </v-col>
+              <v-col sm="6">
+                <span>Infraestructura: {{ parque.ifraestructura }}</span>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field
-                  label="Infraestructura"
+                <v-select
+                  v-model="newRecords"
+                  :items="records"
+                  attach
+                  chips
                   outlined
-                  v-model="parque.ifraestructura"
-                ></v-text-field>
+                  label="Reconocimientos"
+                  multiple
+                ></v-select>
+              </v-col>
+
+              <v-col sm="12" md="6">
+                <v-select
+                  v-model="newInfra"
+                  :items="infraList"
+                  attach
+                  chips
+                  outlined
+                  label="Infraestructura"
+                  multiple
+                ></v-select>
               </v-col>
               <v-col sm="12">
                 <span>Contacto</span>
@@ -319,6 +305,68 @@ export default {
       data_user: false,
       naves: null,
       editUb: false,
+      mercados: [
+        "productos de consumo",
+        "productos de uso o inversión",
+        "productos industriales",
+        "servicios",
+        "financieros",
+        "distribuidores",
+        "compradores industriales",
+      ],
+      regiones: [
+        "Región Noroeste",
+        "Región Noreste",
+        "Región Occidente",
+        "Región Oriente",
+        "Región Centronorte",
+        "Región Centrosur",
+        "Región Suroeste",
+        "Región Sureste",
+      ],
+      items: ["Privado", "Público"],
+      records: [
+        "Norma Mexiana de Parque Industrial",
+        "Parque Industrial Verde",
+        "Calidad Ambiental (PROFEPA)",
+        "Parque Industrial Sustentable",
+        "Parque Industrial Limpio",
+        "Parque Industrial Seguro",
+        "OEA",
+      ],
+      infraList: [
+        "Al menos 0.5 litros agua por segundo por ha",
+        "Pavimento",
+        "Banquetas",
+        "Drenaje Sanitario",
+        "Drenaje Pluvial",
+        "Planta de tratamiento de Agua",
+        "Gas Natural",
+        "Alumbrado público",
+        "Instalación eléctrica",
+        "Subestación eléctrica",
+        "Telefonía",
+        "Comunicación Satelital",
+        "Instalación Digital",
+        "Espuela de Ferrocarril",
+        "Estación de bomberos",
+        "Áreas verdes o recreativas",
+        "Guardería",
+        "Centro de Capacitación",
+        "Seguridad",
+        "Transporte interno de personal",
+        "Transporte Urbano",
+        "Recolección de basura",
+        "Aduana interna",
+        "Agente aduanal",
+        "Servicios de consultoria",
+        "Programa shelter",
+        "Servicio Built to suit",
+        "Reglamento interno",
+        "Oficinas administrativas",
+      ],
+      newInfra: null,
+      newRecords: null,
     };
   },
   beforeMount() {
@@ -434,21 +482,43 @@ export default {
       this.editUb = true;
     },
     updatePark() {
+      let infra, records;
+
+      if(this.newRecords != null)
+      {
+        records = this.newRecords;
+      } else{
+        records  = this.parque.reconocimientoPracticas;
+      }
+
+      if(this.newRecords != null)
+      {
+        infra = this.newInfra;
+      } else{
+        infra  = this.parque.infraestructura;
+      }
+
       let params = new URLSearchParams();
+      params.append("id",this.parque.id);
       params.append("nombre_es", this.parque.nombre_es);
-      params.append("nombre_en", this.parque.nombre_es);
+      params.append("nombre_en", this.parque.nombre_en);
       params.append("adminParq", this.parque.adminParq);
-      params.append("adminParq", this.parque.parqProp);
-      params.append("adminParq", this.parque.parqIntoParq);
-      params.append("adminParq", this.parque.region);
-      params.append("adminParq", this.parque.mercado);
-      params.append("adminParq", this.parque.tipoDeIndustria);
+      params.append("parqProp", this.parque.parqProp);
+      params.append("parqIntoParq", this.parque.parqIntoParq);
+      params.append("region", this.parque.region);
+      params.append("mercado", this.parque.mercado);
+      params.append("tipoDeIndustria", this.parque.tipoDeIndustria);
       params.append("adminParq", this.parque.adminParq);
-      params.append("adminParq", this.parque.tipoDePropiedad);
-      params.append("adminParq", this.parque.reconocimientoPracticas);
-      params.append("adminParq", this.parque.ifraestructura);
-      params.append("adminParq", this.parque.contactName);
-      params.append("adminParq", this.parque.contactEmail);
+      params.append("tipoDePropiedad", this.parque.tipoDePropiedad);
+      params.append("reconocimientoPracticas", records);
+      params.append("ifraestructura", infra);
+      params.append("contactName", this.parque.contactName);
+      params.append("contactEmail", this.parque.contactEmail);
+      params.append("date", null);
+
+      axios.post(`${this.$store.state.url}/updatepark`,params)
+      .then(res => console.log(res))
+      .catch((e) => console.log(e));
     },
   },
   components: { plusCard, infoCard },
