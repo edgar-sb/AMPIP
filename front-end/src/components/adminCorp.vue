@@ -1,7 +1,11 @@
 <template>
   <componen>
     <v-card-title>
-      <v-btn icon @click="getTabId" v-if="tab != 1 && id.tipoDeSocio != 'Patrocinador'">
+      <v-btn
+        icon
+        @click="getTabId"
+        v-if="tab != 1 && id.tipoDeSocio != 'Patrocinador'"
+      >
         <v-icon>
           mdi-plus
         </v-icon>
@@ -148,7 +152,7 @@
               </v-text-field>
             </v-col>
             <v-card-actions>
-              <v-btn>Guardar Informacion</v-btn>
+              <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
             </v-card-actions>
           </v-row>
         </v-container>
@@ -294,6 +298,37 @@ export default {
         })
         .catch((e) => console.log(e));
       this.cards.infoNave = true;
+    },
+
+    updatecorpAction() {
+      let params = new URLSearchParams();
+      params.append("id", this.id.id);
+      params.append("nombre_es", this.id.nombre_es);
+      params.append("nombre_en", this.id.nombre_en);
+      params.append("direccion", this.id.direccion);
+      params.append("rfc", this.id.rfc);
+      params.append("cp", this.id.cp);
+      params.append("colonia", this.id.colonia);
+      params.append("estado", this.id.estado);
+      params.append("municipio", this.id.municipio);
+      params.append("telefono", this.id.celular);
+      params.append("inversionAnualSiguiente", this.id.inversionAnualSiguiente);
+      params.append(
+        "inversionRealizadaActual",
+        this.id.inversionRealizadaActual
+      );
+      params.append(
+        "inversionRealizadaAnterior",
+        this.id.inversionRealizadaAnterior
+      );
+      params.append("habilitar", 0);
+
+      axios
+        .post(`${this.$store.state.url}/updatecorp`, params)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((e) => console.log(e));
     },
   },
   beforeMount() {

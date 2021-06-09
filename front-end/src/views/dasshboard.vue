@@ -14,13 +14,10 @@
               <v-row>
                 <v-col sm="12">
                   <v-card>
-
                     <v-toolbar dense>
-                      
-
                       <v-toolbar-title>
                         <span style="font-size: small">
-                          {{saludo}}
+                          {{ saludo }}
                         </span>
                       </v-toolbar-title>
 
@@ -29,7 +26,11 @@
                       <label for="more">Editar perfil</label>
                       <v-btn icon @click="setProfileActionModel" id="more">
                         <v-icon>mdi-dots-vertical</v-icon>
-                        <v-dialog v-model="getProfileActionModel" width="700" persistent>
+                        <v-dialog
+                          v-model="getProfileActionModel"
+                          width="700"
+                          persistent
+                        >
                           <profile />
                         </v-dialog>
                       </v-btn>
@@ -39,7 +40,7 @@
               </v-row>
             </v-container>
           </v-col>
-        </v-row> 
+        </v-row>
       </v-container>
 
       <!-- administracion global -->
@@ -48,36 +49,56 @@
           <v-container>
             <v-row>
               <v-col sm="12">
-                  <v-card-actions>
-                    <v-btn @click="addNewCorp = true" icon><v-icon>mdi-plus</v-icon></v-btn>
-                    <v-dialog v-model="addNewCorp" width="700">
-                      <plus-card :dialogs="4" :type_society="'Desarrollador'" @close="closePlusCard"></plus-card>
-                    </v-dialog>
-                  </v-card-actions>
-                    <v-container>
-                      <v-row class="content">
-                        <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
-                          <v-card>
-                            <v-card-actions>
-                              <v-btn icon @click="getInfoCorpAction(i.id)"
-                              ><v-icon> mdi-eye </v-icon></v-btn
-                              >
-                            </v-card-actions>
-                            <v-img
-                                :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
-                                class="white--text align-end"
-                                gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                                height="200px"
+                <v-card-actions>
+                  <v-btn @click="addNewCorp = true" icon
+                    ><v-icon>mdi-plus</v-icon></v-btn
+                  >
+                  <v-dialog v-model="addNewCorp" width="700">
+                    <plus-card
+                      :dialogs="4"
+                      :type_society="'Desarrollador'"
+                      @close="closePlusCard"
+                    ></plus-card>
+                  </v-dialog>
+                </v-card-actions>
+                <v-container>
+                  <v-row class="content">
+                    <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
+                      <v-card>
+                        <v-card-actions>
+                          <v-btn icon @click="getInfoCorpAction(i.id)" v-if="i.habilitar == 0">
+                            <v-badge
+                              content="Requiere avilitar"
+                              value="Requiere avilitar"
+                              color="green"
+                              overlap
                             >
-                              <v-card-title>{{ i.corporativo }}</v-card-title>
-                            </v-img>
-                            <v-dialog v-model="getCorpInfo" persistent>
-                              <getCorpInfo :id="infoToCorp" :users="users" />
-                            </v-dialog>
-                          </v-card>
-                        </v-col>
-                      </v-row>
-                    </v-container>
+                              <v-icon large>
+                                mdi-eye
+                              </v-icon>
+                            </v-badge>
+                          </v-btn>
+                          <v-btn icon @click="getInfoCorpAction(i.id)" v-if="i.habilitar != 0">
+                              <v-icon large>
+                                mdi-eye
+                              </v-icon>
+                          </v-btn>
+                        </v-card-actions>
+                        <v-img
+                          :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
+                          class="white--text align-end"
+                          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                          height="200px"
+                        >
+                          <v-card-title>{{ i.corporativo }}</v-card-title>
+                        </v-img>
+                        <v-dialog v-model="getCorpInfo" persistent>
+                          <getCorpInfo :id="infoToCorp" :users="users" />
+                        </v-dialog>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-col>
             </v-row>
           </v-container>
@@ -91,26 +112,30 @@
                     <v-icon>mdi-plus</v-icon>
                   </v-btn>
                   <v-dialog v-model="addNewPat" width="700">
-                    <plus-card :dialogs="4" :type_society="'Patrocinador'" @close="closePlusCard"></plus-card>
+                    <plus-card
+                      :dialogs="4"
+                      :type_society="'Patrocinador'"
+                      @close="closePlusCard"
+                    ></plus-card>
                   </v-dialog>
                 </v-card-actions>
                 <v-col sm="12" md="4" v-for="i in allPat" :key="i">
                   <v-card>
                     <v-card-actions>
                       <v-btn icon @click="getInfoCorpAction(i.id)"
-                      ><v-icon> mdi-eye </v-icon></v-btn
+                        ><v-icon> mdi-eye </v-icon></v-btn
                       >
                     </v-card-actions>
                     <v-img
-                        :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
-                        class="white--text align-end"
-                        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                        height="200px"
+                      :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
+                      class="white--text align-end"
+                      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                      height="200px"
                     >
                       <v-card-title>{{ i.corporativo }}</v-card-title>
                     </v-img>
                     <v-dialog v-model="getCorpInfo" persistent>
-                      <getCorpInfo :id="infoToCorp" :users="users" :type="''"/>
+                      <getCorpInfo :id="infoToCorp" :users="users" :type="''" />
                     </v-dialog>
                   </v-card>
                 </v-col>
@@ -130,7 +155,7 @@
             <v-row justify="center" align="center" align-content="center">
               {{ corpOfUser.corporativo }}
               <v-col sm="12">
-                <admin-corp :id_corp="corpOfUser.id"/>
+                <admin-corp :id_corp="corpOfUser.id" />
               </v-col>
             </v-row>
           </v-container>
@@ -163,11 +188,19 @@ import adminCorp from "../components/adminCorp";
 var CryptoJS = require("crypto-js");
 
 export default {
-  components: { plusCard, getCorpInfo, adminPark, adminNave, profile,adminCorp },
+  components: {
+    plusCard,
+    getCorpInfo,
+    adminPark,
+    adminNave,
+    profile,
+    adminCorp,
+  },
   data() {
     return {
-      imgViewer:false,
-      addNewCorp:false,
+      update:0,
+      imgViewer: false,
+      addNewCorp: false,
       config: false,
       getCorpInfo: false,
       infoToCorp: null,
@@ -206,7 +239,7 @@ export default {
       tab: 0,
       createUserActive: false,
       allCorp: {},
-      allPat:[{"id":1, "nombre_es":"No hay nada por aqui"}],
+      allPat: [{ id: 1, nombre_es: "No hay nada por aqui" }],
       numberCorp: "",
       patro: "",
       corpOfUser: null,
@@ -216,8 +249,8 @@ export default {
       allUser: [],
       createNaveActive: false,
       createParkActive: false,
-      users:{},
-      addNewPat:false
+      users: {},
+      addNewPat: false,
     };
   },
   beforeCreate() {
@@ -286,20 +319,20 @@ export default {
     this.getAllPat();
     let paramsCorps = new URLSearchParams();
     paramsCorps.append("query", "corp");
-    
-    setTimeout(()=>{
+
+    setTimeout(() => {
       if (this.$store.state.data != null) {
-          let params = new URLSearchParams();
-          params.append("id", this.$store.state.data.key_corp);
-          axios
-            .post(`${this.$store.state.url}/corp`, params)
-            .then((res) => {
-              this.corpOfUser = res.data;
-            })
-            .catch((e) => console.log(e));
-        } else {
-          console.log("Vacio")
-        }
+        let params = new URLSearchParams();
+        params.append("id", this.$store.state.data.key_corp);
+        axios
+          .post(`${this.$store.state.url}/corp`, params)
+          .then((res) => {
+            this.corpOfUser = res.data;
+          })
+          .catch((e) => console.log(e));
+      } else {
+        console.log("Vacio");
+      }
     }, 1000);
   },
   methods: {
@@ -375,9 +408,9 @@ export default {
       let params = new URLSearchParams();
       params.append("query", 2);
       axios
-          .post(`${this.$store.state.url}/getallcorp`, params)
-          .then((res) => (this.allPat = res.data))
-          .catch((e) => console.log(e));
+        .post(`${this.$store.state.url}/getallcorp`, params)
+        .then((res) => (this.allPat = res.data))
+        .catch((e) => console.log(e));
     },
 
     logout() {
@@ -391,7 +424,7 @@ export default {
 
     getInfoCorpAction(id) {
       this.$store.commit("setIdCorp", id);
-      this.$router.push('corporativos');
+      this.$router.push("corporativos");
     },
 
     getallParks(id) {
@@ -413,18 +446,17 @@ export default {
     },
 
     // eslint-disable-next-line vue/no-dupe-keys
-    addNewCorps(){
-      this.$store.commit("setTypeSociety", "Desarrollador")
+    addNewCorps() {
+      this.$store.commit("setTypeSociety", "Desarrollador");
     },
 
-    addNewPats(){
-      this.$store.commit("setTypeSociety", "Patrocinador")
+    addNewPats() {
+      this.$store.commit("setTypeSociety", "Patrocinador");
     },
 
-    setProfileActionModel(){
+    setProfileActionModel() {
       this.$store.commit("changeProfileDialog");
     },
-
   },
   computed: {
     retItem() {
@@ -465,13 +497,13 @@ export default {
       return `${this.$store.state.img}/`;
     },
 
-    getProfileActionModel(){
+    getProfileActionModel() {
       return this.$store.state.profileDialog;
     },
 
-    getImageProfile(){
+    getImageProfile() {
       return `${this.$store.state.img}/perfil/${this.$store.state.data.id}.jpg`;
-    }
+    },
   },
 };
 </script>
@@ -479,13 +511,13 @@ export default {
 .saludo {
   margin-left: 0.5em;
 }
-.containerCon{
+.containerCon {
   height: 300px;
 }
 .containerCon::-webkit-scrollbar {
-  width: 8px;     /* Tamaño del scroll en vertical */
-  height: 8px;    /* Tamaño del scroll en horizontal */
-  display: none;  /* Ocultar scroll */
+  width: 8px; /* Tamaño del scroll en vertical */
+  height: 8px; /* Tamaño del scroll en horizontal */
+  display: none; /* Ocultar scroll */
 }
 
 /* Ponemos un color de fondo y redondeamos las esquinas del thumb */
@@ -519,9 +551,9 @@ export default {
 
 .fixed-content {
   top: 0;
-  bottom:0;
-  position:fixed;
-  overflow-y:scroll;
-  overflow-x:hidden;
+  bottom: 0;
+  position: fixed;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 </style>

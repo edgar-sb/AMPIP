@@ -353,9 +353,7 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             //Id del usuario que edita
-            $id = $this->params()->fromPost("id");
-            $id_key = $this->params()->fromPost("id_key", "");
-            $permiso = $this->getPermision($id);
+            $id_key = $this->params()->fromPost("id", );
             if (true) {
                 //id del corporativo no cambiable
 

@@ -54,7 +54,7 @@
                     <v-icon> mdi-eye </v-icon>
                   </v-btn>
                   <v-dialog width="700" v-model="cards.infoUser">
-                    <info-card :id="propsToComponents.user" :type="'user'" />
+                    <info-card :id="propsToComponents.user" :type="'user'" @closeInfo="closeInfo"/>
                   </v-dialog>
                   <v-btn icon @click="inactive('i', 'u', i.id)">
                     <v-icon> mdi-delete</v-icon>
@@ -228,8 +228,8 @@
               </v-text-field>
             </v-col>
             <v-col sm="12">
-              <v-btn text color="green">Guardar</v-btn>
-              <v-btn text color="red">No Guardar</v-btn>
+              <v-btn text color="green"  v-if="id.habilitar == 0"  @click="saveInfoCorp">Avilitar</v-btn>
+              <v-btn text color="red" v-if="id.habilitar == 0"  >No Guardar</v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -277,6 +277,27 @@ export default {
     infoCard,
   },
   methods: {
+    saveInfoCorp(){
+      let params = new URLSearchParams();
+      params.append("id",this.id.id);
+      params.append("nombre_es",this.id.nombre_es);
+      params.append("nombre_en",this.id.nombre_en);
+      params.append("direccion",this.id.direccion);
+      params.append("cp",this.id.cp);
+      params.append("colonia",this.id.colonia);
+      params.append("estado",this.id.estado);
+      params.append("municipio",this.id.municipio);
+      params.append("telefono",this.id.celular);
+      params.append("inversionAnualSiguiente",this.id.id);
+      params.append("habilitar",1);
+
+      axios.post(`${this.$store.state.url}/updatecorp`,params)
+      .then(() => {
+        this.$router.push("/");       
+      })
+      .catch((e) => console.log(e));
+    },
+    
     close() {
       this.$router.push("/");
     },
@@ -379,6 +400,7 @@ export default {
       this.cards.infoPark = false;
       this.cards.infoUser = false;
       this.cards.infoNave = false;
+      this.cards.infoUser = false;
     },
 
     closePlusCard() {

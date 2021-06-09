@@ -5,7 +5,7 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col sm="12" md="6">
+            <v-col sm="12" >
               <v-img
                   :src="imgRoute + '/perfil/' + id.id + '.jpg'"
                   class="white--text align-end"
@@ -13,32 +13,33 @@
                   height="200px"
               ></v-img>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col sm="12" >
               <v-container>
                 <v-row>
-                  <v-col sm="12" md="6">
+                  <v-col sm="12" >
                     Cargo: <br/> {{id.cargo}}
                   </v-col>
-                  <v-col sm="12" md="6">
+                  <v-col sm="12" >
                     Telefono de oficina: <br/> {{id.telefonoOfficina}}
                   </v-col>
 
-                  <v-col sm="12" md="6">
+                  <v-col sm="12" >
                     Telefono personal: <br/> {{id.celular}}
                   </v-col>
 
-                  <v-col sm="12" md="6">
+                  <v-col sm="12">
                     Direccion de oficina: <br/> {{id.direccionDeOfficina}}
                   </v-col>
 
-                  <v-col sm="12" md="6">
+                  <v-col sm="12">
                     Cumpleaños: <br/> {{id.cumpleanios}}
-                  </v-col>
-                  <v-col sm="12" md="6">
-                    <v-btn small @click="reset(id.id_A)">Reenviar <br/> contraseña</v-btn>
                   </v-col>
                 </v-row>
               </v-container>
+              <v-card-actions>
+                 <v-btn  @click="reset(id.id_A)">Reenviar contraseña</v-btn>
+                 <v-btn @click="emitsClose">Cerrar</v-btn>
+              </v-card-actions>
             </v-col>
           </v-row>
         </v-container>
@@ -53,10 +54,10 @@
         <v-container>
           <v-row>
             <v-col sm="12" md="6">
-              <v-text-field outlined v-model="id.nombre_es" label="Nombre"></v-text-field>
+              <v-text-field outlined v-model="id.nombre_es" label="Nombre de parque (Español)"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
-              <v-text-field outlined v-model="id.nombre_en" label="Nombre en ingles"></v-text-field>
+              <v-text-field outlined v-model="id.nombre_en" label="Nombre de parque (Inglés)"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
               <v-text-field outlined v-model="id.parqProp" label="Propietario"></v-text-field>
@@ -101,7 +102,7 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="updatePark">Guardar</v-btn>
+        <v-btn @click="updatePark">Aprobar</v-btn>
         <v-btn @click="emitsClose">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
@@ -114,10 +115,10 @@
         <v-container>
           <v-row>
             <v-col sm="12" md="6">
-              <v-text-field outlined  label="Nombre de inquilino en Español" v-model="id.nombre_es"></v-text-field>
+              <v-text-field outlined  label="Nombre de inquilino en (Español)" v-model="id.nombre_es"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
-              <v-text-field outlined  label="Nombre de inquilino en Inglés" v-model="id.nombre_en"></v-text-field>
+              <v-text-field outlined  label="Nombre de inquilino en (Inglés)" v-model="id.nombre_en"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
               <v-text-field outlined  label="Propietario" v-model="id.propietario"></v-text-field>
@@ -144,8 +145,7 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <v-btn >Guardar</v-btn>
-        <v-btn @click="emitsClose">Cancelar</v-btn>
+        <v-btn @click="emitsClose">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -204,7 +204,7 @@ export default {
       axios.post(`${this.$store.state.url}/updatepark`, params)
       .then(res => {
         console.log(res.data)
-        this.$router.push("/")
+        this.emitsClose()
       })
       .catch(e => {
         console.log(e)
