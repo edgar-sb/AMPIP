@@ -228,7 +228,7 @@
               </v-text-field>
             </v-col>
             <v-col sm="12">
-              <v-btn text color="green"  v-if="id.habilitar == 0"  @click="saveInfoCorp">Avilitar</v-btn>
+              <v-btn text color="green"  v-if="id.habilitar == 0"  @click="saveInfoCorp">habilitar</v-btn>
               <v-btn text color="red" v-if="id.habilitar == 0"  >No Guardar</v-btn>
             </v-col>
           </v-row>
@@ -288,7 +288,7 @@ export default {
       params.append("estado",this.id.estado);
       params.append("municipio",this.id.municipio);
       params.append("telefono",this.id.celular);
-      params.append("inversionAnualSiguiente",this.id.id);
+      params.append("inversionAnualSiguiente",this.id.inversionAnualSiguiente);
       params.append("habilitar",1);
 
       axios.post(`${this.$store.state.url}/updatecorp`,params)

@@ -125,28 +125,10 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col sm="12" md="12">
               <v-text-field
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
-                outlined
-              >
-              </v-text-field>
-            </v-col>
-
-            <v-col sm="12" md="6">
-              <v-text-field
-                v-model="id.inversionRealizadaActual"
-                label="Inversión anual realizada (año en curso) MXN"
-                outlined
-              >
-              </v-text-field>
-            </v-col>
-
-            <v-col sm="12">
-              <v-text-field
-                v-model="id.inversionRealizadaAnterior"
-                label="Inversión anual realizada (año anterior) MXN"
                 outlined
               >
               </v-text-field>
@@ -164,7 +146,7 @@
 import axios from "axios";
 import plusCard from "../components/plusCard";
 import UploadImages from "vue-upload-drop-images";
-
+import Swal from "sweetalert2";
 export default {
   data() {
     return {
@@ -325,8 +307,8 @@ export default {
 
       axios
         .post(`${this.$store.state.url}/updatecorp`, params)
-        .then((res) => {
-          console.log(res.data);
+        .then(() => {
+          Swal.fire("La informacion se actualizo esta en espera de que se habilite")
         })
         .catch((e) => console.log(e));
     },

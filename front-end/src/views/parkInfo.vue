@@ -61,7 +61,11 @@
           </v-card>
         </v-dialog>
         <v-dialog width="700" persistent v-model="addNave">
-          <plusCard dialogs="1" @close="closePlusCard" :id="parque.id"></plusCard>
+          <plusCard
+            dialogs="1"
+            @close="closePlusCard"
+            :id="parque.id"
+          ></plusCard>
         </v-dialog>
       </v-btn>
     </v-card-actions>
@@ -94,7 +98,11 @@
                       </v-icon>
                     </v-btn>
                     <v-dialog width="300" persistent v-model="data_user">
-                      <infoCard :type="'user_from_parq'" :id="data_to_info" @close="closePlusCard"></infoCard>
+                      <infoCard
+                        :type="'user_from_parq'"
+                        :id="data_to_info"
+                        @close="closePlusCard"
+                      ></infoCard>
                     </v-dialog>
                   </v-card-actions>
                 </v-card>
@@ -104,18 +112,18 @@
         </v-tab-item>
         <v-tab-item>
           <v-container>
-            <v-row >
-              <v-col sm="12" md="3" v-for="(i,k) in naves" :key="k">
-              <v-card>
-                <v-card-title>
-                  {{i.name}}
-                </v-card-title>
-                <v-card-actions>
-                  <v-btn icon @click="viewNave(i.id)">
-                    <v-icon>mdi-eye</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+            <v-row>
+              <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
+                <v-card>
+                  <v-card-title>
+                    {{ i.name }}
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn icon @click="viewNave(i.id)">
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
               </v-col>
             </v-row>
           </v-container>
@@ -124,77 +132,159 @@
           <v-container>
             <v-row>
               <v-col sm="12" md="6">
-                <v-text-field label="Nombre del parque en Español" outlined v-model="parque.nombre_es"></v-text-field>
+                <v-text-field
+                  label="Nombre del parque en (Español)"
+                  outlined
+                  v-model="parque.nombre_es"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Nombre del parque en Ingles" outlined v-model="parque.nombre_es"></v-text-field>
+                <v-text-field
+                  label="Nombre del parque en (Ingles)"
+                  outlined
+                  v-model="parque.nombre_es"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Administrador del parque" outlined v-model="parque.adminParq"></v-text-field>
+                <v-text-field
+                  label="Administrador del parque"
+                  outlined
+                  v-model="parque.adminParq"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Propietario del parque" outlined v-model="parque.parqProp"></v-text-field>
+                <v-text-field
+                  label="Propietario del parque"
+                  outlined
+                  v-model="parque.parqProp"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Ubicacion" outlined v-model="parque.parqIntoParq" @focus="focs"></v-text-field>
+                <v-text-field
+                  label="Ubicacion"
+                  outlined
+                  v-model="parque.parqIntoParq"
+                  @focus="focs"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6" v-if="editUb">
-                <v-text-field label="Ubicacion" outlined v-model="parque.parqIntoParq" @focus="focs"></v-text-field>
+                <v-text-field
+                  label="Ubicacion"
+                  outlined
+                  v-model="parque.parqIntoParq"
+                  @focus="focs"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Region" outlined v-model="parque.region"></v-text-field>
+                <v-text-field
+                  label="Region"
+                  outlined
+                  v-model="parque.region"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Mercado" outlined v-model="parque.mercado"></v-text-field>
+                <v-text-field
+                  label="Mercado"
+                  outlined
+                  v-model="parque.mercado"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Tipo de industria" outlined v-model="parque.tipoDeIndustria"></v-text-field>
+                <v-text-field
+                  label="Tipo de industria"
+                  outlined
+                  v-model="parque.tipoDeIndustria"
+                ></v-text-field>
               </v-col>
               <v-col sm="12">
                 <span>Superficies</span>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Superficie total" outlined v-model="parque.superficieTotal"></v-text-field>
+                <v-text-field
+                  label="Superficie total"
+                  outlined
+                  v-model="parque.superficieTotal"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Superficie urbanizada" outlined v-model="parque.superficieUrban"></v-text-field>
+                <v-text-field
+                  label="Superficie urbanizada"
+                  outlined
+                  v-model="parque.superficieUrban"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Superficie ocupada" outlined v-model="parque.superficieOcup"></v-text-field>
+                <v-text-field
+                  label="Superficie ocupada"
+                  outlined
+                  v-model="parque.superficieOcup"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Superficie disponible" outlined v-model="parque.superficieDisp"></v-text-field>
+                <v-text-field
+                  label="Superficie disponible"
+                  outlined
+                  v-model="parque.superficieDisp"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Tipo de propiedad" outlined v-model="parque.tipoDePropiedad"></v-text-field>
+                <v-text-field
+                  label="Tipo de propiedad"
+                  outlined
+                  v-model="parque.tipoDePropiedad"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Inicio de operaciones" outlined  v-model="parque.inicioOperaciones"></v-text-field>
+                <v-text-field
+                  label="Inicio de operaciones"
+                  outlined
+                  v-model="parque.inicioOperaciones"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Numero de empleados" outlined  v-model="parque.numEmpleados"></v-text-field>
+                <v-text-field
+                  label="Numero de empleados"
+                  outlined
+                  v-model="parque.numEmpleados"
+                ></v-text-field>
               </v-col>
               <v-col sm="12">
                 <span>Detalles</span>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Reconocimientos" outlined  v-model="parque.reconocimientoPracticas"></v-text-field>
+                <v-text-field
+                  label="Reconocimientos"
+                  outlined
+                  v-model="parque.reconocimientoPracticas"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Infraestructura" outlined  v-model="parque.ifraestructura"></v-text-field>
+                <v-text-field
+                  label="Infraestructura"
+                  outlined
+                  v-model="parque.ifraestructura"
+                ></v-text-field>
               </v-col>
               <v-col sm="12">
                 <span>Contacto</span>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Nombre de contacto" outlined  v-model="parque.contactName"></v-text-field>
+                <v-text-field
+                  label="Nombre de contacto"
+                  outlined
+                  v-model="parque.contactName"
+                ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
-                <v-text-field label="Email" outlined v-model="parque.contactEmail"></v-text-field>
+                <v-text-field
+                  label="Email"
+                  outlined
+                  v-model="parque.contactEmail"
+                ></v-text-field>
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn>Enviar a revision</v-btn>
+              <v-btn @click="updatePark">Guardar Informacion</v-btn>
             </v-card-actions>
           </v-container>
         </v-tab-item>
@@ -203,7 +293,9 @@
   </content>
 </template>
 <script>
-import infoCard from "../components/infoCard"
+/*
+ */
+import infoCard from "../components/infoCard";
 import axios from "axios";
 import plusCard from "../components/plusCard";
 import Swal from "sweetalert2";
@@ -224,9 +316,9 @@ export default {
       },
       users_parqs: "",
       data_to_info: "",
-      data_user:false,
-      naves:null,
-      editUb : false
+      data_user: false,
+      naves: null,
+      editUb: false,
     };
   },
   beforeMount() {
@@ -322,22 +414,42 @@ export default {
       this.addNave = false;
       this.data_user = false;
     },
-    openDialog(i){
-     this.data_user = true
+    openDialog(i) {
+      this.data_user = true;
       this.data_to_info = i;
     },
-    getallnaves(id){
+    getallnaves(id) {
       let params = new URLSearchParams();
-      params.append("id", id)
-      axios.post(`${this.$store.state.url}/getallnaveforpark`, params).then(res => this.naves = res.data).catch(e => console.log(e));
+      params.append("id", id);
+      axios
+        .post(`${this.$store.state.url}/getallnaveforpark`, params)
+        .then((res) => (this.naves = res.data))
+        .catch((e) => console.log(e));
     },
-    viewNave(id){
+    viewNave(id) {
       this.$store.commit("setNave", id);
-      this.$router.push("/nave")
+      this.$router.push("/nave");
     },
-    focs(){
+    focs() {
       this.editUb = true;
-    }
+    },
+    updatePark() {
+      let params = new URLSearchParams();
+      params.append("nombre_es", this.parque.nombre_es);
+      params.append("nombre_en", this.parque.nombre_es);
+      params.append("adminParq", this.parque.adminParq);
+      params.append("adminParq", this.parque.parqProp);
+      params.append("adminParq", this.parque.parqIntoParq);
+      params.append("adminParq", this.parque.region);
+      params.append("adminParq", this.parque.mercado);
+      params.append("adminParq", this.parque.tipoDeIndustria);
+      params.append("adminParq", this.parque.adminParq);
+      params.append("adminParq", this.parque.tipoDePropiedad);
+      params.append("adminParq", this.parque.reconocimientoPracticas);
+      params.append("adminParq", this.parque.ifraestructura);
+      params.append("adminParq", this.parque.contactName);
+      params.append("adminParq", this.parque.contactEmail);
+    },
   },
   components: { plusCard, infoCard },
 };

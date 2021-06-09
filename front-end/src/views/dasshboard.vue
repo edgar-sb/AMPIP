@@ -68,8 +68,8 @@
                         <v-card-actions>
                           <v-btn icon @click="getInfoCorpAction(i.id)" v-if="i.habilitar == 0">
                             <v-badge
-                              content="Requiere avilitar"
-                              value="Requiere avilitar"
+                              content="Requiere habilitar"
+                              value="Requiere habilitar"
                               color="green"
                               overlap
                             >
@@ -83,6 +83,7 @@
                                 mdi-eye
                               </v-icon>
                           </v-btn>
+                          <span>Ultima actualizacion:<br/> {{i.fechaDeValidacion}}</span>
                         </v-card-actions>
                         <v-img
                           :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"

@@ -360,6 +360,7 @@ class apiController extends AbstractActionController
                 $nombre_es = $this->params()->fromPost("nombre_es", null);
                 $nombre_en = $this->params()->fromPost("nombre_en", null);
                 $direccion = $this->params()->fromPost("direccion", null);
+                $rfc = $this->params()->fromPost("rfc", null);
                 $cp = $this->params()->fromPost("cp", null);
                 $colonia = $this->params()->fromPost("colonia", null);
                 $estado = $this->params()->fromPost("estado", null);
@@ -374,16 +375,17 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".nombre_en", $nombre_en, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".direccion", $direccion, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".cp", $cp, $id_key);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".rfc", $rfc, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".colonia", $colonia, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".estado", $estado, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".municipio", $municipio, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".celular", $telefono, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionAnualSiguiente", $inversionAnualSiguiente, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".habilitar", $habilitar, $id_key);
-                    $this->logs("El usuario con id $id actualizo la corporacion con id  $id_key", $id);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".fechaDeValidacion", date('Y-m-d H:i:s'), $id_key);
                     return new JsonModel(["message" => "listo"]);
                 } else {
-                    $this->logs("El usuario con id $id intento actualizar la corporacion con id  $id_key", $id);
+                    $this->logs("El usuario con id  intento actualizar la corporacion con id ", 0);
                     return new JsonModel(["message" => "corporacion no encontrada"]);
                 }
             } else {
