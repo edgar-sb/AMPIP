@@ -1865,9 +1865,7 @@ class apiController extends AbstractActionController
         switch ($query){
             case 1:
                 $id = $this->params()->fromPost("id");
-
                 $result = $this->entityManager->getRepository(extrasEntity::class)->findBy(["id_entity"=>$id]);
-                
                 $data = [];
                 foreach($result as $item){
                     $data['id'] = $item->getId();
@@ -1889,7 +1887,8 @@ class apiController extends AbstractActionController
                     $this->entityManager->flush();
                     return new JsonModel(["message"=>"Creado"]);
                 } else {
-                    return new JsonModel(["message" => "ya hay datos de este corporativo"]);
+                    $this->entityManager->getRepository(extrasEntity::class)->updateData(".dataExtra",$data, $id);
+                    return new JsonModel(["message" => "Se actualizaron los datos"]);
                 }
                 break;
             default:
