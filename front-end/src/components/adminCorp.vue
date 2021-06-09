@@ -133,6 +133,42 @@
               >
               </v-text-field>
             </v-col>
+
+            <v-col sm="12" md="12">
+              <v-text-field
+                v-model="social.facebook"
+                label="Facebook"
+                outlined
+              >
+              </v-text-field>
+            </v-col>
+
+            <v-col sm="12" md="12">
+              <v-text-field
+                v-model="social.twiter"
+                label="Twiter"
+                outlined
+              >
+              </v-text-field>
+            </v-col>
+
+            <v-col sm="12" md="12">
+              <v-text-field
+                v-model="social.instagram"
+                label="Instagram"
+                outlined
+              >
+              </v-text-field>
+            </v-col>
+
+            <v-col sm="12" md="12">
+              <v-text-field
+                v-model="social.linkdin"
+                label="LinkedIn"
+                outlined
+              >
+              </v-text-field>
+            </v-col>
             <v-card-actions>
               <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
             </v-card-actions>
@@ -175,6 +211,12 @@ export default {
         park: 0,
         nave: 0,
       },
+      social:{
+        facebook:"", 
+        twiter:"",
+        instagram:"",
+        linkdin:""
+      }
     };
   },
   props: ["id_corp"],
@@ -308,10 +350,21 @@ export default {
       axios
         .post(`${this.$store.state.url}/updatecorp`, params)
         .then(() => {
+          this.extrasAction();
           Swal.fire("La informacion se actualizo esta en espera de que se habilite")
         })
         .catch((e) => console.log(e));
     },
+
+     extrasAction(){
+       let params = new URLSearchParams();
+       params.append("query",2);
+       params.append("id", this.id.id);
+       params.append("data", JSON.stringify(this.social));
+       axios.post(`${this.$store.state.url}/extras`, params)
+       .then(res => console.log(res))
+       .catch((e) => console.log(e));
+     }  
   },
   beforeMount() {
     this.getInfoCorpAction();
