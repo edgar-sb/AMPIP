@@ -2,7 +2,7 @@
   <content>
     <v-card-actions>
       <v-btn icon @click="getTab" v-if="tab == 0">
-        <v-icon>mdi-plus</v-icon>
+        <v-icon v-if="options.i">mdi-plus</v-icon>
         <v-dialog width="700" persistent v-model="addNave">
           <plusCard
             dialogs="1"
@@ -47,6 +47,7 @@
                 <v-text-field
                   label="Nombre del parque en (Español)"
                   outlined
+                  :disabled="!options.u"
                   v-model="parque.nombre_es"
                 ></v-text-field>
               </v-col>
@@ -55,6 +56,7 @@
                   label="Nombre del parque en (Ingles)"
                   outlined
                   v-model="parque.nombre_en"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -62,6 +64,7 @@
                   label="Administrador del parque"
                   outlined
                   v-model="parque.adminParq"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -69,6 +72,7 @@
                   label="Propietario del parque"
                   outlined
                   v-model="parque.parqProp"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6" v-if="editUb">
@@ -77,6 +81,7 @@
                   outlined
                   v-model="parque.parqIntoParq"
                   @focus="focs"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -85,6 +90,7 @@
                   label="Region"
                   outlined
                   v-model="parque.region"
+                  :disabled="!options.u"
                 ></v-select>
               </v-col>
               <v-col sm="12" md="6">
@@ -94,12 +100,14 @@
                   outlined
                   v-model="parque.mercado"
                   :value="Mercados"
+                  :disabled="!options.u"
                 ></v-select>
               </v-col>
               <v-col sm="12">
                 <v-text-field
                   label="Tipo de industria"
                   outlined
+                  :disabled="!options.u"
                   v-model="parque.tipoDeIndustria"
                 ></v-text-field>
               </v-col>
@@ -111,6 +119,7 @@
                   label="Superficie total"
                   outlined
                   v-model="parque.superficieTotal"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -119,6 +128,7 @@
                   label="Tipo de Propiedad"
                   outlined
                   v-model="parque.tipoDePropiedad"
+                  :disabled="!options.u"
                 ></v-select>
               </v-col>
               <v-col sm="12">
@@ -126,6 +136,7 @@
                   label="Numero de empleados"
                   outlined
                   v-model="parque.numEmpleados"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12">
@@ -148,6 +159,7 @@
                   chips
                   outlined
                   label="Reconocimientos"
+                  :disabled="!options.u"
                   multiple
                 ></v-select>
               </v-col>
@@ -160,6 +172,7 @@
                   chips
                   outlined
                   label="Infraestructura"
+                  :disabled="!options.u"
                   multiple
                 ></v-select>
               </v-col>
@@ -171,6 +184,7 @@
                   label="Nombre de contacto"
                   outlined
                   v-model="parque.contactName"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
               <v-col sm="12" md="6">
@@ -178,11 +192,12 @@
                   label="Email"
                   outlined
                   v-model="parque.contactEmail"
+                  :disabled="!options.u"
                 ></v-text-field>
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark">Guardar Informacion</v-btn>
+              <v-btn @click="updatePark" v-if="options.u">Guardar Informacion</v-btn>
             </v-card-actions>
           </v-container>
         </v-tab-item>
@@ -277,19 +292,45 @@ export default {
       ],
       newInfra: null,
       newRecords: null,
+      roles: [],
+
+      options:{
+        u:false,
+        d:false,
+        i: false,
+      }
     };
   },
   beforeMount() {
-    let params = new URLSearchParams();
-    params.append("id", this.$store.state.parque);
-    axios
-      .post(`${this.$store.state.url}/getpark`, params)
-      .then((res) => {
-        this.parque = res.data[0];
-        this.getUserFromPark(res.data[0].id);
-        this.getallnaves(res.data[0].key_corp);
-      })
-      .catch((e) => console.log(e));
+
+      setTimeout(() => {
+        let params = new URLSearchParams();
+        params.append("query", 1);
+        params.append("id", this.$store.state.data.id_A);
+        axios.post(`${this.$store.state.url}/getparquesusuarios`,params)
+        .then(res => {
+            this.roles = res.data[0].permiso;
+            console.log(res)
+            let paramsD = new URLSearchParams();
+            paramsD.append("id", res.data[0].id);
+            axios
+              .post(`${this.$store.state.url}/getpark`, paramsD)
+              .then((res) => {
+                this.parque = res.data[0];
+                this.getUserFromPark(res.data[0].id);
+                this.getallnaves(res.data[0].key_corp);
+              })
+              .catch((e) => console.log(e));
+
+
+
+
+
+
+        })
+        .catch((e) => console.log(e));
+      }, 1000);
+
   },
   methods: {
     getTab() {
@@ -458,5 +499,20 @@ export default {
     }
   },
   components: { plusCard },
+  props:["parque_id"],
+  watch:{
+    roles(){
+      var roles = this.roles.split(",");
+      var findValueEdit = roles.find(i => i == 'Editar')
+      var findValueAdd = roles.find(i => i == 'Agregar')
+      if(findValueEdit != undefined){
+        this.options.u = true
+      } 
+
+      if(findValueAdd != undefined){
+        this.options.i = true
+      } 
+    }
+  }
 };
 </script>

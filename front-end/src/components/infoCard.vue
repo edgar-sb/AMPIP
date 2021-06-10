@@ -74,6 +74,7 @@
       <v-card-text>
         <v-container>
           <v-row>
+            {{id}}
             <v-col sm="12" md="6">
               <v-text-field
                 outlined

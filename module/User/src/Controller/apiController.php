@@ -97,6 +97,7 @@ class apiController extends AbstractActionController
 
                     foreach ($permisos as $permiso) {
                         $rolepermisos["permiso"] = $permiso->getpermiso();
+                        $rolepermisos["id"] = $permiso->getid();
                         array_push($arr, $rolepermisos);
                     }
 
