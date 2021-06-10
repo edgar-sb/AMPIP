@@ -80,12 +80,32 @@
           <v-row>
             <v-col sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
+                <span v-if="i.edit != 'null'">Ultima actualizacion : {{ i.edit }}</span>
                 <v-card-title v-text="i.nombre_es"></v-card-title>
-
                 <v-card-actions>
-                  <v-btn icon @click="infoParkAction(i.id)">
+                  <v-btn
+                    icon
+                    @click="infoParkAction(i.id)"
+                    v-if="i.edit != 'null'"
+                  >
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
+
+                  <v-btn
+                    icon
+                    @click="infoParkAction(i.id)"
+                    v-if="i.edit == 'null'"
+                  >
+                    <v-badge
+                      content="Requiere habilitar"
+                      value="Requiere habilitar"
+                      color="green"
+                      overlap
+                    >
+                      <v-icon>mdi-eye</v-icon>
+                    </v-badge>
+                  </v-btn>
+
                   <v-dialog v-model="cards.infoPark" width="700">
                     <info-card
                       :id="propsToComponents.park[0]"
@@ -317,12 +337,12 @@ export default {
         park: 0,
         nave: 0,
       },
-      social:{
+      social: {
         facebook: null,
         twiter: null,
-        instagram:null,
-        linkdin:null
-      }
+        instagram: null,
+        linkdin: null,
+      },
     };
   },
   components: {
