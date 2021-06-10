@@ -1,5 +1,12 @@
 <template>
   <v-card>
+    <v-card-actions>
+      <v-card-title>Perfil de usuario</v-card-title>
+      <v-spacer></v-spacer>
+      <v-btn @click="setProfileActionModel" icon color="red" >
+        <v-icon>mdi-window-close</v-icon>
+      </v-btn>
+    </v-card-actions>
     <v-card-text>
       <v-container>
         <v-row>
@@ -170,11 +177,11 @@
         Cerrar sesion
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="save" text color="green">
-        Guardar
-      </v-btn>
       <v-btn @click="setProfileActionModel" text color="red" >
         Cerrar
+      </v-btn>
+      <v-btn @click="save" text color="green">
+        Guardar
       </v-btn>
     </v-card-actions>
   </v-card>

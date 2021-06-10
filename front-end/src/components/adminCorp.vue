@@ -55,7 +55,13 @@
       <v-tab-item>
         <v-container>
           <v-row>
-            <v-col sm="12">
+            <v-col sm="12" class="my-4">
+              <span style="color : red" v-if="id.habilitar == 0"
+                >Aun no se Autoriza la ultima actualizacion</span
+              >
+              <span style="color : green" v-if="id.habilitar != 0"
+                >Ultima actualizacion autorizada</span
+              >
               <UploadImages
                 @change="handleImages"
                 :max="1"
@@ -107,30 +113,46 @@
             </v-col>
 
             <v-col sm="12" md="6">
-              <v-text-field v-model="id.cp" label="Código Postal" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col sm="12" md="6">
-              <v-text-field v-model="id.colonia" label="Colonia" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col sm="12" md="6">
-              <v-text-field v-model="id.estado" label="Estado" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col sm="12" md="6">
               <v-text-field
-                v-model="id.municipio"
+                outlined
+                label="Código Postal"
+                v-model="id.cp"
+                @keyup="watchCp"
+              ></v-text-field>
+            </v-col>
+
+            <v-col sm="12" md="6">
+              <span>{{ id.colonia }}</span>
+              <v-select
+                :items="cp"
+                label="Colonia"
+                placeholder="Colonia"
+                outlined
+                v-model="id.colonia"
+                item-text="colonia"
+                item-value="colonia"
+              ></v-select>
+            </v-col>
+
+            <v-col sm="12" md="6">
+              <span>{{ id.estado }}</span>
+              <v-text-field v-model="edo" label="Estado" outlined disabled>
+              </v-text-field>
+            </v-col>
+
+            <v-col sm="12" md="6">
+              <spam>{{ id.municipio }}</spam>
+              <v-text-field
+                v-model="mun"
                 label="municipio/alcaldía"
                 outlined
+                disabled
               >
               </v-text-field>
             </v-col>
 
             <v-col sm="12" md="6">
+              <span>Numero celular: </span>
               <v-text-field v-model="id.celular" label="Celular" outlined>
               </v-text-field>
             </v-col>
@@ -141,6 +163,23 @@
               <v-text-field
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
+                outlined
+              >
+              </v-text-field>
+            </v-col>
+            <v-col sm="12" md="6">
+              <v-text-field
+                v-model="id.inversionRealizadaActual"
+                label="Inversión anual programada (pipeline año actual) MXN"
+                outlined
+                
+              >
+              </v-text-field>
+            </v-col>
+            <v-col sm="12" md="6">
+              <v-text-field
+                v-model="id.inversionRealizadaAnterior"
+                label="Inversión anual programada (pipeline año anterior) MXN"
                 outlined
               >
               </v-text-field>
@@ -219,6 +258,8 @@ export default {
         instagram: "",
         linkdin: "",
       },
+      cp: [],
+      logo:null
     };
   },
   props: ["id_corp"],
@@ -347,11 +388,11 @@ export default {
       params.append("telefono", this.id.celular);
       params.append("inversionAnualSiguiente", this.id.inversionAnualSiguiente);
       params.append(
-        "inversionRealizadaActual",
+        "inversionAnualActual",
         this.id.inversionRealizadaActual
       );
       params.append(
-        "inversionRealizadaAnterior",
+        "inversionAnualAnterior",
         this.id.inversionRealizadaAnterior
       );
       params.append("habilitar", 0);
@@ -365,6 +406,25 @@ export default {
           );
         })
         .catch((e) => console.log(e));
+      let data = new FormData();
+      data.append("query", "logo");
+      data.append("uniqueName", this.id.nombre_es);
+      data.append("fichero_usuario", this.logo);
+      var config = {
+        method: "post",
+        url: `${this.$store.state.baseUrl}/api/uploadfiles`,
+        headers: { "Content-Type": "image/jpeg" },
+        data: data,
+      };
+    let ctx = this;
+      axios(config)
+        .then(function(response) {
+          ctx.$router.push("/");
+          console.log(JSON.stringify(response.data));
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     },
 
     extrasAction() {
@@ -380,6 +440,23 @@ export default {
     x() {
       this.addPark = false;
     },
+    handleImages(files) {
+      this.logo = files[0];
+    },
+    watchCp() {
+      if (this.id.cp.length > 4) {
+        let params = new URLSearchParams();
+        params.append("cp", this.id.cp);
+        axios
+          .post(`${this.$store.state.url}/copomex`, params)
+          .then((res) => {
+            this.cp = res.data;
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      }
+    },
   },
   beforeMount() {
     this.getInfoCorpAction();
@@ -389,6 +466,20 @@ export default {
   computed: {
     imgRoute() {
       return `${this.$store.state.img}/`;
+    },
+    edo() {
+      if (this.cp.length > 0) {
+        return this.cp[0].estado;
+      } else {
+        return "Sin datos";
+      }
+    },
+    mun() {
+      if (this.cp.length > 0) {
+        return this.cp[0].municipip;
+      } else {
+        return "Sin datos";
+      }
     },
   },
 };

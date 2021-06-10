@@ -2,9 +2,17 @@
   <div>
     <!-- Nave -->
     <v-card v-show="dialogs == 1">
-      <v-card-title>Inquilinos </v-card-title>
-      <br />
-      <v-container>
+      <v-card-actions>
+        <v-card-title>Inquilinos </v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
+          <v-icon>mdi-window-close</v-icon>
+        </v-btn>
+      </v-card-actions>
+
+      
+      <v-card-text>
+        <v-container>
         <v-row>
           <v-col cols="6">
             <v-text-field
@@ -102,18 +110,27 @@
           </v-col>
         </v-row>
       </v-container>
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="addNave">
           Añadir
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cerrar</v-btn>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Crear Parque -->
     <v-card v-show="dialogs == 2">
-      <v-card-title>Parque</v-card-title>
-      <v-container>
+      
+      <v-card-actions>
+        <v-card-title>Parque</v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
+          <v-icon> mdi-window-close </v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-card-text>
+        <v-container>
         <v-row>
           <v-col cols="6">
             <v-text-field
@@ -420,16 +437,23 @@
           </v-col>
         </v-row>
       </v-container>
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="addparque">
           Añadir
         </v-btn>
-        <v-btn color="red" @click="closeAction" text>Cerrar</v-btn>
+        <v-btn color="red" @click="closeAction" text>Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Corporativo -->
     <v-card v-show="dialogs == 4">
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
+          <v-icon>mdi-window-close</v-icon>
+        </v-btn>
+      </v-card-actions>
       <v-container>
         <v-row>
           <v-col sm="12" md="12">
@@ -581,14 +605,20 @@
         <v-btn color="green darken-1" text @click="addCorp">
           Añadir
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cerrar</v-btn>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Usuario --->
     <v-card v-show="dialogs == 5">
-      <v-card-title>
+      <v-card-actions>
+        <v-card-title>
         Usuario
       </v-card-title>
+      <v-spacer></v-spacer>
+       <v-btn icon @click="closeAction">
+          <v-icon>mdi-window-close</v-icon>
+        </v-btn>
+      </v-card-actions>
       <v-container>
         <v-row>
           <v-col sm="12">
@@ -630,7 +660,7 @@
         <v-btn color="green darken-1" text @click="addUserAction">
           Agregar
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cerrar</v-btn>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -1223,31 +1253,7 @@ export default {
       }
     },
     addparque() {
-      if (
-        this.parquesData.name_es != "" &&
-        this.parquesData.name_en != "" &&
-        this.parquesData.key_corp != "" &&
-        this.parquesData.admins != "" &&
-        this.parquesData.propi != "" &&
-        this.parquesData.mun != "" &&
-        this.parquesData.region != "" &&
-        this.parquesData.Mercado != "" &&
-        this.parquesData.industria != "" &&
-        this.parquesData.sup_tot != "" &&
-        this.parquesData.sup_urb != "" &&
-        this.parquesData.sup_oc != "" &&
-        this.parquesData.sup_dis != "" &&
-        this.parquesData.tipo != "" &&
-        this.parquesData.date != "" &&
-        this.parquesData.infra != "" &&
-        this.parquesData.name_contact != "" &&
-        this.parquesData.telefono != "" &&
-        this.parquesData.code != "" &&
-        this.parquesData.lada != "" &&
-        this.parquesData.direccion != "" &&
-        this.parquesData.employeds != "" &&
-        this.parquesData.record != ""
-      ) {
+      if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
         var params = new URLSearchParams();
         params.append("key_corp", this.id);
         params.append("nombre_es", this.parquesData.name_es);
@@ -1390,7 +1396,7 @@ export default {
             data.append("fichero_usuario", this.corp.logo);
             var config = {
               method: "post",
-              url:`${this.$store.state.baseUrl}/api/uploadfiles`,
+              url: `${this.$store.state.baseUrl}/api/uploadfiles`,
               headers: { "Content-Type": "image/jpeg" },
               data: data,
             };

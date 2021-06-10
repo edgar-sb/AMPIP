@@ -367,6 +367,8 @@ class apiController extends AbstractActionController
                 $municipio = $this->params()->fromPost("municipio", null);
                 $telefono = $this->params()->fromPost("telefono", null);
                 $inversionAnualSiguiente = $this->params()->fromPost("inversionAnualSiguiente", null);
+                $inversionAnualActual = $this->params()->fromPost("inversionAnualActual", null);
+                $inversionAnualAnterior = $this->params()->fromPost("inversionAnualAnterior", null);
                 $habilitar = $this->params()->fromPost("habilitar", null);
                 $search = $this->entityManager->getRepository(corpEntity::class)->findById($id_key);
 
@@ -381,6 +383,8 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".municipio", $municipio, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".celular", $telefono, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionAnualSiguiente", $inversionAnualSiguiente, $id_key);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionRealizadaActual", $inversionAnualActual, $id_key);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionRealizadaAnterior", $inversionAnualAnterior, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".habilitar", $habilitar, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".fechaDeValidacion", date('Y-m-d H:i:s'), $id_key);
                     return new JsonModel(["message" => "listo"]);

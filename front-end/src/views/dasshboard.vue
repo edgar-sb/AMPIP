@@ -1,7 +1,13 @@
 <template>
   <v-container>
     <v-col sm="12">
-      <v-tabs v-model="tab" background-color="transparent" color="basil" grow v-if="userType == 'AdministradorGlobal'">
+      <v-tabs
+        v-model="tab"
+        background-color="transparent"
+        color="basil"
+        grow
+        v-if="userType == 'AdministradorGlobal'"
+      >
         <v-tab v-for="item in retItem" :key="item.id">
           {{ item.title }}
         </v-tab>
@@ -15,10 +21,10 @@
                 <v-col sm="12">
                   <v-card>
                     <v-toolbar dense>
-                      <v-toolbar-title>
-                        <span style="font-size: small">
-                          {{ saludo }}
-                        </span>
+                      <v-toolbar-title small>
+                        
+                          <label>{{ saludo }}</label>
+                        
                       </v-toolbar-title>
 
                       <v-spacer></v-spacer>
@@ -66,6 +72,11 @@
                     <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
                       <v-card>
                         <v-card-actions>
+                          <span
+                            >Ultima actualizacion:<br />
+                            {{ i.fechaDeValidacion }}</span
+                          >
+                          <v-spacer></v-spacer>
                           <v-btn
                             icon
                             @click="getInfoCorpAction(i.id)"
@@ -91,10 +102,6 @@
                               mdi-eye
                             </v-icon>
                           </v-btn>
-                          <span
-                            >Ultima actualizacion:<br />
-                            {{ i.fechaDeValidacion }}</span
-                          >
                         </v-card-actions>
                         <v-img
                           :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
@@ -134,6 +141,13 @@
                 <v-col sm="12" md="4" v-for="i in allPat" :key="i">
                   <v-card>
                     <v-card-actions>
+                      <span
+                        >Ultima actualizacion:<br />
+                        {{ i.fechaDeValidacion }}</span
+                      >
+
+                      <v-spacer></v-spacer>
+
                       <v-btn
                         icon
                         @click="getInfoCorpAction(i.id)"
@@ -159,10 +173,6 @@
                           mdi-eye
                         </v-icon>
                       </v-btn>
-                      <span
-                        >Ultima actualizacion:<br />
-                        {{ i.fechaDeValidacion }}</span
-                      >
                     </v-card-actions>
                     <v-img
                       :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
@@ -199,9 +209,10 @@
           </v-container>
         </v-tab-item>
       </v-tabs-items>
+
       <!-- administrador de parque -->
       <adminPark
-        v-if="userType == 'Administrador de parque' && corpOfUser != null"
+        v-if="userType == 'AdministradorParque' && corpOfUser != null"
       />
 
       <!-- administrador de nave -->

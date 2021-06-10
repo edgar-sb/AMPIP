@@ -1,6 +1,12 @@
 <template>
   <content>
     <v-card-actions>
+      <v-btn @click="back" icon> 
+        <v-icon color="red">
+          mdi-arrow-left-bold
+        </v-icon>
+      </v-btn>
+
       <v-btn icon @click="getTab" v-if="tab != 2">
         <v-icon>mdi-plus</v-icon>
         <v-dialog width="500" v-model="addUser">
@@ -68,7 +74,7 @@
           ></plusCard>
         </v-dialog>
       </v-btn>
-    </v-card-actions>
+      </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
         <v-tab>
@@ -444,7 +450,7 @@ export default {
     createdataUser(id) {
       let params = new URLSearchParams();
       params.append("id", id[0].id);
-      params.append("charge", "Administrador");
+      params.append("charge", "AdministradorParque");
       params.append("habilitar", 1);
       params.append("key_corp", this.$store.state.data.key_corp);
       axios
@@ -545,6 +551,9 @@ export default {
         })
         .catch((e) => console.log(e));
     },
+    back(){
+      this.$router.push("/");
+    }
   },
   components: { plusCard, infoCard },
 };
