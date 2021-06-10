@@ -796,6 +796,7 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
+                    $roleList["data"] = $role->getedit();
                 } else {
                     $roleList["error"] = "2541";
                 }

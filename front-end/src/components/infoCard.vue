@@ -74,7 +74,6 @@
       <v-card-text>
         <v-container>
           <v-row>
-            {{id}}
             <v-col sm="12" md="6">
               <v-text-field
                 outlined
@@ -187,7 +186,7 @@
         
         <v-spacer></v-spacer>
 
-        <v-btn @click="updatePark">Aprobar</v-btn>
+        <v-btn @click="updatePark" v-if="id.data == 'null'">Aprobar</v-btn>
         <v-btn @click="emitsClose">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
