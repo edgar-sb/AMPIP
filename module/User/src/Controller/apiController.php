@@ -1900,5 +1900,45 @@ class apiController extends AbstractActionController
 
         }
     }
+
+    public function naveadminAction(){
+        $query = $this->params()->fromPost("query");
+
+        switch ($query) {
+            case 1:
+                $id_nave = $this->params()->fromPost("id");
+                $id_user = $this->params()->fromPost("id_user");
+                $naves = $this->entityManager->getRepository(naveEntity::class)->findById($id_nave);
+                $ids = [];
+                foreach ($naves as $nave){
+                    $ids['id'] = $nave->getparque_id();
+                    $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $id_user, $ids['id']);                    
+                }
+
+                return new JsonModel(["message"=>$ids['id']]);
+                break;
+            case 2:
+                $id_user = $this->params()->fromPost("id_user");
+                $inquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["isAmpip"=>$id_user]);
+                $roleList = [];
+                foreach($inquilino as $item){
+                    $roleList["id"] = $item->getid();
+                    $roleList["corp"] = $item->getcorporativo();
+                    $roleList["nombre_es"] = $item->getnombre_es();
+                    $roleList["nombre_en"] = $item->getnombre_en();
+                    $roleList["propietario"] = $item->getpropietario();
+                    $roleList["nombre_empresa"] = $item->getnombreEmpresa();
+                    $roleList["numero_empleados"] = $item->getnumEmpleados();
+                    $roleList["pais_origen"] = $item->getpaisOrigen();
+                    $roleList["producto_insignia"] = $item->getproductoInsignia();
+                    $roleList["sector"] = $item->getsectorEmpresarial();
+                    $roleList["antiguedad"] = $item->getantiguedad();
+                }
+                return new JsonModel([$roleList]);
+                break;
+
+        }
+
+    }
 }
 
