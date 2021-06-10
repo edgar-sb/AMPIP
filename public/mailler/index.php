@@ -36,7 +36,7 @@ try {
     //Content
     $mail->isHTML(true);                                  //Set email format to HTML
     $mail->Subject = 'Seguridad ampip';
-    $mail->Body    = "Por favor ingresa a la siguiente liga para asignar una contraseña a $email <a href='http://localhost:8080/#/password?id=$link'> Aqui</a>";
+    $mail->Body    = "Por favor ingresa a la siguiente liga para asignar una contraseña a $email <a href='http://18.207.162.106/#/password?id=$link'> Aqui</a>";
     $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
     $mail->send();
