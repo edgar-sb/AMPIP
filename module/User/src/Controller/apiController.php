@@ -1908,14 +1908,9 @@ class apiController extends AbstractActionController
             case 1:
                 $id_nave = $this->params()->fromPost("id");
                 $id_user = $this->params()->fromPost("id_user");
-                $naves = $this->entityManager->getRepository(naveEntity::class)->findById($id_nave);
-                $ids = [];
-                foreach ($naves as $nave){
-                    $ids['id'] = $nave->getparque_id();
-                    $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $id_user, $ids['id']);                    
-                }
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $id_user,$id_nave);  
 
-                return new JsonModel(["message"=>$ids['id']]);
+                return new JsonModel(["message"=>"ok"]);
                 break;
             case 2:
                 $id_user = $this->params()->fromPost("id_user");
