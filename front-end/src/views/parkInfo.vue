@@ -396,30 +396,50 @@ export default {
       this.addNave = false;
     },
     addUserAction() {
-      let params = new URLSearchParams();
-      params.append(
-        "fullname",
-        `${this.dataUser.name} ${this.dataUser.lastName} ${this.dataUser.last}`
-      );
-      params.append("email", this.dataUser.email);
+      if (
+        this.dataUser.name != "" &&
+        this.dataUser.lastName != "" &&
+        this.dataUser.last != "" &&
+        this.dataUser.email != "" &&
+        this.permiso != null
+      ) {
+        let params = new URLSearchParams();
+        params.append(
+          "fullname",
+          `${this.dataUser.name} ${this.dataUser.lastName} ${this.dataUser.last}`
+        );
+        params.append("email", this.dataUser.email);
 
-      var ctx = this;
-      axios
-        .post(`${this.$store.state.url}/createuser`, params)
-        .then((res) => {
-          if (res.data.message) {
-            let par = new URLSearchParams();
-            par.append("email", ctx.dataUser.email);
-            par.append("pass", ctx.dataUser.password);
-            axios
-              .post(`${this.$store.state.url}/getuseridlogin`, par)
-              .then((res) => {
-                ctx.createdataUser(res.data);
-              })
-              .catch((e) => console.log(e));
-          }
-        })
-        .catch((e) => console.log(e));
+        var ctx = this;
+        axios
+          .post(`${this.$store.state.url}/createuser`, params)
+          .then((res) => {
+            if (res.data.message) {
+              let par = new URLSearchParams();
+              par.append("email", ctx.dataUser.email);
+              par.append("pass", ctx.dataUser.password);
+              axios
+                .post(`${this.$store.state.url}/getuseridlogin`, par)
+                .then((res) => {
+                  ctx.createdataUser(res.data);
+                })
+                .catch((e) => console.log(e));
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Ooops ...",
+          text: "Por favor asegurate de llenar todos los datos",
+          backdrop: `
+                  rgba(255,0,0,0.1)
+                  url("/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `,
+        });
+      }
     },
     createdataUser(id) {
       let params = new URLSearchParams();
@@ -484,22 +504,20 @@ export default {
     updatePark() {
       let infra, records;
 
-      if(this.newRecords != null)
-      {
+      if (this.newRecords != null) {
         records = this.newRecords;
-      } else{
-        records  = this.parque.reconocimientoPracticas;
+      } else {
+        records = this.parque.reconocimientoPracticas;
       }
 
-      if(this.newInfra != null)
-      {
+      if (this.newInfra != null) {
         infra = this.newInfra;
-      } else{
-        infra  = this.parque.ifraestructura;
+      } else {
+        infra = this.parque.ifraestructura;
       }
 
       let params = new URLSearchParams();
-      params.append("id",this.parque.id);
+      params.append("id", this.parque.id);
       params.append("nombre_es", this.parque.nombre_es);
       params.append("nombre_en", this.parque.nombre_en);
       params.append("adminParq", this.parque.adminParq);
@@ -518,11 +536,14 @@ export default {
       params.append("superficieTotal", this.parque.superficieTotal);
       params.append("date", null);
 
-      axios.post(`${this.$store.state.url}/updatepark`,params)
-      .then(() => {
-        Swal.fire("La informacion se actualizo esta en espera de que se habilite")
-      })
-      .catch((e) => console.log(e));
+      axios
+        .post(`${this.$store.state.url}/updatepark`, params)
+        .then(() => {
+          Swal.fire(
+            "La informacion se actualizo esta en espera de que se habilite"
+          );
+        })
+        .catch((e) => console.log(e));
     },
   },
   components: { plusCard, infoCard },
