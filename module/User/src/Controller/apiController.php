@@ -1928,6 +1928,8 @@ class apiController extends AbstractActionController
                     $roleList["producto_insignia"] = $item->getproductoInsignia();
                     $roleList["sector"] = $item->getsectorEmpresarial();
                     $roleList["antiguedad"] = $item->getantiguedad();
+                    $roleList["id_denue"] = $item->getid_DENUE();
+                    $roleList["id_scian"] = $item->getid_SCIAN();
                 }
                 return new JsonModel([$roleList]);
                 break;

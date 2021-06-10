@@ -731,7 +731,7 @@ export default {
   components: { UploadImages },
   data() {
     return {
-      codigoPais: ["+52", "+1"],
+      codigoPais: ["+52"],
       gmapsLat: true,
       editPark: false,
       restEsp: null,
