@@ -541,7 +541,7 @@
               label="Lada"
               outlined
               v-model="ladaValue"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.phone, rules.phoneLada]"
             ></v-text-field>
           </v-col>
           <v-col sm="7">
@@ -1390,7 +1390,7 @@ export default {
             data.append("fichero_usuario", this.corp.logo);
             var config = {
               method: "post",
-              url: "http://18.207.162.106/api/uploadfiles",
+              url:`${this.$store.state.baseUrl}/api/uploadfiles`,
               headers: { "Content-Type": "image/jpeg" },
               data: data,
             };
