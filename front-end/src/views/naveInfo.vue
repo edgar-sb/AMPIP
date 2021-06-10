@@ -8,7 +8,6 @@
       <v-container>
         
         <v-row v-if="inquilino[0]">
-          
           <v-col sm="12" md="6">
             <v-text-field v-model="inquilino[0].nombre_es" label="Nombre de Inquilino Español" outlined></v-text-field>
           </v-col>

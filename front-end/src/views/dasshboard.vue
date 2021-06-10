@@ -217,7 +217,7 @@
 
       <!-- administrador de nave -->
       <adminNave
-        v-if="userType == 'Administrador de nave' && corpOfUser != null"
+        v-if="userType == 'AdministradorDeNave' && corpOfUser != null"
       />
     </v-col>
   </v-container>

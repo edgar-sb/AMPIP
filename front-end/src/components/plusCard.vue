@@ -663,6 +663,61 @@
         <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
+    <!-- ultimo usuario -->
+     <v-card v-show="dialogs == 6" >
+      <v-card-actions>
+        <v-card-title>
+        Usuario
+      </v-card-title>
+      <v-spacer></v-spacer>
+       <v-btn icon @click="closeAction">
+          <v-icon>mdi-window-close</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-container>
+        <v-row>
+          <v-col sm="12">
+            <v-text-field
+              outlined
+              label="Nombre"
+              :rules="[rules.required]"
+              v-model="addUser.name"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              outlined
+              label="Apellido Paterno"
+              :rules="[rules.required]"
+              v-model="addUser.lastname"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="6">
+            <v-text-field
+              outlined
+              label="Apellido Materno"
+              :rules="[rules.required]"
+              v-model="addUser.last"
+            ></v-text-field>
+          </v-col>
+          <v-col sm="12">
+            <v-text-field
+              outlined
+              label="Correo"
+              :rules="[rules.required]"
+              v-model="addUser.email"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-container>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="addUserActionUltimo">
+          Agregar
+        </v-btn>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
@@ -1494,12 +1549,71 @@ export default {
         this.alerts();
       }
     },
+
+    addUserActionUltimo(){
+      let params = new URLSearchParams();
+      params.append("email", this.addUser.email);
+      params.append(
+        "fullname",
+        this.addUser.name +
+          " " +
+          this.addUser.lastname +
+          " " +
+          this.addUser.last
+      );
+      params.append("status", 1);
+      var ctx = this;
+      if (
+        this.addUser.email != "" &&
+        this.addUser.name != "" &&
+        this.addUser.lastname != ""
+      ) {
+        axios
+          .post(`${this.$store.state.url}/createuser`, params)
+          .then((res) => {
+            if (res.data.message) {
+              let par = new URLSearchParams();
+              par.append("email", ctx.addUser.email);
+              par.append("pass", ctx.addUser.pass);
+              par.append(
+                "fullname",
+                `${ctx.addUser.name} ${ctx.addUser.lastname} ${ctx.addUser.last}`
+              );
+              axios
+                .post(`${this.$store.state.url}/getuseridlogin`, par)
+                .then((res) => {
+                  ctx.createdataLast(res.data);
+                })
+                .catch((e) => console.log(e));
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        this.alerts();
+      }
+    },
     createdataUser(id) {
       let params = new URLSearchParams();
       params.append("id", id[0].id);
       params.append("charge", "Administrador");
       params.append("habilitar", 1);
       params.append("key_corp", this.$store.state.id_corp);
+      axios
+        .post(`${this.$store.state.url}/createdatauser`, params)
+        .then(() => {
+          this.closeAction();
+        })
+        .catch((e) => console.log(e));
+      axios.get(
+        `${this.$store.state.baseUrl}/mailler?email=${this.addUser.email}&name=${this.addUser.name}&link=${id[0].id}`
+      );
+    },
+    createdataLast(id) {
+      let params = new URLSearchParams();
+      params.append("id", id[0].id);
+      params.append("charge", "AdministradorDeNave");
+      params.append("habilitar", 1);
+      params.append("key_corp", this.$store.state.data.key_corp);
       axios
         .post(`${this.$store.state.url}/createdatauser`, params)
         .then(() => {

@@ -128,6 +128,13 @@
                     <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <!-- isAmpip -->
+                    <v-btn icon @click="addUserToNaveAction" v-if="i.isAmpip == null" >
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                    <v-dialog width="700" v-model="addUserToNave">
+                      <plusCard :dialogs='6' :id="i" @close="closePlusCard"></plusCard>
+                    </v-dialog>
                   </v-card-actions>
                 </v-card>
               </v-col>
@@ -373,6 +380,7 @@ export default {
       ],
       newInfra: null,
       newRecords: null,
+      addUserToNave:false
     };
   },
   beforeMount() {
@@ -487,6 +495,7 @@ export default {
     closePlusCard() {
       this.addNave = false;
       this.data_user = false;
+      this.addUserToNave = false;
     },
     openDialog(i) {
       this.data_user = true;
@@ -553,7 +562,11 @@ export default {
     },
     back(){
       this.$router.push("/");
+    },
+    addUserToNaveAction(){
+      this.addUserToNave = true;
     }
+    
   },
   components: { plusCard, infoCard },
 };
