@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-col sm="12">
-      <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+      <v-tabs v-model="tab" background-color="transparent" color="basil" grow v-if="userType == 'AdministradorGlobal'">
         <v-tab v-for="item in retItem" :key="item.id">
           {{ item.title }}
         </v-tab>
@@ -199,7 +199,6 @@
           </v-container>
         </v-tab-item>
       </v-tabs-items>
-
       <!-- administrador de parque -->
       <adminPark
         v-if="userType == 'Administrador de parque' && corpOfUser != null"

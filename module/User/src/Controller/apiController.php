@@ -892,8 +892,6 @@ class apiController extends AbstractActionController
             $mercado = $this->params()->fromPost("mercado");
             $tipoDeIndustria = $this->params()->fromPost("tipoDeIndustria");
             $superficieTotal = $this->params()->fromPost("superficieTotal");
-            
- 
             $tipoDePropiedad = $this->params()->fromPost("tipoDePropiedad");
             $numEmpleados = $this->params()->fromPost("numEmpleados");
             $reconocimientoPracticas = $this->params()->fromPost("reconocimientoPracticas");

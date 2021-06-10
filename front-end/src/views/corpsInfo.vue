@@ -362,6 +362,7 @@ export default {
       params.append("municipio", this.id.municipio);
       params.append("telefono", this.id.celular);
       params.append("inversionAnualSiguiente", this.id.inversionAnualSiguiente);
+      params.append("rfc", this.id.rfc);
       params.append("habilitar", 1);
 
       axios
@@ -394,6 +395,13 @@ export default {
               ctx.users = res.data;
             })
             .catch((e) => console.log(e));
+          
+          let paramsExtra = new URLSearchParams();
+          paramsExtra.append("query",1);
+          paramsExtra.append("id",this.id.id);
+          axios.post(`${this.$store.state.url}/extras`,paramsExtra)
+          .then(res=> this.social = JSON.parse(res.data.data))
+          .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
       this.getCorpInfo = true;

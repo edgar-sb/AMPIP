@@ -166,14 +166,14 @@
       </v-container>
     </v-card-text>
     <v-card-actions>
-      <v-btn @click="logout">
+      <v-btn @click="logout" text color="yellow">
         Cerrar sesion
       </v-btn>
-
-      <v-btn @click="save">
+      <v-spacer></v-spacer>
+      <v-btn @click="save" text color="green">
         Guardar
       </v-btn>
-      <v-btn @click="setProfileActionModel" text color="red">
+      <v-btn @click="setProfileActionModel" text color="red" >
         Cerrar
       </v-btn>
     </v-card-actions>

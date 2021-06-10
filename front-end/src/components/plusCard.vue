@@ -9,18 +9,20 @@
           <v-col cols="6">
             <v-text-field
               outlined
-              placeholder="Nombre"
-              label="Nombre"
+              placeholder="Nombre del inquilino (Español)"
+              label="Nombre del inquilino (Español)"
               v-model="inquilino.name"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
 
           <v-col cols="6">
             <v-text-field
               outlined
-              placeholder="Nombre en ingles"
-              label="Nombre en ingles"
+              placeholder="Nombre del inquilino (Ingles)"
+              label="Nombre del inquilino (Ingles)"
               v-model="inquilino.name_en"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
 
@@ -30,6 +32,7 @@
               placeholder="Propietario"
               label="Propietario"
               v-model="inquilino.prop"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
 
@@ -39,6 +42,7 @@
               placeholder="Numero de empleados"
               label="Numero de empleados"
               v-model="inquilino.num_emp"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
 
@@ -59,15 +63,17 @@
               placeholder="Producto insignia"
               label="Producto insignia"
               v-model="inquilino.insignia"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
 
           <v-col cols="6">
             <v-text-field
               outlined
-              placeholder="Antigüedad"
-              label="Antigüedad"
+              placeholder="Antigüedad en años"
+              label="Antigüedad en años"
               v-model="inquilino.antiguedad"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
 
@@ -98,10 +104,10 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" text @click="closeAction">Cerrar</v-btn>
         <v-btn color="green darken-1" text @click="addNave">
           Añadir
         </v-btn>
+        <v-btn color="red" text @click="closeAction">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Crear Parque -->
@@ -115,6 +121,7 @@
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_es"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -123,6 +130,7 @@
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_en"
+              :rules="[rules.required]"
             >
             </v-text-field>
           </v-col>
@@ -132,6 +140,7 @@
               outlined
               placeholder="Administrador"
               v-model="parquesData.admins"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -140,6 +149,7 @@
               outlined
               placeholder="Propietario"
               v-model="parquesData.propi"
+              :rules="[rules.required]"
             >
             </v-text-field>
           </v-col>
@@ -153,13 +163,14 @@
               placeholder="Direccion"
               type="phone"
               v-model="parquesData.direccion"
+              :rules="[rules.required]"
             ></v-text-field>
           </v-col>
           <v-col md="6">
             <v-text-field
               outlined
               label="Codigo postal"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.phone]"
               v-model="corp.cp"
               @keyup="watchCp"
             ></v-text-field>
@@ -203,6 +214,7 @@
               label="Region"
               outlined
               v-model="parquesData.region"
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
           <v-col cols="6">
@@ -211,6 +223,7 @@
               label="Mercado"
               outlined
               v-model="parquesData.Mercado"
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
           <v-col cols="12">
@@ -219,6 +232,7 @@
               label="Tipo de industria"
               outlined
               v-model="parquesData.industria"
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
           <v-col sm="12">
@@ -231,6 +245,7 @@
               outlined
               placeholder="En km2"
               v-model="parquesData.sup_tot"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -240,6 +255,7 @@
               suffix="km2"
               placeholder="En km2"
               v-model="parquesData.sup_urb"
+              :rules="[rules.required, rules.phone]"
             >
             </v-text-field>
           </v-col>
@@ -250,6 +266,7 @@
               outlined
               placeholder="En km2"
               v-model="parquesData.sup_oc"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
           <v-col cols="6">
@@ -260,6 +277,7 @@
               disabled
               placeholder="En km2"
               v-model="sup_disComputed"
+              :rules="[rules.required, rules.phone]"
             >
             </v-text-field>
           </v-col>
@@ -269,6 +287,7 @@
               label="Tipo de Propiedad"
               outlined
               v-model="parquesData.tipo"
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
 
@@ -281,6 +300,7 @@
               outlined
               label="Infraestructura"
               multiple
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
           <v-col sm="12">
@@ -291,14 +311,16 @@
               label="Página web"
               outlined
               placeholder="http://"
+              :rules="[rules.required]"
               v-model="parquesData.name_contact"
             >
             </v-text-field>
           </v-col>
           <v-col sm="12">
-            {{parquesData.code}} {{parquesData.lada}} {{parquesData.telefono}}
+            {{ parquesData.code }} {{ parquesData.lada }}
+            {{ parquesData.telefono }}
           </v-col>
-          
+
           <v-col sm="12" md="3">
             <v-select
               :items="codigoPais"
@@ -307,6 +329,7 @@
               placeholder="Codigo de pais"
               type="phone"
               v-model="parquesData.code"
+              :rules="[rules.required]"
             ></v-select>
           </v-col>
           <v-col sm="12" md="2">
@@ -316,6 +339,7 @@
               placeholder="Lada"
               type="phone"
               v-model="parquesData.lada"
+              :rules="[rules.required, rules.phoneLada, rules.phone]"
             ></v-text-field>
           </v-col>
           <v-col sm="12" md="7">
@@ -325,6 +349,7 @@
               placeholder="Teléfono"
               type="phone"
               v-model="parquesData.telefono"
+              :rules="[rules.required, rules.phoneLenght, rules.phone]"
             ></v-text-field>
           </v-col>
           <v-col sm="12">
@@ -336,6 +361,7 @@
               outlined
               placeholder="Numero de empleados"
               v-model="parquesData.employeds"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
 
@@ -396,10 +422,10 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" @click="closeAction" text>Cerrar</v-btn>
         <v-btn color="green darken-1" text @click="addparque">
           Añadir
         </v-btn>
+        <v-btn color="red" @click="closeAction" text>Cerrar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Corporativo -->
@@ -527,7 +553,6 @@
             ></v-text-field>
           </v-col>
 
-          
           <v-col sm="12">
             <span>Clasificación</span>
           </v-col>
@@ -718,7 +743,8 @@ export default {
         },
         cp: (value) => value.length <= 5 || "maximo 5 numeros",
         waitingSpace: (value) => value <= this.space || "Espacio insuficiente",
-        phoneLenght: (value) => value.length <= 10 || "maximo 10 digitos",
+        phoneLenght: (value) => value.length <= 8 || "maximo 8 digitos",
+        phoneLada: (value) => value.length <= 2 || "maximo 2 digitos",
       },
       corps: [],
       park: false,
@@ -1086,8 +1112,8 @@ export default {
         infra: "",
         name_contact: "",
         telefono: "",
-        code:"",
-        lada:"",
+        code: "",
+        lada: "",
         direccion: "",
         employeds: "",
         record: "",
@@ -1106,7 +1132,7 @@ export default {
       addUser: {
         name: "",
         lastname: "",
-        last:"",
+        last: "",
         email: "",
         pass: "",
       },
@@ -1131,29 +1157,36 @@ export default {
       ],
       society: "",
       parks: ["Modelo"],
-     
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
   methods: {
     addNave() {
-
-      var parqueId = null ;
-      if(this.parque != false){
-        parqueId = this.parque;
+      if (
+        this.inquilino.name != "" &&
+        this.inquilino.name_en != "" &&
+        this.inquilino.prop != "" &&
+        this.inquilino.num_emp != "" &&
+        this.inquilino.origin != "" &&
+        this.inquilino.insignia != "" &&
+        this.inquilino.sector != "" &&
+        this.inquilino.antiguedad != ""
+      ) {
+        var parqueId = null;
+        if (this.parque != false) {
+          parqueId = this.parque;
         } else {
-        parqueId = this.id;
+          parqueId = this.id;
         }
 
-      
-      var params = new URLSearchParams();
-      params.append("name", this.inquilino.name);
-      params.append("idParque", parqueId);
+        var params = new URLSearchParams();
+        params.append("name", this.inquilino.name);
+        params.append("idParque", parqueId);
 
-      axios
-        .post(`${this.$store.state.url}/createnave`, params)
-        .then((res) => {
-            console.log(res.data.id)
+        axios
+          .post(`${this.$store.state.url}/createnave`, params)
+          .then((res) => {
+            console.log(res.data.id);
             let data = new URLSearchParams();
             data.append("nombre_es", this.inquilino.name);
             data.append("nombre_en", this.inquilino.name_en);
@@ -1167,87 +1200,137 @@ export default {
 
             data.append("id_nave", res.data.id);
             axios
-                .post(`${this.$store.state.url}/setinquilino`, data)
-                .then((res) => {
-                  this.closeAction()
-                  console.log(res.data);
-                })
-                .catch((e) => console.log(e));
-          })
-        .catch((e) => console.log(e));
-    },
-    addparque() {
-      console.log(this.id);
-      var params = new URLSearchParams();
-      params.append("key_corp", this.id);
-      params.append("nombre_es", this.parquesData.name_es);
-      params.append("nombre_en", this.parquesData.name_en);
-      params.append("adminParq", this.parquesData.admins);
-      params.append("parqProp", this.parquesData.propi);
-      params.append(
-        "parqIntoParq",
-        this.corp.col + "-" + this.edo + "-" + this.mun
-      );
-      params.append("region", this.parquesData.region);
-      params.append("mercado", this.parquesData.Mercado);
-      params.append("tipoDeIndustria", this.parquesData.industria);
-      params.append("superficieTotal", this.parquesData.sup_tot);
-      params.append("superficieUrban", this.parquesData.sup_urb);
-      params.append("superficieOcup", this.parquesData.sup_urb);
-      params.append("superficieDisp", this.sup_disComputed);
-      params.append("tipoDePropiedad", this.parquesData.tipo);
-      params.append("ifraestructura", this.parquesData.infra);
-      /* numEmpleados */
-      params.append("numEmpleados", this.parquesData.employeds);
-      params.append("observacion", this.parquesData.region);
-      params.append("kmz", this.parquesData.name_contact);
-      params.append("planMaestro", this.parquesData.direccion);
-      params.append("contactName", this.parquesData.telefono);
-      params.append("contactEmail", this.parquesData.region);
-      params.append("reconocimientoPracticas", this.parquesData.record);
-
-      axios
-        .post(`${this.$store.state.url}/createpark`, params)
-        .then((res) => {
-          if (res.data.message == "Listo") {
-            let data = new URLSearchParams();
-            data.append("name", this.name_es);
-            data.append("lat", this.markers.lat);
-            data.append("lng", this.markers.lng);
-
-            axios
-              .post(`${this.$store.state.url}/mapsup`, data)
-              .then(() => {
-                Swal.fire({
-                  icon: "success",
-                  title: "Listo",
-                  text: "Guardado",
-                  backdrop: `
-                  rgba(0,0,0,.01)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
-                });
+              .post(`${this.$store.state.url}/setinquilino`, data)
+              .then((res) => {
                 this.closeAction();
+                console.log(res.data);
               })
               .catch((e) => console.log(e));
-          } else {
-            Swal.fire({
-              icon: "error",
-              title: "Ooops ...",
-              text: res.data.err,
-              backdrop: `
+          })
+          .catch((e) => console.log(e));
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Ooops ...",
+          text: "Por favor asegurate de llenar todos los datos",
+          backdrop: `
                   rgba(255,0,0,0.1)
                   url("/images/nyan-cat.gif")
                   left top
                   no-repeat
                 `,
-            });
-          }
-          this.reload();
-        })
-        .catch((e) => console.log(e));
+        });
+      }
+    },
+    addparque() {
+      if (
+        this.parquesData.name_es != "" &&
+        this.parquesData.name_en != "" &&
+        this.parquesData.key_corp != "" &&
+        this.parquesData.admins != "" &&
+        this.parquesData.propi != "" &&
+        this.parquesData.mun != "" &&
+        this.parquesData.region != "" &&
+        this.parquesData.Mercado != "" &&
+        this.parquesData.industria != "" &&
+        this.parquesData.sup_tot != "" &&
+        this.parquesData.sup_urb != "" &&
+        this.parquesData.sup_oc != "" &&
+        this.parquesData.sup_dis != "" &&
+        this.parquesData.tipo != "" &&
+        this.parquesData.date != "" &&
+        this.parquesData.infra != "" &&
+        this.parquesData.name_contact != "" &&
+        this.parquesData.telefono != "" &&
+        this.parquesData.code != "" &&
+        this.parquesData.lada != "" &&
+        this.parquesData.direccion != "" &&
+        this.parquesData.employeds != "" &&
+        this.parquesData.record != ""
+      ) {
+        var params = new URLSearchParams();
+        params.append("key_corp", this.id);
+        params.append("nombre_es", this.parquesData.name_es);
+        params.append("nombre_en", this.parquesData.name_en);
+        params.append("adminParq", this.parquesData.admins);
+        params.append("parqProp", this.parquesData.propi);
+        params.append(
+          "parqIntoParq",
+          this.corp.col + "-" + this.edo + "-" + this.mun
+        );
+        params.append("region", this.parquesData.region);
+        params.append("mercado", this.parquesData.Mercado);
+        params.append("tipoDeIndustria", this.parquesData.industria);
+        params.append("superficieTotal", this.parquesData.sup_tot);
+        params.append("superficieUrban", this.parquesData.sup_urb);
+        params.append("superficieOcup", this.parquesData.sup_urb);
+        params.append("superficieDisp", this.sup_disComputed);
+        params.append("tipoDePropiedad", this.parquesData.tipo);
+        params.append("ifraestructura", this.parquesData.infra);
+        /* numEmpleados */
+        params.append("numEmpleados", this.parquesData.employeds);
+        params.append("observacion", this.parquesData.region);
+        params.append("kmz", this.parquesData.name_contact);
+        params.append("planMaestro", this.parquesData.direccion);
+        params.append("contactName", this.parquesData.telefono);
+        params.append("contactEmail", this.parquesData.region);
+        params.append("reconocimientoPracticas", this.parquesData.record);
+
+        axios
+          .post(`${this.$store.state.url}/createpark`, params)
+          .then((res) => {
+            if (res.data.message == "Listo") {
+              let data = new URLSearchParams();
+              data.append("name", this.name_es);
+              data.append("lat", this.markers.lat);
+              data.append("lng", this.markers.lng);
+
+              axios
+                .post(`${this.$store.state.url}/mapsup`, data)
+                .then(() => {
+                  Swal.fire({
+                    icon: "success",
+                    title: "Listo",
+                    text: "Guardado",
+                    backdrop: `
+                  rgba(0,0,0,.01)
+                  url("/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `,
+                  });
+                  this.closeAction();
+                })
+                .catch((e) => console.log(e));
+            } else {
+              Swal.fire({
+                icon: "error",
+                title: "Ooops ...",
+                text: res.data.err,
+                backdrop: `
+                  rgba(255,0,0,0.1)
+                  url("/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `,
+              });
+            }
+            this.reload();
+          })
+          .catch((e) => console.log(e));
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Ooops ...",
+          text: "Por favor asegurate de llenar todos los datos",
+          backdrop: `
+                  rgba(255,0,0,0.1)
+                  url("/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `,
+        });
+      }
     },
     add(target) {
       this.markers = target.latLng.toJSON();
@@ -1313,7 +1396,7 @@ export default {
             };
             axios(config)
               .then(function(response) {
-                ctx.$router.push("/")
+                ctx.$router.push("/");
                 console.log(JSON.stringify(response.data));
               })
               .catch(function(error) {
@@ -1368,7 +1451,11 @@ export default {
       params.append("email", this.addUser.email);
       params.append(
         "fullname",
-        this.addUser.name + " " + this.addUser.lastname + " " + this.addUser.last
+        this.addUser.name +
+          " " +
+          this.addUser.lastname +
+          " " +
+          this.addUser.last
       );
       params.append("status", 1);
       var ctx = this;
@@ -1376,7 +1463,7 @@ export default {
         this.addUser.email != "" &&
         this.addUser.name != "" &&
         this.addUser.lastname != ""
-      ) { 
+      ) {
         axios
           .post(`${this.$store.state.url}/createuser`, params)
           .then((res) => {
@@ -1384,7 +1471,10 @@ export default {
               let par = new URLSearchParams();
               par.append("email", ctx.addUser.email);
               par.append("pass", ctx.addUser.pass);
-              par.append("fullname",`${ctx.addUser.name} ${ctx.addUser.lastname} ${ctx.addUser.last}`);
+              par.append(
+                "fullname",
+                `${ctx.addUser.name} ${ctx.addUser.lastname} ${ctx.addUser.last}`
+              );
               axios
                 .post(`${this.$store.state.url}/getuseridlogin`, par)
                 .then((res) => {
@@ -1407,7 +1497,7 @@ export default {
       axios
         .post(`${this.$store.state.url}/createdatauser`, params)
         .then(() => {
-          this.closeAction()
+          this.closeAction();
         })
         .catch((e) => console.log(e));
       axios.get(
@@ -1420,8 +1510,14 @@ export default {
     alerts() {
       Swal.fire({
         icon: "error",
-        title: "Datos faltantes",
-        text: "Porfavor llena todos los datos",
+        title: "Ooops ...",
+        text: "Por favor asegurate de llenar todos los datos",
+        backdrop: `
+                  rgba(255,0,0,0.1)
+                  url("/images/nyan-cat.gif")
+                  left top
+                  no-repeat
+                `,
       });
     },
     reload() {
@@ -1457,9 +1553,9 @@ export default {
       return `${this.codigoPaisValue} ${this.ladaValue} ${this.corp.cel}`;
     },
 
-    sup_disComputed(){
-      return  this.parquesData.sup_tot - this.parquesData.sup_oc;
-    }
+    sup_disComputed() {
+      return this.parquesData.sup_tot - this.parquesData.sup_oc;
+    },
   },
   beforeMount() {
     this.getAllParks();

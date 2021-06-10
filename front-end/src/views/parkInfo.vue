@@ -491,11 +491,11 @@ export default {
         records  = this.parque.reconocimientoPracticas;
       }
 
-      if(this.newRecords != null)
+      if(this.newInfra != null)
       {
         infra = this.newInfra;
       } else{
-        infra  = this.parque.infraestructura;
+        infra  = this.parque.ifraestructura;
       }
 
       let params = new URLSearchParams();
@@ -514,10 +514,14 @@ export default {
       params.append("ifraestructura", infra);
       params.append("contactName", this.parque.contactName);
       params.append("contactEmail", this.parque.contactEmail);
+      params.append("numEmpleados", this.parque.numEmpleados);
+      params.append("superficieTotal", this.parque.superficieTotal);
       params.append("date", null);
 
       axios.post(`${this.$store.state.url}/updatepark`,params)
-      .then(res => console.log(res))
+      .then(() => {
+        Swal.fire("La informacion se actualizo esta en espera de que se habilite")
+      })
       .catch((e) => console.log(e));
     },
   },

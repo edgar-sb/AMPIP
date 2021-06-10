@@ -13,7 +13,7 @@
 
       <!-- Parque nuevo-->
       <v-dialog v-model="addPark" width="700">
-        <plus-card :dialogs="2" :id="id.id"></plus-card>
+        <plus-card :dialogs="2" :id="id.id" @close="x"></plus-card>
       </v-dialog>
     </v-card-title>
 
@@ -73,14 +73,18 @@
             </v-col>
 
             <v-col sm="12" md="6">
-              <v-text-field v-model="id.nombre_es" label="Nombre" outlined>
+              <v-text-field
+                v-model="id.nombre_es"
+                label="Nombre de Corporativo (Español)"
+                outlined
+              >
               </v-text-field>
             </v-col>
 
             <v-col sm="12" md="6">
               <v-text-field
                 v-model="id.nombre_en"
-                label="Nombre ingles"
+                label="Nombre de Corporativo (Ingles)"
                 outlined
               >
               </v-text-field>
@@ -90,14 +94,20 @@
               <v-text-field v-model="id.rfc" label="RFC" outlined>
               </v-text-field>
             </v-col>
-
+            <v-col sm="12">
+              <span>Direccion / Contacto</span>
+            </v-col>
             <v-col sm="12" md="6">
-              <v-text-field v-model="id.direccion" label="Direccion" outlined>
+              <v-text-field
+                v-model="id.direccion"
+                label="Calle y Número"
+                outlined
+              >
               </v-text-field>
             </v-col>
 
             <v-col sm="12" md="6">
-              <v-text-field v-model="id.cp" label="C.P" outlined>
+              <v-text-field v-model="id.cp" label="Código Postal" outlined>
               </v-text-field>
             </v-col>
 
@@ -124,7 +134,9 @@
               <v-text-field v-model="id.celular" label="Celular" outlined>
               </v-text-field>
             </v-col>
-
+            <v-col sm="12">
+              <span>Inversión: </span>
+            </v-col>
             <v-col sm="12" md="12">
               <v-text-field
                 v-model="id.inversionAnualSiguiente"
@@ -133,22 +145,16 @@
               >
               </v-text-field>
             </v-col>
-
+            <v-col sm="12">
+              <span>Social: </span>
+            </v-col>
             <v-col sm="12" md="12">
-              <v-text-field
-                v-model="social.facebook"
-                label="Facebook"
-                outlined
-              >
+              <v-text-field v-model="social.facebook" label="Facebook" outlined>
               </v-text-field>
             </v-col>
 
             <v-col sm="12" md="12">
-              <v-text-field
-                v-model="social.twiter"
-                label="Twiter"
-                outlined
-              >
+              <v-text-field v-model="social.twiter" label="Twiter" outlined>
               </v-text-field>
             </v-col>
 
@@ -162,11 +168,7 @@
             </v-col>
 
             <v-col sm="12" md="12">
-              <v-text-field
-                v-model="social.linkdin"
-                label="LinkedIn"
-                outlined
-              >
+              <v-text-field v-model="social.linkdin" label="LinkedIn" outlined>
               </v-text-field>
             </v-col>
             <v-card-actions>
@@ -211,12 +213,12 @@ export default {
         park: 0,
         nave: 0,
       },
-      social:{
-        facebook:"", 
-        twiter:"",
-        instagram:"",
-        linkdin:""
-      }
+      social: {
+        facebook: "",
+        twiter: "",
+        instagram: "",
+        linkdin: "",
+      },
     };
   },
   props: ["id_corp"],
@@ -246,6 +248,13 @@ export default {
             .then((res) => {
               ctx.users = res.data;
             })
+            .catch((e) => console.log(e));
+          let paramsExtra = new URLSearchParams();
+          paramsExtra.append("query", 1);
+          paramsExtra.append("id", this.id.id);
+          axios
+            .post(`${this.$store.state.url}/extras`, paramsExtra)
+            .then((res) => (this.social = JSON.parse(res.data.data)))
             .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
@@ -351,20 +360,26 @@ export default {
         .post(`${this.$store.state.url}/updatecorp`, params)
         .then(() => {
           this.extrasAction();
-          Swal.fire("La informacion se actualizo esta en espera de que se habilite")
+          Swal.fire(
+            "La informacion se actualizo esta en espera de que se habilite"
+          );
         })
         .catch((e) => console.log(e));
     },
 
-     extrasAction(){
-       let params = new URLSearchParams();
-       params.append("query",2);
-       params.append("id", this.id.id);
-       params.append("data", JSON.stringify(this.social));
-       axios.post(`${this.$store.state.url}/extras`, params)
-       .then(res => console.log(res))
-       .catch((e) => console.log(e));
-     }  
+    extrasAction() {
+      let params = new URLSearchParams();
+      params.append("query", 2);
+      params.append("id", this.id.id);
+      params.append("data", JSON.stringify(this.social));
+      axios
+        .post(`${this.$store.state.url}/extras`, params)
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
+    },
+    x() {
+      this.addPark = false;
+    },
   },
   beforeMount() {
     this.getInfoCorpAction();
