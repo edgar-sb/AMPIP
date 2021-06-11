@@ -59,8 +59,8 @@
               placeholder="Colonia"
               outlined
               v-model="col"
-              item-text="colonia"
-              item-value="colonia"
+              item-text="d_asenta"
+              item-value="d_asenta"
             ></v-select>
           </v-col>
           <v-col md="6" v-if="changeAddres">
@@ -351,12 +351,10 @@ export default {
     },
     watchCp() {
       if (this.cpUser.length > 4) {
-        let params = new URLSearchParams();
-        params.append("cp", this.cpUser);
         axios
-          .post(`${this.$store.state.url}/copomex`, params)
+          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.cpUser}`)
           .then((res) => {
-            this.cp = res.data;
+            this.cp = res.data.zip_codes;
           })
           .catch((e) => {
             console.log(e);
@@ -397,14 +395,14 @@ export default {
   computed: {
     edo() {
       if (this.cp.length > 0) {
-        return this.cp[0].estado;
+        return this.cp[0].d_estado;
       } else {
         return "Sin datos";
       }
     },
     mun() {
       if (this.cp.length > 0) {
-        return this.cp[0].municipip;
+        return this.cp[0].d_mnpio;
       } else {
         return "Sin datos";
       }

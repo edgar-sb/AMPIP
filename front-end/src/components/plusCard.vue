@@ -200,8 +200,8 @@
               :rules="[rules.required]"
               outlined
               v-model="corp.col"
-              item-text="colonia"
-              item-value="colonia"
+              item-text="d_asenta"
+              item-value="d_asenta"
             ></v-select>
           </v-col>
           <v-col md="6">
@@ -524,8 +524,8 @@
               :rules="[rules.required]"
               outlined
               v-model="corp.col"
-              item-text="colonia"
-              item-value="colonia"
+              item-text="d_asenta"
+              item-value="d_asenta"
             ></v-select>
           </v-col>
           <v-col sm="12" md="6">
@@ -1406,12 +1406,10 @@ export default {
     },
     watchCp() {
       if (this.corp.cp.length > 4) {
-        let params = new URLSearchParams();
-        params.append("cp", this.corp.cp);
         axios
-          .post(`${this.$store.state.url}/copomex`, params)
+          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.corp.cp}`)
           .then((res) => {
-            this.cp = res.data;
+            this.cp = res.data.zip_codes;
           })
           .catch((e) => {
             console.log(e);
@@ -1655,14 +1653,14 @@ export default {
   computed: {
     edo() {
       if (this.cp.length > 0) {
-        return this.cp[0].estado;
+        return this.cp[0].d_estado;
       } else {
         return "Sin datos";
       }
     },
     mun() {
       if (this.cp.length > 0) {
-        return this.cp[0].municipip;
+        return this.cp[0].d_mnpio;
       } else {
         return "Sin datos";
       }
