@@ -25,7 +25,7 @@ try {
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
-    $mail->setFrom('ampip', 'Ampip');
+    $mail->setFrom('moontsapp@gmail.com', 'Ampip');
     $mail->addAddress($email, $name);     //Add a recipient
 
 
