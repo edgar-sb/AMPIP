@@ -25,9 +25,8 @@ try {
     $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
     //Recipients
-    $mail->setFrom('ampip@administracion.com', 'Ampip');
+    $mail->setFrom('ampip', 'Ampip');
     $mail->addAddress($email, $name);     //Add a recipient
-    $mail->addReplyTo('edgar.edgarroman@gmail.com', 'NUevo registro');
 
 
     //Attachments
@@ -41,6 +40,6 @@ try {
 
     $mail->send();
     echo 'Message has been sent';
-} catch (Exception $e) {   echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; }
+} catch (Exception $e) {   echo "------------------------------------------------->: {$mail->ErrorInfo}<-----------------------------------------------------------"; }
 
 ?>
