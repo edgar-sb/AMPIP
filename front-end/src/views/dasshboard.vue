@@ -83,8 +83,8 @@
                             v-if="i.habilitar == 0"
                           >
                             <v-badge
-                              content="Requiere habilitar"
-                              value="Requiere habilitar"
+                              content="1"
+                              value="1"
                               color="green"
                               overlap
                             >
@@ -154,8 +154,8 @@
                         v-if="i.habilitar == 0"
                       >
                         <v-badge
-                          content="Requiere habilitar"
-                          value="Requiere habilitar"
+                          content="1"
+                          value="1"
                           color="green"
                           overlap
                         >

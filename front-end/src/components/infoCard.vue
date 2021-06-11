@@ -273,11 +273,12 @@
     <v-card v-if="type == 'user_from_parq'">
       <v-card-title>Permisos:</v-card-title>
       <v-card-text>
-        <span>El usuario {{ id.fullName }} tiene los siguiente permisos</span>
+        <span>El usuario {{ id.fullName }} tiene los siguientes permisos</span>
         <br />
         <span> ' {{ id.permisos }} '</span>
       </v-card-text>
       <v-card-actions>
+        <v-spacer></v-spacer>
         <v-btn @click="closeInfo">Cerrar</v-btn>
       </v-card-actions>
     </v-card>

@@ -1308,9 +1308,17 @@ export default {
       }
     },
     addparque() {
+
+      var key = null;
+      if(this.$store.state.id_corp != null){
+        key = this.$store.state.id_corp ;
+      } else{
+        key = this.$store.state.data.key_corp;
+      }
+
       if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
         var params = new URLSearchParams();
-        params.append("key_corp", this.id);
+        params.append("key_corp", key);
         params.append("nombre_es", this.parquesData.name_es);
         params.append("nombre_en", this.parquesData.name_en);
         params.append("adminParq", this.parquesData.admins);
@@ -1376,7 +1384,7 @@ export default {
                 `,
               });
             }
-            this.reload();
+            this.closeAction();
           })
           .catch((e) => console.log(e));
       } else {

@@ -1288,11 +1288,7 @@ class apiController extends AbstractActionController
     public function updateinquilinoAction()
     {
         if ($this->getRequest()->isPost()) {
-            $key_id = $this->params()->fromPost("key", "");
             $id = $this->params()->fromPost("id", "");
-            $tipoDeNave = $this->params()->fromPost("tipoDeNave", "");
-            $nombre_es = $this->params()->fromPost("nombre_es", "");
-            $nombre_en = $this->params()->fromPost("nombre_en", "");
             $propietario = $this->params()->fromPost("propietario", "");
             $nombreEmpresa = $this->params()->fromPost("nombreEmpresa", "");
             $numEmpleados = $this->params()->fromPost("numEmpleados", "");
@@ -1302,16 +1298,8 @@ class apiController extends AbstractActionController
             $id_SCIAN = $this->params()->fromPost("id_SCIAN", "");
             $id_DENUE = $this->params()->fromPost("id_DENUE", "");
             $antiguedad = $this->params()->fromPost("antiguedad", "");
-            $isAmpip = $this->params()->fromPost("isAmpip", "");
             $medidaX = $this->params()->fromPost("medidaX");
-            $medidaY = $this->params()->fromPost("medidaY");
-            $medidaZ = $this->params()->fromPost("medidaZ");
-
-            $permiso = $this->getPermision($key_id);
-            if ($permiso['name'] == "Administrator") {
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".tipoDeNave", $tipoDeNave, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".nombre_es", $nombre_es, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".nombre_en", $nombre_en, $id);
+            if (true) {
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".propietario", $propietario, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".nombreEmpresa", $nombreEmpresa, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".numEmpleados", $numEmpleados, $id);
@@ -1321,10 +1309,8 @@ class apiController extends AbstractActionController
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".id_SCIAN", $id_SCIAN, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".id_DENUE", $id_DENUE, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".antiguedad", $antiguedad, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $isAmpip, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaX", $medidaX, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaY", $medidaY, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaZ", $medidaZ, $id);
+                
                 return new JsonModel(["message" => "listo"]);
             } else {
                 return new JsonModel(["message" => "permiso Insuficiente"]);

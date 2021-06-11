@@ -17,7 +17,7 @@
                 <v-text-field outlined v-model="nave.producto_insignia" label="Producto insignia"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
-                <v-text-field outlined v-model="nave.sector" label="Sector"></v-text-field>
+                <v-text-field outlined v-model="nave.sector" disabled label="Sector"></v-text-field>
             </v-col>
             <v-col sm="12" md="6">
                 <v-text-field outlined v-model="nave.antiguedad" label="Antiguedad en años"></v-text-field>
@@ -30,7 +30,7 @@
             </v-col>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn>Guardar informacion</v-btn>
+                <v-btn @click="save">Guardar informacion</v-btn>
             </v-card-actions>
         </v-row>
     </v-container>
@@ -38,6 +38,7 @@
 <script>
 import VueCookies from "vue-cookies";
 import axios from "axios";
+import Swal from "sweetalert2";
 var CryptoJS = require("crypto-js");
 export default {
     data(){
@@ -55,6 +56,30 @@ export default {
         axios.post(`${this.$store.state.url}/naveadmin`,params)
         .then(res => this.nave = res.data[0])
         .catch(e => console.log(e));
+    },
+
+    methods: {
+        save(){
+            let params = new URLSearchParams();
+            params.append("id", this.nave.id);
+            params.append("propietario", this.nave.propietario)
+            params.append("nombreEmpresa", this.nave.nombre_empresa)
+            params.append("numEmpleados", this.nave.numero_empleados)
+            params.append("paisOrigen", this.nave.pais_origen)
+            params.append("productoInsignia", this.nave.producto_insignia)
+            params.append("sectorEmpresarial", this.nave.sector)
+            params.append("id_SCIAN", this.nave.id_scian)
+            params.append("id_DENUE", this.nave.id_denue)
+            params.append("antiguedad", this.nave.antiguedad)
+            params.append("medidaX",0)
+            params.append("medidaY",0)
+            params.append("medidaZ",0)
+            axios.post(`${this.$store.state.url}/updateinquilino`, params)
+            .then(() => {
+                Swal.fire("Inquilino actualizado");
+            })
+            .catch(e => console.log(e))
+        }
     }
 }
 </script>

@@ -97,8 +97,8 @@
                     v-if="i.edit == 'null'"
                   >
                     <v-badge
-                      content="Requiere habilitar"
-                      value="Requiere habilitar"
+                      content="1"
+                      value="1"
                       color="green"
                       overlap
                     >
@@ -285,6 +285,10 @@
                 v-model="social.instagram"
                 outlined
               ></v-text-field>
+            </v-col>
+
+            <v-col sm="12">
+              <v-text-field disabled v-model="id.fechaDeValidacion" label="Ultima actualizacion" v-if="id.fechaDeValidacion"></v-text-field>
             </v-col>
             <v-col sm="12">
               <v-btn
