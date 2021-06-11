@@ -19,7 +19,7 @@ class IndexController extends AbstractActionController
      */
     public function __construct($entityManager) 
     {
-        $this->url = "http://localhost:8000/panel/#/";
+        $this->url = "http://localhost/panel/#/";
        $this->entityManager = $entityManager;
     }
     
