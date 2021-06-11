@@ -501,11 +501,11 @@ export default {
       this.data_user = true;
       this.data_to_info = i;
     },
-    getallnaves(id) {
+    getallnaves() {
       let params = new URLSearchParams();
-      params.append("id", id);
+      params.append("id", this.$store.state.parque);
       axios
-        .post(`${this.$store.state.url}/getallnaveforpark`, params)
+        .post(`${this.$store.state.url}/getnavebyparque`, params)
         .then((res) => (this.naves = res.data))
         .catch((e) => console.log(e));
     },

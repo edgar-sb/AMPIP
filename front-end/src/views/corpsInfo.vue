@@ -78,7 +78,7 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
-            <v-col sm="12" md="4" v-for="i in parks" :key="i.id">
+            <v-col sm="12" md="4" v-for="i in parks" :key="i.id" v-show="i.nombre_es != 'standalone'">
               <v-card>
                 <span v-if="i.edit != 'null'">Ultima actualizacion : {{ i.edit }}</span>
                 <v-card-title v-text="i.nombre_es"></v-card-title>

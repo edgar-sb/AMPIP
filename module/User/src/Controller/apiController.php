@@ -958,7 +958,7 @@ class apiController extends AbstractActionController
             $roleList = [];
 
             foreach ($result as $role) {
-                if ($role->getId() != "") {
+                if ($role->getId() != "" ) {
                     $roleList["id"] = $role->getid();
                     $roleList["key_corp"] = $role->getkey_corp();
                     $roleList["key_user"] = $role->getkey_user();
@@ -1026,6 +1026,31 @@ class apiController extends AbstractActionController
         }
     }
 
+
+    /* 
+    if ($this->getRequest()->isPost()) {
+            $id = $this->params()->fromPost("id");
+            $parques = $this->entityManager->getRepository(parqueEntity::class)->findBy(["key_corp"=>$id]);
+            $items = [];
+            $arr = array();
+            foreach($parques as $parque){
+                
+                $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id"=>$parque->getid()]);
+                foreach($naves as $nave){
+                    $items['id'] = $nave->getid();
+                    $items['name'] = $nave->getname();
+                    $items['parque_id'] = $nave->getparque_id();
+                    array_push($arr, $items);
+                }
+            }
+            return new JsonModel($arr);
+        } else {
+            return $this->redirect()->toUrl(
+                $this->url
+            );
+        }
+    
+    */
 
     public function getparksAction()
     {
@@ -1923,5 +1948,24 @@ class apiController extends AbstractActionController
         }
 
     }
+
+
+    public function getnavebyparqueAction(){
+        /* resivimos el id del parque */
+        $id = $this->params()->fromPost("id");
+        $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id"=>$id]);
+        $allNavesArray = array();
+        $allNaves = [];
+        
+        foreach ($naves as $nave){
+            $allNaves['id'] = $nave->getid();
+            $allNaves['name'] = $nave->getname();
+            $allNaves['parque'] = $nave->getparque_id();
+            array_push($allNavesArray, $allNaves);
+        }
+
+        return new JsonModel($allNavesArray);
+    }
+
 }
 
