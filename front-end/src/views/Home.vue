@@ -18,6 +18,7 @@
                   label="Correo"
                   id="id"
                   outlined
+                  :rules="[rules.required]"
                 ></v-text-field>
               </v-col>
 
@@ -28,6 +29,7 @@
                   id="id"
                   outlined
                   type="password"
+                  :rules="[rules.required]"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -75,7 +77,7 @@ export default {
       lastName: "",
       ex11: 0,
       rules: {
-        required: (value) => !!value || "Required.",
+        required: (value) => !!value || "Requerido.",
         counter: (value) => value.length >= 8 || "Minimo 8 characters",
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

@@ -18,7 +18,7 @@
             <v-text-field
               outlined
               placeholder="Nombre del inquilino (Español)"
-              label="Nombre del inquilino (Español)"
+              label="Nombre del inquilino (Español) *"
               v-model="inquilino.name"
               :rules="[rules.required]"
             ></v-text-field>
@@ -28,7 +28,7 @@
             <v-text-field
               outlined
               placeholder="Nombre del inquilino (Ingles)"
-              label="Nombre del inquilino (Ingles)"
+              label="Nombre del inquilino (Ingles) *"
               v-model="inquilino.name_en"
               :rules="[rules.required]"
             ></v-text-field>
@@ -38,7 +38,7 @@
             <v-text-field
               outlined
               placeholder="Propietario"
-              label="Propietario"
+              label="Propietario *"
               v-model="inquilino.prop"
               :rules="[rules.required]"
             ></v-text-field>
@@ -48,7 +48,7 @@
             <v-text-field
               outlined
               placeholder="Numero de empleados"
-              label="Numero de empleados"
+              label="Numero de empleados *"
               v-model="inquilino.num_emp"
               :rules="[rules.required, rules.phone]"
             ></v-text-field>
@@ -57,7 +57,7 @@
           <v-col cols="12">
             <v-select
               :items="inquilino.paises"
-              label="País de Origen"
+              label="País de Origen *"
               placeholder="País de Origen"
               outlined
               v-model="inquilino.origin"
@@ -69,7 +69,7 @@
             <v-text-field
               outlined
               placeholder="Producto insignia"
-              label="Producto insignia"
+              label="Producto insignia *"
               v-model="inquilino.insignia"
               :rules="[rules.required]"
             ></v-text-field>
@@ -79,7 +79,7 @@
             <v-text-field
               outlined
               placeholder="Antigüedad en años"
-              label="Antigüedad en años"
+              label="Antigüedad en años *"
               v-model="inquilino.antiguedad"
               :rules="[rules.required, rules.phone]"
             ></v-text-field>
@@ -88,7 +88,7 @@
           <v-col cols="12">
             <v-select
               :items="inquilino.sectores"
-              label="Sector"
+              label="Sector *"
               placeholder="Sector"
               outlined
               v-model="inquilino.sector"
@@ -100,7 +100,7 @@
             <v-select
               :items="parks"
               v-model="parque"
-              label="¿Perteneces a un parque?"
+              label="Espacio en *"
               outlined
               @click="getAllParks"
               item-text="nombre_en"
@@ -123,7 +123,7 @@
     <v-card v-show="dialogs == 2">
       
       <v-card-actions>
-        <v-card-title>Parque</v-card-title>
+        <v-card-title>Parque *</v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
           <v-icon> mdi-window-close </v-icon>
@@ -134,7 +134,7 @@
         <v-row>
           <v-col cols="6">
             <v-text-field
-              label="Nombre de parque (Español)"
+              label="Nombre de parque (Español) *"
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_es"
@@ -143,7 +143,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Nombre de parque (Inglés)"
+              label="Nombre de parque (Inglés) *"
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_en"
@@ -153,7 +153,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Administrador de Parque"
+              label="Administrador de Parque *"
               outlined
               placeholder="Administrador"
               v-model="parquesData.admins"
@@ -162,7 +162,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Propietario"
+              label="Propietario *"
               outlined
               placeholder="Propietario"
               v-model="parquesData.propi"
@@ -175,7 +175,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              label="Calle y Número"
+              label="Calle y Número *"
               outlined
               placeholder="Direccion"
               type="phone"
@@ -186,7 +186,7 @@
           <v-col md="6">
             <v-text-field
               outlined
-              label="Codigo postal"
+              label="Codigo postal *"
               :rules="[rules.required, rules.phone]"
               v-model="corp.cp"
               @keyup="watchCp"
@@ -195,7 +195,7 @@
           <v-col md="6">
             <v-select
               :items="cp"
-              label="Colonia"
+              label="Colonia *"
               placeholder="Colonia"
               :rules="[rules.required]"
               outlined
@@ -207,7 +207,7 @@
           <v-col md="6">
             <v-text-field
               outlined
-              label="Estado"
+              label="Estado *"
               :rules="[rules.required]"
               v-model="edo"
               disabled
@@ -216,7 +216,7 @@
           <v-col md="6">
             <v-text-field
               outlined
-              label="Municipio/Alcaldía"
+              label="Municipio/Alcaldía *"
               :rules="[rules.required]"
               v-model="mun"
               disabled
@@ -228,7 +228,7 @@
           <v-col cols="6">
             <v-select
               :items="regiones"
-              label="Region"
+              label="Region *"
               outlined
               v-model="parquesData.region"
               :rules="[rules.required]"
@@ -237,7 +237,7 @@
           <v-col cols="6">
             <v-select
               :items="mercados"
-              label="Mercado"
+              label="Mercado *"
               outlined
               v-model="parquesData.Mercado"
               :rules="[rules.required]"
@@ -246,7 +246,7 @@
           <v-col cols="12">
             <v-select
               :items="tipoDeIndustria"
-              label="Tipo de industria"
+              label="Tipo de industria *"
               outlined
               v-model="parquesData.industria"
               :rules="[rules.required]"
@@ -257,7 +257,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              label="Superficie Total"
+              label="Superficie Total *"
               suffix="km2"
               outlined
               placeholder="En km2"
@@ -267,7 +267,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Superficie Urbanizada"
+              label="Superficie Urbanizada *"
               outlined
               suffix="km2"
               placeholder="En km2"
@@ -278,7 +278,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Superficie Ocupada"
+              label="Superficie Ocupada *"
               suffix="km2"
               outlined
               placeholder="En km2"
@@ -288,7 +288,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Superficie Disponible"
+              label="Superficie Disponible *"
               suffix="km2"
               outlined
               disabled
@@ -301,7 +301,7 @@
           <v-col cols="6">
             <v-select
               :items="items"
-              label="Tipo de Propiedad"
+              label="Tipo de Propiedad *"
               outlined
               v-model="parquesData.tipo"
               :rules="[rules.required]"
@@ -315,7 +315,7 @@
               attach
               chips
               outlined
-              label="Infraestructura"
+              label="Infraestructura *"
               multiple
               :rules="[rules.required]"
             ></v-select>
@@ -325,7 +325,7 @@
           </v-col>
           <v-col sm="12">
             <v-text-field
-              label="Página web"
+              label="Página web *"
               outlined
               placeholder="http://"
               :rules="[rules.required]"
@@ -341,7 +341,7 @@
           <v-col sm="12" md="3">
             <v-select
               :items="codigoPais"
-              label="Codigo de pais"
+              label="Codigo de pais *"
               outlined
               placeholder="Codigo de pais"
               type="phone"
@@ -351,7 +351,7 @@
           </v-col>
           <v-col sm="12" md="2">
             <v-text-field
-              label="Lada"
+              label="Lada *"
               outlined
               placeholder="Lada"
               type="phone"
@@ -361,7 +361,7 @@
           </v-col>
           <v-col sm="12" md="7">
             <v-text-field
-              label="Teléfono"
+              label="Teléfono *"
               outlined
               placeholder="Teléfono"
               type="phone"
@@ -374,7 +374,7 @@
           </v-col>
           <v-col cols="12">
             <v-text-field
-              label="Numero de empleados"
+              label="Numero de empleados *"
               outlined
               placeholder="Numero de empleados"
               v-model="parquesData.employeds"
@@ -389,40 +389,11 @@
               attach
               chips
               outlined
-              label="Reconocimientos"
+              label="Reconocimientos *"
               multiple
             ></v-select>
           </v-col>
-          <v-col sm="12">
-            <span>Ubicacion:</span>
-          </v-col>
-          <v-col sm="12">
-            <v-switch v-model="gmapsLat" :label="mapsorlat"></v-switch>
-          </v-col>
-          <v-col cols="12" v-if="gmapsLat">
-            <GmapMap
-              :center="{ lat: 25, lng: -100 }"
-              :zoom="4"
-              map-type-id="terrain"
-              style="width: 100%; height: 300px"
-              @click="add"
-            >
-              <GmapMarker
-                :position="markers"
-                :clickable="true"
-                :draggable="true"
-              />
-            </GmapMap>
-          </v-col>
-          <v-col cols="12" v-if="!gmapsLat">
-            <v-text-field
-              v-model="latLng"
-              outlined
-              label="Igresar latitud y longitud"
-              placeholder="Separa latitud y longitud por coma (,) "
-            >
-            </v-text-field>
-          </v-col>
+          
           <v-col sm="12">
             <span>Multimedia:</span>
           </v-col>
@@ -463,10 +434,9 @@
                   <UploadImages
                     @change="handleImages"
                     :max="3"
-                    maxError="Solamente una imagen"
                     style="color:#fff"
                   />
-                  <span>Sube aquí tu logotipo</span>
+                  <span>Sube aquí tu logotipo *</span>
                 </v-col>
               </v-row>
             </v-cotainer>
@@ -474,7 +444,7 @@
           <v-col sm="12" md="6">
             <v-text-field
               outlined
-              label="Razón Social"
+              label="Razón Social *"
               :rules="[rules.required]"
               v-model="corp.spcial"
             ></v-text-field>
@@ -482,7 +452,7 @@
           <v-col sm="12" md="6">
             <v-text-field
               outlined
-              label="Nombre de Corporativo (Español)"
+              label="Nombre de Corporativo (Español) *"
               :rules="[rules.required]"
               v-model="corp.name_es"
             ></v-text-field>
@@ -490,19 +460,19 @@
           <v-col sm="12" md="12">
             <v-text-field
               outlined
-              label="Nombre de Corporativo (Inglés)"
+              label="Nombre de Corporativo (Inglés) *"
               :rules="[rules.required]"
               v-model="corp.name_en"
             ></v-text-field>
           </v-col>
           <!-- Apartado de direccion -->
           <v-col sm="12">
-            <span>Dirección</span>
+            <span>Dirección </span>
           </v-col>
           <v-col sm="12" md="12">
             <v-text-field
               outlined
-              label="Calle y Número"
+              label="Calle y Número *"
               :rules="[rules.required]"
               v-model="corp.address"
             ></v-text-field>
@@ -510,7 +480,7 @@
           <v-col sm="12" md="12">
             <v-text-field
               outlined
-              label="Código Postal"
+              label="Código Postal *"
               :rules="[rules.required]"
               v-model="corp.cp"
               @keyup="watchCp"
@@ -519,7 +489,7 @@
           <v-col sm="12" md="12">
             <v-select
               :items="cp"
-              label="Colonia"
+              label="Colonia *"
               placeholder="Colonia"
               :rules="[rules.required]"
               outlined
@@ -531,7 +501,7 @@
           <v-col sm="12" md="6">
             <v-text-field
               outlined
-              label="Estado"
+              label="Estado *"
               :rules="[rules.required]"
               v-model="edo"
               disabled
@@ -540,7 +510,7 @@
           <v-col sm="12" md="6">
             <v-text-field
               outlined
-              label="Municipio/Alcaldía"
+              label="Municipio/Alcaldía *"
               :rules="[rules.required]"
               v-model="mun"
               disabled
@@ -554,7 +524,7 @@
           <v-col sm="3">
             <v-select
               :items="codigoPais"
-              label="Código país"
+              label="Código país *"
               outlined
               :rules="[rules.required]"
               v-model="codigoPaisValue"
@@ -562,7 +532,7 @@
           </v-col>
           <v-col sm="2">
             <v-text-field
-              label="Lada"
+              label="Lada *"
               outlined
               v-model="ladaValue"
               :rules="[rules.required, rules.phone, rules.phoneLada]"
@@ -571,7 +541,7 @@
           <v-col sm="7">
             <v-text-field
               outlined
-              label="Número local"
+              label="Número local *"
               :rules="[rules.required, rules.phone, rules.phoneLenght]"
               v-model="corp.cel"
             ></v-text-field>
@@ -584,7 +554,7 @@
             <v-select
               outlined
               :rules="[rules.required]"
-              label="Clasificación de Socio"
+              label="Clasificación de Socio *"
               v-model="society"
               :items="types"
             ></v-select>
@@ -593,7 +563,7 @@
             <v-select
               outlined
               :rules="[rules.required]"
-              label="Clasificación de patrocinador"
+              label="Clasificación de patrocinador *"
               v-model="society"
               :items="types_pats"
             ></v-select>

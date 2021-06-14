@@ -4,7 +4,7 @@
       <v-btn icon @click="close">
         <v-icon color="red"> mdi-arrow-left-bold</v-icon>
       </v-btn>
-      <v-btn icon @click="getTabId" v-if="tab != 3">
+      <v-btn icon @click="getTabId" v-if="tab == 0">
         <v-icon>
           mdi-plus
         </v-icon>
