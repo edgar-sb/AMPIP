@@ -1967,5 +1967,58 @@ class apiController extends AbstractActionController
         return new JsonModel($allNavesArray);
     }
 
+    public function apiforsheetsAction()
+    {
+        $dates = date('Y-m-d H:i:s');
+        if ($this->getRequest()->isPost()) {
+            $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["edit" => $dates]);
+            $arr = array();
+            $roleList = [];
+
+            foreach ($result as $role) {
+                if ($role->getId() != "" ) {
+                    $roleList["id"] = $role->getid();
+                    $roleList["key_corp"] = $role->getkey_corp();
+                    $roleList["key_user"] = $role->getkey_user();
+                    $roleList["nombre_es"] = $role->getnombre_es();
+                    $roleList["nombre_en"] = $role->getnombre_en();
+                    $roleList["adminParq"] = $role->getadminParq();
+                    $roleList["parqProp"] = $role->getparqProp();
+                    $roleList["parqIntoParq"] = $role->getparqIntoParq();
+                    $roleList["region"] = $role->getregion();
+                    $roleList["mercado"] = $role->getmercado();
+                    $roleList["tipoDeIndustria"] = $role->gettipoDeIndustria();
+                    $roleList["superficieTotal"] = $role->getsuperficieTotal();
+                    $roleList["superficieUrban"] = $role->getsuperficieUrban();
+                    $roleList["superficieOcup"] = $role->getsuperficieOcup();
+                    $roleList["superficieDisp"] = $role->getsuperficieDisp();
+                    $roleList["tipoDePropiedad"] = $role->gettipoDePropiedad();
+                    $roleList["inicioOperaciones"] = $role->getinicioOperaciones();
+                    $roleList["numEmpleados"] = $role->getnumEmpleados();
+                    $roleList["reconocimientoPracticas"] = $role->getreconocimientoPracticas();
+                    $roleList["ifraestructura"] = $role->getifraestructura();
+                    $roleList["numeroDeNaves"] = $role->getnumeroDeNaves();
+                    $roleList["observacion"] = $role->getobservacion();
+                    $roleList["kmz"] = $role->getkmz();
+                    $roleList["planMaestro"] = $role->getplanMaestro();
+                    $roleList["contactName"] = $role->getcontactName();
+                    $roleList["contactEmail"] = $role->getcontactEmail();
+                    $roleList["edit"] = $role->getedit();
+                    if($role->getkey_corp() != "" ){
+                        array_push($arr, $roleList);
+                    }
+                } else {
+                    $roleList["error"] = "2541";
+                }
+            }
+
+            return new JsonModel($arr);
+        } else {
+            return $this->redirect()->toUrl(
+                $this->url
+            );
+        }
+    }
+
 }
 
