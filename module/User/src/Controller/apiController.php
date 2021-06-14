@@ -1969,15 +1969,17 @@ class apiController extends AbstractActionController
 
     public function apiforsheetsAction()
     {
-        $dates = date('Y-m-d H:i:s');
-        if ($this->getRequest()->isPost()) {
+        $dates = date('Y-m-d');
+            /* 2021-06-14  
+               2021-06-1
+            */
             $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["edit" => $dates]);
             $arr = array();
             $roleList = [];
 
             foreach ($result as $role) {
-                if ($role->getId() != "" ) {
-                    $roleList["id"] = $role->getid();
+                $roleList["date"] = $dates;
+                $roleList["id"] = $role->getid();
                     $roleList["key_corp"] = $role->getkey_corp();
                     $roleList["key_user"] = $role->getkey_user();
                     $roleList["nombre_es"] = $role->getnombre_es();
@@ -2003,22 +2005,12 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
-                    $roleList["edit"] = $role->getedit();
-                    if($role->getkey_corp() != "" ){
-                        array_push($arr, $roleList);
-                    }
-                } else {
-                    $roleList["error"] = "2541";
-                }
-            }
+                array_push($arr, $roleList);
 
-            return new JsonModel($arr);
-        } else {
-            return $this->redirect()->toUrl(
-                $this->url
-            );
-        }
+            }
+        return new JsonModel($arr);
     }
+    
 
 }
 
