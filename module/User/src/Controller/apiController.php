@@ -2009,6 +2009,7 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
+                    $roleList["extras"] = $role->getextras();
                 array_push($arr, $roleList);
 
             }
