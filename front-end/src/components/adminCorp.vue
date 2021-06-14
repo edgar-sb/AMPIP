@@ -24,6 +24,9 @@
       <v-tab>
         Informacion
       </v-tab>
+      <v-tab>
+        Espacio disponible
+      </v-tab>
     </v-tabs>
 
     <!-- Items -->
@@ -214,6 +217,13 @@
               <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
             </v-card-actions>
           </v-row>
+        </v-container>
+      </v-tab-item>
+
+      <!-- Espacio disponible -->
+      <v-tab-item>
+        <v-container>
+          <h1>Espacio deisp</h1>
         </v-container>
       </v-tab-item>
     </v-tabs-items>

@@ -11,21 +11,21 @@
       </v-btn>
       <!-- Usuario nuevo -->
       <v-dialog v-model="addUser" width="700" persistent>
-        <plus-card :dialogs="5" @close="closePlusCard"></plus-card>
+        <plusCard :dialogs="5" @close="closePlusCard"></plusCard>
       </v-dialog>
 
       <!-- Parque nuevo-->
       <v-dialog v-model="addPark" width="700">
-        <plus-card :dialogs="2" @close="closePlusCard"></plus-card>
+        <plusCard :dialogs="2" @close="closePlusCard"></plusCard>
       </v-dialog>
 
       <!-- Nave nueva-->
       <v-dialog v-model="addNav" width="700">
-        <plus-card
+        <plusCard
           :dialogs="1"
           :id="this.$store.state.id_corp"
           @close="closePlusCard"
-        ></plus-card>
+        ></plusCard>
       </v-dialog>
     </v-card-title>
 
