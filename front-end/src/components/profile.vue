@@ -3,181 +3,178 @@
     <v-card-actions>
       <v-card-title>Perfil de usuario</v-card-title>
       <v-spacer></v-spacer>
-      <v-btn @click="setProfileActionModel" icon color="red" >
+      <v-btn @click="setProfileActionModel" icon color="red">
         <v-icon>mdi-window-close</v-icon>
       </v-btn>
     </v-card-actions>
     <v-card-text>
-      <v-container>
-        <v-row>
-          <v-col sm="12">
-            <UploadImages
-              @change="handleImages"
-              :max="1"
-              maxError="Solamente una imagen"
-              style="color:#fff"
-            />
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field outlined label="Nombre completo" v-model="name">
-            </v-text-field>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field outlined label="email" v-model="email">
-            </v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <span>Direccion:</span> <br />
-            <span> {{ dataUser.direccionDeOfficina }}</span>
-            <v-switch
-              label="¿Deseas modificar tu Direccion?"
-              v-model="changeAddres"
-              :value="changeAddres"
-            ></v-switch>
-          </v-col>
-          <v-col sm="12" md="12" v-if="changeAddres">
-            <v-text-field
-              label="Calle y Número"
-              v-model="address_street"
-              outlined
-            >
-            </v-text-field>
-          </v-col>
+      <v-row>
+        <v-col sm="12">
+          <UploadImages
+            @change="handleImages"
+            :max="1"
+            maxError="Solamente una imagen"
+            style="color:#fff"
+          />
+        </v-col>
+        <v-col sm="12" md="6">
+          <v-text-field outlined label="Nombre completo" v-model="name">
+          </v-text-field>
+        </v-col>
+        <v-col sm="12" md="6">
+          <v-text-field outlined label="email" v-model="email"> </v-text-field>
+        </v-col>
+        <v-col sm="12">
+          <span>Direccion:</span> <br />
+          <span> {{ dataUser.direccionDeOfficina }}</span>
+          <v-switch
+            label="¿Deseas modificar tu Direccion?"
+            v-model="changeAddres"
+            :value="changeAddres"
+          ></v-switch>
+        </v-col>
+        <v-col sm="12" md="12" v-if="changeAddres">
+          <v-text-field
+            label="Calle y Número"
+            v-model="address_street"
+            outlined
+          >
+          </v-text-field>
+        </v-col>
 
-          <v-col md="6" v-if="changeAddres">
-            <v-text-field
-              outlined
-              label="Codigo postal"
-              v-model="cpUser"
-              @keyup="watchCp"
-            ></v-text-field>
-          </v-col>
-          <v-col md="6" v-if="changeAddres">
-            <v-select
-              :items="cp"
-              label="Colonia"
-              placeholder="Colonia"
-              outlined
-              v-model="col"
-              item-text="d_asenta"
-              item-value="d_asenta"
-            ></v-select>
-          </v-col>
-          <v-col md="6" v-if="changeAddres">
-            <v-text-field
-              outlined
-              label="Estado"
-              v-model="edo"
-              disabled
-            ></v-text-field>
-          </v-col>
-          <v-col md="6" v-if="changeAddres">
-            <v-text-field
-              outlined
-              label="Municipio/Alcaldía"
-              v-model="mun"
-              disabled
-            ></v-text-field>
-          </v-col>
+        <v-col md="6" v-if="changeAddres">
+          <v-text-field
+            outlined
+            label="Codigo postal"
+            v-model="cpUser"
+            @keyup="watchCp"
+          ></v-text-field>
+        </v-col>
+        <v-col md="6" v-if="changeAddres">
+          <v-select
+            :items="cp"
+            label="Colonia"
+            placeholder="Colonia"
+            outlined
+            v-model="col"
+            item-text="d_asenta"
+            item-value="d_asenta"
+          ></v-select>
+        </v-col>
+        <v-col md="6" v-if="changeAddres">
+          <v-text-field
+            outlined
+            label="Estado"
+            v-model="edo"
+            disabled
+          ></v-text-field>
+        </v-col>
+        <v-col md="6" v-if="changeAddres">
+          <v-text-field
+            outlined
+            label="Municipio/Alcaldía"
+            v-model="mun"
+            disabled
+          ></v-text-field>
+        </v-col>
 
-          <v-col sm="12">
-            <span>Contacto:</span>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              label="Teléfono de oficina"
-              v-model="dataUser.telefonoOfficina"
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              label="Teléfono personal"
-              outlined
-              v-model="dataUser.celular"
-            >
-            </v-text-field>
-          </v-col>
+        <v-col sm="12">
+          <span>Contacto:</span>
+        </v-col>
+        <v-col sm="12" md="6">
+          <v-text-field
+            label="Teléfono de oficina"
+            v-model="dataUser.telefonoOfficina"
+            outlined
+          >
+          </v-text-field>
+        </v-col>
+        <v-col sm="12" md="6">
+          <v-text-field
+            label="Teléfono personal"
+            outlined
+            v-model="dataUser.celular"
+          >
+          </v-text-field>
+        </v-col>
 
-          <v-col cols="12" v-if="dataUser.key_corp != 0">
-            <v-dialog
-              ref="dialog"
-              v-model="modal"
-              :return-value.sync="dataUser.cumpleanios"
-              persistent
-              width="290px"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  v-model="dataUser.cumpleanios"
-                  label="Fecha de nacimiento"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                  outlined
-                ></v-text-field>
-              </template>
-              <v-date-picker v-model="date" scrollable>
-                <v-spacer></v-spacer>
-                <v-btn text color="primary" @click="modal = false">
-                  Cancel
-                </v-btn>
-                <v-btn text color="primary" @click="$refs.dialog.save(date)">
-                  OK
-                </v-btn>
-              </v-date-picker>
-            </v-dialog>
-          </v-col>
-          <v-col sm="12">
-            <span>Seguridad:</span>
-          </v-col>
-          <v-col sm="12">
-            <v-switch
-              label="¿Deseas modificar tu contraseña?"
-              v-model="changePass"
-              :value="changePass"
-            ></v-switch>
-          </v-col>
-          <v-col sm="12" md="6" v-if="changePass">
-            <v-text-field
-              type="password"
-              label="Nueva contraseña"
-              v-model="newPass"
-              outlined
-            >
-            </v-text-field>
-          </v-col>
+        <v-col cols="12" v-if="dataUser.key_corp != 0">
+          <v-dialog
+            ref="dialog"
+            v-model="modal"
+            :return-value.sync="dataUser.cumpleanios"
+            persistent
+            width="290px"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-text-field
+                v-model="dataUser.cumpleanios"
+                label="Fecha de nacimiento"
+                readonly
+                v-bind="attrs"
+                v-on="on"
+                outlined
+              ></v-text-field>
+            </template>
+            <v-date-picker v-model="date" scrollable>
+              <v-spacer></v-spacer>
+              <v-btn text color="primary" @click="modal = false">
+                Cancel
+              </v-btn>
+              <v-btn text color="primary" @click="$refs.dialog.save(date)">
+                OK
+              </v-btn>
+            </v-date-picker>
+          </v-dialog>
+        </v-col>
+        <v-col sm="12">
+          <span>Seguridad:</span>
+        </v-col>
+        <v-col sm="12">
+          <v-switch
+            label="¿Deseas modificar tu contraseña?"
+            v-model="changePass"
+            :value="changePass"
+          ></v-switch>
+        </v-col>
+        <v-col sm="12" md="6" v-if="changePass">
+          <v-text-field
+            type="password"
+            label="Nueva contraseña"
+            v-model="newPass"
+            outlined
+          >
+          </v-text-field>
+        </v-col>
 
-          <v-col sm="12" md="6" v-if="changePass">
-            <v-text-field
-              type="password"
-              label="Confirma tu nueva contraseña"
-              v-model="newPassConfirm"
-              :rules="[filters.pass]"
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              type="password"
-              label="Confirma tu contraseña actual"
-              v-model="pass"
-              :rules="[rules.required]"
-              outlined
-            >
-            </v-text-field>
-          </v-col>
-        </v-row>
-      </v-container>
+        <v-col sm="12" md="6" v-if="changePass">
+          <v-text-field
+            type="password"
+            label="Confirma tu nueva contraseña"
+            v-model="newPassConfirm"
+            :rules="[filters.pass]"
+            outlined
+          >
+          </v-text-field>
+        </v-col>
+        <v-col sm="12">
+          <v-text-field
+            type="password"
+            label="Confirma tu contraseña actual"
+            v-model="pass"
+            :rules="[rules.required]"
+            outlined
+          >
+          </v-text-field>
+        </v-col>
+      </v-row>
     </v-card-text>
     <v-card-actions>
       <v-btn @click="logout" text color="yellow">
         Cerrar sesion
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn @click="setProfileActionModel" text color="red" >
+      <v-btn @click="setProfileActionModel" text color="red">
         Cerrar
       </v-btn>
       <v-btn @click="save" text color="green">
@@ -352,7 +349,9 @@ export default {
     watchCp() {
       if (this.cpUser.length > 4) {
         axios
-          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.cpUser}`)
+          .get(
+            `http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.cpUser}`
+          )
           .then((res) => {
             this.cp = res.data.zip_codes;
           })

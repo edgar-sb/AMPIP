@@ -69,17 +69,9 @@ class espacio_disponibleEntity
      */
     protected $id_parque;
     /**
-     * @ORM\Column(name="medidaX")
+     * @ORM\Column(name="extras")
      */
-    protected $medidaX;
-    /**
-     * @ORM\Column(name="medidaY")
-     */
-    protected $medidaY;
-    /**
-     * @ORM\Column(name="medidaZ")
-     */
-    protected $medidaZ;
+    protected $extras;
 
 
     /**
@@ -103,23 +95,12 @@ class espacio_disponibleEntity
 
 
     /**
-     * Returns medidaX.
+     * Returns extras.
      * @return string
      */
 
-    function getmedidaX(){return $this->medidaX;}
-    /**
-     * Returns medidaY.
-     * @return string
-     */
-
-    function getmedidaY(){ return $this->medidaY;}
-    /**
-     * Returns medidaZ.
-     * @return string
-     */
-
-    function getmedidaZ(){return $this->medidaZ;}
+    function getextras(){return $this->extras;}
+    
 
     /**
      * Returns ubicacion.
@@ -351,21 +332,8 @@ class espacio_disponibleEntity
     }
 
     /**
-     * Sets isAmpip
-     * @param int $medidaX
+     * Sets extras
+     * @param string $extra
      */
-    public function setmedidaX($medidaX){ $this->medidaX = $medidaX; }
-
-    /**
-     * Sets isAmpip
-     * @param int $medidaY
-     */
-    public function setmedidaY($medidaY){ $this->medidaY = $medidaY; }
-
-
-    /**
-     * Sets isAmpip
-     * @param int $medidaX
-     */
-    public function setmedidaZ($medidaZ){ $this->medidaZ = $medidaZ; }
+    public function setextras($extra){ $this->extras = $extra; }
 }

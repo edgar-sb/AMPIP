@@ -12,6 +12,7 @@ use User\Entity\naveEntity;
 use User\Entity\copomexEntity;
 use User\Entity\parqueEntity;
 use User\Entity\parquesuserEntity;
+use User\Entity\spacesEntity;
 use User\Entity\userEntity;
 use User\Entity\Role;
 use User\Entity\userRole;
@@ -1391,49 +1392,7 @@ class apiController extends AbstractActionController
         }
     }
 
-    /*
-     * DEJAR AL ULTIMO
-     */
-    public function espacioAction()
-    {
-        if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost("id");
-            $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findById($id);
 
-            $roleList = [];
-            foreach ($inquilino as $role) {
-                if ($role->getId() != "") {
-                    $roleList["id"] = $role->getid();
-                    $roleList["corporativo"] = $role->getcorporativo();
-                    $roleList["ubicacion"] = $role->getubicacion();
-                    $roleList["tipo"] = $role->gettipo();
-                    $roleList["tipoDeDispo"] = $role->gettipoDeDispo();
-                    $roleList["uso"] = $role->getuso();
-                    $roleList["municipio"] = $role->getmunicipio();
-                    $roleList["estado"] = $role->getestado();
-                    $roleList["web"] = $role->getweb();
-                    $roleList["contacto"] = $role->getcontacto();
-                    $roleList["precioPromedio"] = $role->getprecioPromedio();
-                    $roleList["datoDeContacto"] = $role->getdatoDeContacto();
-                    $roleList["id_parque"] = $role->getid_parque();
-                    $roleList["x"] = $role->getmedidaX();
-                    $roleList["y"] = $role->getmedidaY();
-                    $roleList["z"] = $role->getmedidaZ();
-                } else {
-                    $roleList["error"] = "2541";
-                }
-            }
-
-            return new JsonModel($roleList);
-        } else {
-            return $this->redirect()->toUrl(
-                $this->url
-            );
-        }
-    }
-
-  
-   
 
 
     public function getroleAction()
@@ -2015,7 +1974,50 @@ class apiController extends AbstractActionController
             }
         return new JsonModel($arr);
     }
-    
+
+    /*
+ * DEJAR AL ULTIMO
+ */
+    public function espacioAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $id = $this->params()->fromPost("id");
+            $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findById($id);
+
+            $roleList = [];
+            foreach ($inquilino as $role) {
+                if ($role->getId() != "") {
+                    $roleList["id"] = $role->getid();
+                    $roleList["corporativo"] = $role->getcorporativo();
+                    $roleList["ubicacion"] = $role->getubicacion();
+                    $roleList["tipo"] = $role->gettipo();
+                    $roleList["tipoDeDispo"] = $role->gettipoDeDispo();
+                    $roleList["uso"] = $role->getuso();
+                    $roleList["municipio"] = $role->getmunicipio();
+                    $roleList["estado"] = $role->getestado();
+                    $roleList["web"] = $role->getweb();
+                    $roleList["contacto"] = $role->getcontacto();
+                    $roleList["precioPromedio"] = $role->getprecioPromedio();
+                    $roleList["datoDeContacto"] = $role->getdatoDeContacto();
+                    $roleList["id_parque"] = $role->getid_parque();
+                    $roleList["x"] = $role->getmedidaX();
+                    $roleList["y"] = $role->getmedidaY();
+                    $roleList["z"] = $role->getmedidaZ();
+                } else {
+                    $roleList["error"] = "2541";
+                }
+            }
+
+            return new JsonModel($roleList);
+        } else {
+            return $this->redirect()->toUrl(
+                $this->url
+            );
+        }
+    }
+
+
+
 
 }
 

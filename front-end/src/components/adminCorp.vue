@@ -13,7 +13,7 @@
 
       <!-- Parque nuevo-->
       <v-dialog v-model="addPark" width="700">
-        <plus-card :dialogs="2" :id="id.id" @close="x"></plus-card>
+        <plusCard :dialogs="2" :id="id.id" @close="x"></plusCard>
       </v-dialog>
     </v-card-title>
 
@@ -23,9 +23,6 @@
       </v-tab>
       <v-tab>
         Informacion
-      </v-tab>
-      <v-tab>
-        Espacio disponible
       </v-tab>
     </v-tabs>
 
@@ -37,13 +34,13 @@
           <v-row>
             <v-col sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
-                <v-card-title v-text="i.nombre_es"></v-card-title>
-
+                <v-card-title v-if="i.nombre_es != 'standalone'" v-text="i.nombre_es"></v-card-title>
+                <v-card-title  v-if="i.nombre_es == 'standalone'" >Stand-a·lone</v-card-title>
                 <v-card-actions>
                   <v-btn icon @click="infoParkAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-btn icon>
+                  <v-btn icon v-if="i.nombre_es != 'standalone'">
                     <v-icon @click="inactive('i', 'p', i.id)"
                       >mdi-delete</v-icon
                     >
@@ -217,13 +214,6 @@
               <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
             </v-card-actions>
           </v-row>
-        </v-container>
-      </v-tab-item>
-
-      <!-- Espacio disponible -->
-      <v-tab-item>
-        <v-container>
-          <h1>Espacio deisp</h1>
         </v-container>
       </v-tab-item>
     </v-tabs-items>
@@ -491,6 +481,6 @@ export default {
         return "Sin datos";
       }
     },
-  },
+  }
 };
 </script>

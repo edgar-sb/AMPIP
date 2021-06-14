@@ -10,106 +10,105 @@
         </v-btn>
       </v-card-actions>
 
-      
       <v-card-text>
         <v-container>
-        <v-row>
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Nombre del inquilino (Español)"
-              label="Nombre del inquilino (Español) *"
-              v-model="inquilino.name"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Nombre del inquilino (Español)"
+                label="Nombre del inquilino (Español) *"
+                v-model="inquilino.name"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Nombre del inquilino (Ingles)"
-              label="Nombre del inquilino (Ingles) *"
-              v-model="inquilino.name_en"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Nombre del inquilino (Ingles)"
+                label="Nombre del inquilino (Ingles) *"
+                v-model="inquilino.name_en"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Propietario"
-              label="Propietario *"
-              v-model="inquilino.prop"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Propietario"
+                label="Propietario *"
+                v-model="inquilino.prop"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Numero de empleados"
-              label="Numero de empleados *"
-              v-model="inquilino.num_emp"
-              :rules="[rules.required, rules.phone]"
-            ></v-text-field>
-          </v-col>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Numero de empleados"
+                label="Numero de empleados *"
+                v-model="inquilino.num_emp"
+                :rules="[rules.required, rules.phone]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="12">
-            <v-select
-              :items="inquilino.paises"
-              label="País de Origen *"
-              placeholder="País de Origen"
-              outlined
-              v-model="inquilino.origin"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
+            <v-col cols="12">
+              <v-select
+                :items="inquilino.paises"
+                label="País de Origen *"
+                placeholder="País de Origen"
+                outlined
+                v-model="inquilino.origin"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Producto insignia"
-              label="Producto insignia *"
-              v-model="inquilino.insignia"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Producto insignia"
+                label="Producto insignia *"
+                v-model="inquilino.insignia"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="6">
-            <v-text-field
-              outlined
-              placeholder="Antigüedad en años"
-              label="Antigüedad en años *"
-              v-model="inquilino.antiguedad"
-              :rules="[rules.required, rules.phone]"
-            ></v-text-field>
-          </v-col>
+            <v-col cols="6">
+              <v-text-field
+                outlined
+                placeholder="Antigüedad en años"
+                label="Antigüedad en años *"
+                v-model="inquilino.antiguedad"
+                :rules="[rules.required, rules.phone]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="12">
-            <v-select
-              :items="inquilino.sectores"
-              label="Sector *"
-              placeholder="Sector"
-              outlined
-              v-model="inquilino.sector"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
+            <v-col cols="12">
+              <v-select
+                :items="inquilino.sectores"
+                label="Sector *"
+                placeholder="Sector"
+                outlined
+                v-model="inquilino.sector"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
 
-          <v-col sm="12" v-if="id">
-            <v-select
-              :items="parks"
-              v-model="parque"
-              label="Espacio en *"
-              outlined
-              @click="getAllParks"
-              item-text="nombre_en"
-              item-value="id"
-            >
-            </v-select>
-          </v-col>
-        </v-row>
-      </v-container>
+            <v-col sm="12" v-if="id">
+              <v-select
+                :items="parks"
+                v-model="parque"
+                label="Espacio en *"
+                outlined
+                @click="getAllParks"
+                item-text="nombre_en"
+                item-value="id"
+              >
+              </v-select>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -121,7 +120,6 @@
     </v-card>
     <!-- Crear Parque -->
     <v-card v-show="dialogs == 2">
-      
       <v-card-actions>
         <v-card-title>Parque *</v-card-title>
         <v-spacer></v-spacer>
@@ -131,283 +129,283 @@
       </v-card-actions>
       <v-card-text>
         <v-container>
-        <v-row>
-          <v-col cols="6">
-            <v-text-field
-              label="Nombre de parque (Español) *"
-              outlined
-              placeholder="Nombre"
-              v-model="parquesData.name_es"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Nombre de parque (Inglés) *"
-              outlined
-              placeholder="Nombre"
-              v-model="parquesData.name_en"
-              :rules="[rules.required]"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Administrador de Parque *"
-              outlined
-              placeholder="Administrador"
-              v-model="parquesData.admins"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Propietario *"
-              outlined
-              placeholder="Propietario"
-              v-model="parquesData.propi"
-              :rules="[rules.required]"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <span>Dirección:</span>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              label="Calle y Número *"
-              outlined
-              placeholder="Direccion"
-              type="phone"
-              v-model="parquesData.direccion"
-              :rules="[rules.required]"
-            ></v-text-field>
-          </v-col>
-          <v-col md="6">
-            <v-text-field
-              outlined
-              label="Codigo postal *"
-              :rules="[rules.required, rules.phone]"
-              v-model="corp.cp"
-              @keyup="watchCp"
-            ></v-text-field>
-          </v-col>
-          <v-col md="6">
-            <v-select
-              :items="cp"
-              label="Colonia *"
-              placeholder="Colonia"
-              :rules="[rules.required]"
-              outlined
-              v-model="corp.col"
-              item-text="d_asenta"
-              item-value="d_asenta"
-            ></v-select>
-          </v-col>
-          <v-col md="6">
-            <v-text-field
-              outlined
-              label="Estado *"
-              :rules="[rules.required]"
-              v-model="edo"
-              disabled
-            ></v-text-field>
-          </v-col>
-          <v-col md="6">
-            <v-text-field
-              outlined
-              label="Municipio/Alcaldía *"
-              :rules="[rules.required]"
-              v-model="mun"
-              disabled
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <span>Informacion de actividades:</span>
-          </v-col>
-          <v-col cols="6">
-            <v-select
-              :items="regiones"
-              label="Region *"
-              outlined
-              v-model="parquesData.region"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
-          <v-col cols="6">
-            <v-select
-              :items="mercados"
-              label="Mercado *"
-              outlined
-              v-model="parquesData.Mercado"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
-          <v-col cols="12">
-            <v-select
-              :items="tipoDeIndustria"
-              label="Tipo de industria *"
-              outlined
-              v-model="parquesData.industria"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
-          <v-col sm="12">
-            <span>Superficies:</span>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              label="Superficie Total *"
-              suffix="km2"
-              outlined
-              placeholder="En km2"
-              v-model="parquesData.sup_tot"
-              :rules="[rules.required, rules.phone]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Superficie Urbanizada *"
-              outlined
-              suffix="km2"
-              placeholder="En km2"
-              v-model="parquesData.sup_urb"
-              :rules="[rules.required, rules.phone]"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Superficie Ocupada *"
-              suffix="km2"
-              outlined
-              placeholder="En km2"
-              v-model="parquesData.sup_oc"
-              :rules="[rules.required, rules.phone]"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-text-field
-              label="Superficie Disponible *"
-              suffix="km2"
-              outlined
-              disabled
-              placeholder="En km2"
-              v-model="sup_disComputed"
-              :rules="[rules.required, rules.phone]"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col cols="6">
-            <v-select
-              :items="items"
-              label="Tipo de Propiedad *"
-              outlined
-              v-model="parquesData.tipo"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
+          <v-row>
+            <v-col cols="6">
+              <v-text-field
+                label="Nombre de parque (Español) *"
+                outlined
+                placeholder="Nombre"
+                v-model="parquesData.name_es"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Nombre de parque (Inglés) *"
+                outlined
+                placeholder="Nombre"
+                v-model="parquesData.name_en"
+                :rules="[rules.required]"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Administrador de Parque *"
+                outlined
+                placeholder="Administrador"
+                v-model="parquesData.admins"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Propietario *"
+                outlined
+                placeholder="Propietario"
+                v-model="parquesData.propi"
+                :rules="[rules.required]"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <span>Dirección:</span>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Calle y Número *"
+                outlined
+                placeholder="Direccion"
+                type="phone"
+                v-model="parquesData.direccion"
+                :rules="[rules.required]"
+              ></v-text-field>
+            </v-col>
+            <v-col md="6">
+              <v-text-field
+                outlined
+                label="Codigo postal *"
+                :rules="[rules.required, rules.phone]"
+                v-model="corp.cp"
+                @keyup="watchCp"
+              ></v-text-field>
+            </v-col>
+            <v-col md="6">
+              <v-select
+                :items="cp"
+                label="Colonia *"
+                placeholder="Colonia"
+                :rules="[rules.required]"
+                outlined
+                v-model="corp.col"
+                item-text="d_asenta"
+                item-value="d_asenta"
+              ></v-select>
+            </v-col>
+            <v-col md="6">
+              <v-text-field
+                outlined
+                label="Estado *"
+                :rules="[rules.required]"
+                v-model="edo"
+                disabled
+              ></v-text-field>
+            </v-col>
+            <v-col md="6">
+              <v-text-field
+                outlined
+                label="Municipio/Alcaldía *"
+                :rules="[rules.required]"
+                v-model="mun"
+                disabled
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <span>Informacion de actividades:</span>
+            </v-col>
+            <v-col cols="6">
+              <v-select
+                :items="regiones"
+                label="Region *"
+                outlined
+                v-model="parquesData.region"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col cols="6">
+              <v-select
+                :items="mercados"
+                label="Mercado *"
+                outlined
+                v-model="parquesData.Mercado"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col cols="12">
+              <v-select
+                :items="tipoDeIndustria"
+                label="Tipo de industria *"
+                outlined
+                v-model="parquesData.industria"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col sm="12">
+              <span>Superficies:</span>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Superficie Total *"
+                suffix="km2"
+                outlined
+                placeholder="En km2"
+                v-model="parquesData.sup_tot"
+                :rules="[rules.required, rules.phone]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Superficie Urbanizada *"
+                outlined
+                suffix="km2"
+                placeholder="En km2"
+                v-model="parquesData.sup_urb"
+                :rules="[rules.required, rules.phone]"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Superficie Ocupada *"
+                suffix="km2"
+                outlined
+                placeholder="En km2"
+                v-model="parquesData.sup_oc"
+                :rules="[rules.required, rules.phone]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-text-field
+                label="Superficie Disponible *"
+                suffix="km2"
+                outlined
+                disabled
+                placeholder="En km2"
+                v-model="sup_disComputed"
+                :rules="[rules.required, rules.phone]"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-select
+                :items="items"
+                label="Tipo de Propiedad *"
+                outlined
+                v-model="parquesData.tipo"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
 
-          <v-col cols="12">
-            <v-select
-              v-model="parquesData.infra"
-              :items="infraList"
-              attach
-              chips
-              outlined
-              label="Infraestructura *"
-              multiple
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
-          <v-col sm="12">
-            <span>Contacto:</span>
-          </v-col>
-          <v-col sm="12">
-            <v-text-field
-              label="Página web *"
-              outlined
-              placeholder="http://"
-              :rules="[rules.required]"
-              v-model="parquesData.web"
-            >
-            </v-text-field>
-          </v-col>
-          <v-col sm="12">
-            {{ parquesData.code }} {{ parquesData.lada }}
-            {{ parquesData.telefono }}
-          </v-col>
+            <v-col cols="12">
+              <v-select
+                v-model="parquesData.infra"
+                :items="infraList"
+                attach
+                chips
+                outlined
+                label="Infraestructura *"
+                multiple
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col sm="12">
+              <span>Contacto:</span>
+            </v-col>
+            <v-col sm="12">
+              <v-text-field
+                label="Página web *"
+                outlined
+                placeholder="http://"
+                :rules="[rules.required]"
+                v-model="parquesData.web"
+              >
+              </v-text-field>
+            </v-col>
+            <v-col sm="12">
+              {{ parquesData.code }} {{ parquesData.lada }}
+              {{ parquesData.telefono }}
+            </v-col>
 
-          <v-col sm="12" md="3">
-            <v-select
-              :items="codigoPais"
-              label="Codigo de pais *"
-              outlined
-              placeholder="Codigo de pais"
-              type="phone"
-              v-model="parquesData.code"
-              :rules="[rules.required]"
-            ></v-select>
-          </v-col>
-          <v-col sm="12" md="2">
-            <v-text-field
-              label="Lada *"
-              outlined
-              placeholder="Lada"
-              type="phone"
-              v-model="parquesData.lada"
-              :rules="[rules.required, rules.phoneLada, rules.phone]"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="7">
-            <v-text-field
-              label="Teléfono *"
-              outlined
-              placeholder="Teléfono"
-              type="phone"
-              v-model="parquesData.telefono"
-              :rules="[rules.required, rules.phoneLenght, rules.phone]"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12">
-            <span>Detalles:</span>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field
-              label="Numero de empleados *"
-              outlined
-              placeholder="Numero de empleados"
-              v-model="parquesData.employeds"
-              :rules="[rules.required, rules.phone]"
-            ></v-text-field>
-          </v-col>
+            <v-col sm="12" md="3">
+              <v-select
+                :items="codigoPais"
+                label="Codigo de pais *"
+                outlined
+                placeholder="Codigo de pais"
+                type="phone"
+                v-model="parquesData.code"
+                :rules="[rules.required]"
+              ></v-select>
+            </v-col>
+            <v-col sm="12" md="2">
+              <v-text-field
+                label="Lada *"
+                outlined
+                placeholder="Lada"
+                type="phone"
+                v-model="parquesData.lada"
+                :rules="[rules.required, rules.phoneLada, rules.phone]"
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12" md="7">
+              <v-text-field
+                label="Teléfono *"
+                outlined
+                placeholder="Teléfono"
+                type="phone"
+                v-model="parquesData.telefono"
+                :rules="[rules.required, rules.phoneLenght, rules.phone]"
+              ></v-text-field>
+            </v-col>
+            <v-col sm="12">
+              <span>Detalles:</span>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Numero de empleados *"
+                outlined
+                placeholder="Numero de empleados"
+                v-model="parquesData.employeds"
+                :rules="[rules.required, rules.phone]"
+              ></v-text-field>
+            </v-col>
 
-          <v-col cols="12">
-            <v-select
-              v-model="parquesData.record"
-              :items="records"
-              attach
-              chips
-              outlined
-              label="Reconocimientos *"
-              multiple
-            ></v-select>
-          </v-col>
-          
-          <v-col sm="12">
-            <span>Multimedia:</span>
-          </v-col>
+            <v-col cols="12">
+              <v-select
+                v-model="parquesData.record"
+                :items="records"
+                attach
+                chips
+                outlined
+                label="Reconocimientos *"
+                multiple
+              ></v-select>
+            </v-col>
 
-          <v-col sm="12">
-            <UploadImages
-              @change="handleImages"
-              :max="4"
-              maxError="Solamente una imagen"
-              style="color:#fff"
-            />
-          </v-col>
-        </v-row>
-      </v-container>
+            <v-col sm="12">
+              <span>Multimedia:</span>
+            </v-col>
+
+            <v-col sm="12">
+              <UploadImages
+                @change="handleImages"
+                :max="4"
+                maxError="Solamente una imagen"
+                style="color:#fff"
+              />
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -419,157 +417,160 @@
     </v-card>
     <!-- Corporativo -->
     <v-card v-show="dialogs == 4">
-      <v-card-actions>
+      <v-card-title>
+        Nuevo {{ type_society }}
         <v-spacer></v-spacer>
-        <v-btn icon @click="closeAction">
-          <v-icon>mdi-window-close</v-icon>
-        </v-btn>
-      </v-card-actions>
-      <v-container>
-        <v-row>
-          <v-col sm="12" md="12">
-            <v-cotainer>
-              <v-row align="center" justify="center">
-                <v-col sm="12" md="6">
-                  <UploadImages
-                    @change="handleImages"
-                    :max="3"
-                    style="color:#fff"
-                  />
-                  <span>Sube aquí tu logotipo *</span>
-                </v-col>
-              </v-row>
-            </v-cotainer>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              outlined
-              label="Razón Social *"
-              :rules="[rules.required]"
-              v-model="corp.spcial"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              outlined
-              label="Nombre de Corporativo (Español) *"
-              :rules="[rules.required]"
-              v-model="corp.name_es"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="12">
-            <v-text-field
-              outlined
-              label="Nombre de Corporativo (Inglés) *"
-              :rules="[rules.required]"
-              v-model="corp.name_en"
-            ></v-text-field>
-          </v-col>
-          <!-- Apartado de direccion -->
-          <v-col sm="12">
-            <span>Dirección </span>
-          </v-col>
-          <v-col sm="12" md="12">
-            <v-text-field
-              outlined
-              label="Calle y Número *"
-              :rules="[rules.required]"
-              v-model="corp.address"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="12">
-            <v-text-field
-              outlined
-              label="Código Postal *"
-              :rules="[rules.required]"
-              v-model="corp.cp"
-              @keyup="watchCp"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="12">
-            <v-select
-              :items="cp"
-              label="Colonia *"
-              placeholder="Colonia"
-              :rules="[rules.required]"
-              outlined
-              v-model="corp.col"
-              item-text="d_asenta"
-              item-value="d_asenta"
-            ></v-select>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              outlined
-              label="Estado *"
-              :rules="[rules.required]"
-              v-model="edo"
-              disabled
-            ></v-text-field>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-text-field
-              outlined
-              label="Municipio/Alcaldía *"
-              :rules="[rules.required]"
-              v-model="mun"
-              disabled
-            ></v-text-field>
-          </v-col>
+        <v-card-actions>
+          <v-btn icon @click="closeAction">
+            <v-icon>mdi-window-close</v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card-title>
 
-          <v-col sm="12" md="12">
-            <label>Teléfono de Oficina: {{ officePhone }}</label>
-          </v-col>
+      <v-card-text>
+        
+          <v-row>
+            <v-col cols="12" sm="12" md="12">
+              <v-cotainer>
+                <v-row align="center" justify="center">
+                  <v-col sm="12" md="6">
+                    <UploadImages
+                      @change="handleImages"
+                      :max="3"
+                      style="color:#fff"
+                    />
+                    <span>Sube aquí tu logotipo *</span>
+                  </v-col>
+                </v-row>
+              </v-cotainer>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                outlined
+                label="Razón Social *"
+                :rules="[rules.required]"
+                v-model="corp.spcial"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12"  sm="12" md="6">
+              <v-text-field
+                outlined
+                label="Nombre de Corporativo (Español) *"
+                :rules="[rules.required]"
+                v-model="corp.name_es"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                outlined
+                label="Nombre de Corporativo (Inglés) *"
+                :rules="[rules.required]"
+                v-model="corp.name_en"
+              ></v-text-field>
+            </v-col>
+            <!-- Apartado de direccion -->
+            <v-col cols="12" sm="12">
+              <span>Dirección </span>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                outlined
+                label="Calle y Número *"
+                :rules="[rules.required]"
+                v-model="corp.address"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-text-field
+                outlined
+                label="Código Postal *"
+                :rules="[rules.required]"
+                v-model="corp.cp"
+                @keyup="watchCp"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <v-select
+                :items="cp"
+                label="Colonia *"
+                placeholder="Colonia"
+                :rules="[rules.required]"
+                outlined
+                v-model="corp.col"
+                item-text="d_asenta"
+                item-value="d_asenta"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                outlined
+                label="Estado *"
+                :rules="[rules.required]"
+                v-model="edo"
+                disabled
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="6">
+              <v-text-field
+                outlined
+                label="Municipio/Alcaldía *"
+                :rules="[rules.required]"
+                v-model="mun"
+                disabled
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <label>Teléfono de Oficina: {{ officePhone }}</label>
+            </v-col>
+            <v-col cols="12" sm="3">
+              <v-select
+                :items="codigoPais"
+                label="Código país *"
+                outlined
+                :rules="[rules.required]"
+                v-model="codigoPaisValue"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="2">
+              <v-text-field
+                label="Lada *"
+                outlined
+                v-model="ladaValue"
+                :rules="[rules.required, rules.phone, rules.phoneLada]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="7">
+              <v-text-field
+                outlined
+                label="Número local *"
+                :rules="[rules.required, rules.phone, rules.phoneLenght]"
+                v-model="corp.cel"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="12">
+              <span>Clasificación</span>
+            </v-col>
+            <v-col cols="12" sm="12" v-if="type_society === 'Desarrollador'">
+              <v-select
+                outlined
+                :rules="[rules.required]"
+                label="Clasificación de Socio *"
+                v-model="society"
+                :items="types"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="12" v-if="type_society === 'Patrocinador'">
+              <v-select
+                outlined
+                :rules="[rules.required]"
+                label="Clasificación de patrocinador *"
+                v-model="society"
+                :items="types_pats"
+              ></v-select>
+            </v-col>
+          </v-row>
+      </v-card-text>
 
-          <v-col sm="3">
-            <v-select
-              :items="codigoPais"
-              label="Código país *"
-              outlined
-              :rules="[rules.required]"
-              v-model="codigoPaisValue"
-            ></v-select>
-          </v-col>
-          <v-col sm="2">
-            <v-text-field
-              label="Lada *"
-              outlined
-              v-model="ladaValue"
-              :rules="[rules.required, rules.phone, rules.phoneLada]"
-            ></v-text-field>
-          </v-col>
-          <v-col sm="7">
-            <v-text-field
-              outlined
-              label="Número local *"
-              :rules="[rules.required, rules.phone, rules.phoneLenght]"
-              v-model="corp.cel"
-            ></v-text-field>
-          </v-col>
-
-          <v-col sm="12">
-            <span>Clasificación</span>
-          </v-col>
-          <v-col sm="12" v-if="type_society === 'Desarrollador'">
-            <v-select
-              outlined
-              :rules="[rules.required]"
-              label="Clasificación de Socio *"
-              v-model="society"
-              :items="types"
-            ></v-select>
-          </v-col>
-          <v-col sm="12" v-if="type_society === 'Patrocinador'">
-            <v-select
-              outlined
-              :rules="[rules.required]"
-              label="Clasificación de patrocinador *"
-              v-model="society"
-              :items="types_pats"
-            ></v-select>
-          </v-col>
-        </v-row>
-      </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="addCorp">
@@ -582,10 +583,10 @@
     <v-card v-show="dialogs == 5">
       <v-card-actions>
         <v-card-title>
-        Usuario
-      </v-card-title>
-      <v-spacer></v-spacer>
-       <v-btn icon @click="closeAction">
+          Usuario
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
           <v-icon>mdi-window-close</v-icon>
         </v-btn>
       </v-card-actions>
@@ -634,13 +635,13 @@
       </v-card-actions>
     </v-card>
     <!-- ultimo usuario -->
-     <v-card v-show="dialogs == 6" >
+    <v-card v-show="dialogs == 6">
       <v-card-actions>
         <v-card-title>
-        Usuario
-      </v-card-title>
-      <v-spacer></v-spacer>
-       <v-btn icon @click="closeAction">
+          Usuario
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
           <v-icon>mdi-window-close</v-icon>
         </v-btn>
       </v-card-actions>
@@ -1172,7 +1173,7 @@ export default {
         direccion: "",
         employeds: "",
         record: "",
-        web:""
+        web: "",
       },
       parkToEdit: null,
       records: [
@@ -1279,32 +1280,30 @@ export default {
       }
     },
     addparque() {
-
       var key = null;
-      if(this.$store.state.id_corp != null){
-        key = this.$store.state.id_corp ;
-      } else{
+      if (this.$store.state.id_corp != null) {
+        key = this.$store.state.id_corp;
+      } else {
         key = this.$store.state.data.key_corp;
       }
 
       if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
-
         var jsons = {
           telefono: `${this.parquesData.code} ${this.parquesData.lada} ${this.parquesData.telefono}`,
           direccion: this.parquesData.direccion,
-          col:this.corp.col,
-          edo:this.edo,
-          mun:this.mun,
-          web:this.parquesData.web
-        }
-        
+          col: this.corp.col,
+          edo: this.edo,
+          mun: this.mun,
+          web: this.parquesData.web,
+        };
+
         var params = new URLSearchParams();
         params.append("key_corp", key);
         params.append("nombre_es", this.parquesData.name_es);
         params.append("nombre_en", this.parquesData.name_en);
         params.append("adminParq", this.parquesData.admins);
         params.append("parqProp", this.parquesData.propi);
-        params.append("parqIntoParq","");
+        params.append("parqIntoParq", "");
         params.append("region", this.parquesData.region);
         params.append("mercado", this.parquesData.Mercado);
         params.append("tipoDeIndustria", this.parquesData.industria);
@@ -1384,7 +1383,9 @@ export default {
     watchCp() {
       if (this.corp.cp.length > 4) {
         axios
-          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.corp.cp}`)
+          .get(
+            `http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.corp.cp}`
+          )
           .then((res) => {
             this.cp = res.data.zip_codes;
           })
@@ -1533,7 +1534,7 @@ export default {
       }
     },
 
-    addUserActionUltimo(){
+    addUserActionUltimo() {
       let params = new URLSearchParams();
       params.append("email", this.addUser.email);
       params.append(

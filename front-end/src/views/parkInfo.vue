@@ -1,7 +1,7 @@
 <template>
   <content>
     <v-card-actions>
-      <v-btn @click="back" icon> 
+      <v-btn @click="back" icon>
         <v-icon color="red">
           mdi-arrow-left-bold
         </v-icon>
@@ -74,16 +74,16 @@
           ></plusCard>
         </v-dialog>
       </v-btn>
-      </v-card-actions>
+    </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
-        <v-tab>
+        <v-tab v-if="parque.nombre_es != 'standalone'">
           Usuarios
         </v-tab>
         <v-tab>
           Inquilinos
         </v-tab>
-        <v-tab>
+        <v-tab v-if="parque.nombre_es != 'standalone'">
           Informacion
         </v-tab>
       </v-tabs>
@@ -129,11 +129,19 @@
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
                     <!-- isAmpip -->
-                    <v-btn icon @click="addUserToNaveAction" v-if="i.isAmpip == null" >
+                    <v-btn
+                      icon
+                      @click="addUserToNaveAction"
+                      v-if="i.isAmpip == null"
+                    >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                     <v-dialog width="700" v-model="addUserToNave">
-                      <plusCard :dialogs='6' :id="i" @close="closePlusCard"></plusCard>
+                      <plusCard
+                        :dialogs="6"
+                        :id="i"
+                        @close="closePlusCard"
+                      ></plusCard>
                     </v-dialog>
                   </v-card-actions>
                 </v-card>
@@ -380,7 +388,7 @@ export default {
       ],
       newInfra: null,
       newRecords: null,
-      addUserToNave:false
+      addUserToNave: false,
     };
   },
   beforeMount() {
@@ -397,12 +405,16 @@ export default {
   },
   methods: {
     getTab() {
-      switch (this.tab) {
+      if(this.parque.nombre_es == 'standalone'){
+        this.addNave = true;
+      } else{
+        switch (this.tab) {
         case 0:
           this.addUser = true;
           break;
         case 1:
           this.addNave = true;
+      }
       }
     },
     closeAction() {
@@ -560,13 +572,12 @@ export default {
         })
         .catch((e) => console.log(e));
     },
-    back(){
+    back() {
       this.$router.push("/");
     },
-    addUserToNaveAction(){
+    addUserToNaveAction() {
       this.addUserToNave = true;
-    }
-    
+    },
   },
   components: { plusCard, infoCard },
 };
