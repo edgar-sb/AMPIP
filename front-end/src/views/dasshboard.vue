@@ -22,9 +22,7 @@
                   <v-card>
                     <v-toolbar dense>
                       <v-toolbar-title small>
-                        
-                          <label>{{ saludo }}</label>
-                        
+                        <label>{{ saludo }}</label>
                       </v-toolbar-title>
 
                       <v-spacer></v-spacer>
@@ -138,55 +136,63 @@
                     ></plus-card>
                   </v-dialog>
                 </v-card-actions>
-                <v-col sm="12" md="4" v-for="i in allPat" :key="i">
-                  <v-card>
-                    <v-card-actions>
-                      <span
-                        >Ultima actualizacion:<br />
-                        {{ i.fechaDeValidacion }}</span
-                      >
+                <v-container>
+                  <v-row>
+                    <v-col sm="12" md="4" v-for="i in allPat" :key="i">
+                      <v-card>
+                        <v-card-actions>
+                          <span
+                            >Ultima actualizacion:<br />
+                            {{ i.fechaDeValidacion }}</span
+                          >
 
-                      <v-spacer></v-spacer>
+                          <v-spacer></v-spacer>
 
-                      <v-btn
-                        icon
-                        @click="getInfoCorpAction(i.id)"
-                        v-if="i.habilitar == 0"
-                      >
-                        <v-badge
-                          content="1"
-                          value="1"
-                          color="green"
-                          overlap
+                          <v-btn
+                            icon
+                            @click="getInfoCorpAction(i.id)"
+                            v-if="i.habilitar == 0"
+                          >
+                            <v-badge
+                              content="1"
+                              value="1"
+                              color="green"
+                              overlap
+                            >
+                              <v-icon large>
+                                mdi-eye
+                              </v-icon>
+                            </v-badge>
+                          </v-btn>
+                          <v-btn
+                            icon
+                            @click="getInfoCorpAction(i.id)"
+                            v-if="i.habilitar != 0"
+                          >
+                            <v-icon large>
+                              mdi-eye
+                            </v-icon>
+                          </v-btn>
+                        </v-card-actions>
+                        <v-img
+                          :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
+                          class="white--text align-end"
+                          gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                          height="200px"
                         >
-                          <v-icon large>
-                            mdi-eye
-                          </v-icon>
-                        </v-badge>
-                      </v-btn>
-                      <v-btn
-                        icon
-                        @click="getInfoCorpAction(i.id)"
-                        v-if="i.habilitar != 0"
-                      >
-                        <v-icon large>
-                          mdi-eye
-                        </v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                    <v-img
-                      :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
-                      class="white--text align-end"
-                      gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                      height="200px"
-                    >
-                      <v-card-title>{{ i.corporativo }}</v-card-title>
-                    </v-img>
-                    <v-dialog v-model="getCorpInfo" persistent>
-                      <getCorpInfo :id="infoToCorp" :users="users" :type="''" />
-                    </v-dialog>
-                  </v-card>
-                </v-col>
+                          <v-card-title>{{ i.corporativo }}</v-card-title>
+                        </v-img>
+                        <v-dialog v-model="getCorpInfo" persistent>
+                          <getCorpInfo
+                            :id="infoToCorp"
+                            :users="users"
+                            :type="''"
+                          />
+                        </v-dialog>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </v-container>
               </v-col>
             </v-row>
           </v-container>
