@@ -816,8 +816,8 @@ class apiController extends AbstractActionController
             $dates = date("Y-m-d");
             $key_corp = $this->params()->fromPost("key_corp");
             $key_user = $this->params()->fromPost("key_user", null);
-            $nombre_es = $this->params()->fromPost("nombre_es");
-            $nombre_en = $this->params()->fromPost("nombre_en", "");
+            $nombre_es = $this->params()->fromPost("nombre_es", null);
+            $nombre_en = $this->params()->fromPost("nombre_en",null);
             $adminParq = $this->params()->fromPost("adminParq", null);
             $parqProp = $this->params()->fromPost("parqProp");
             $parqIntoParq = $this->params()->fromPost("parqIntoParq", 0);
@@ -839,8 +839,9 @@ class apiController extends AbstractActionController
             $planMaestro = $this->params()->fromPost("planMaestro");
             $contactName = $this->params()->fromPost("contactName");
             $contactEmail = $this->params()->fromPost("contactEmail");
+            $extras = $this->params()->fromPost("extras", "{}");
             $isDispo = $this->entityManager->getRepository(parqueEntity::class)->findBy(["nombre_es" => $nombre_es, "key_corp" => $key_corp]);
-
+            
 
             if ($isDispo == null) {
                 $newpark = new parqueEntity();
@@ -871,6 +872,7 @@ class apiController extends AbstractActionController
                 $newpark->setcontactName($contactName);
                 $newpark->setcontactEmail($contactEmail);
                 $newpark->setedit($dates);
+                $newpark->setextras($extras);
                 $this->entityManager->persist($newpark);
                 $this->entityManager->flush();
                 return new JsonModel(["message" => "Listo"]);
@@ -986,6 +988,7 @@ class apiController extends AbstractActionController
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
                     $roleList["edit"] = $role->getedit();
+                    $roleList["extras"] = $role->getextras();
                     if($role->getkey_corp() != "" ){
                     array_push($arr, $roleList);
                     }
@@ -1087,6 +1090,7 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
+                    $roleList["extras"] = $role->getextras();
                     array_push($arr, $roleList);
                 } else {
                     $roleList["error"] = "2541";

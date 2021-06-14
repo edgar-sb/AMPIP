@@ -123,6 +123,10 @@ class parqueEntity
                      * @ORM\Column(name="edit")
                      */
                     protected $edit;
+                     /**
+                     * @ORM\Column(name="extras")
+                     */
+                    protected $extras;
     
                         /**
                          * Returns id.
@@ -311,6 +315,12 @@ class parqueEntity
                          */
                         public function getcontactEmail(){ return $this->contactEmail;}
 
+                        /**
+                         * Returns extras.
+                         * @return string
+                         */
+                        public function getextras(){ return $this->extras;}
+
                         
 
     
@@ -476,6 +486,12 @@ class parqueEntity
                          * @param date $dates
                          */
                         public function setedit($edit){$this->edit = $edit;}
+
+                        /**
+                         * Sets edit
+                         * @param date $dates
+                         */
+                        public function setextras($extra){$this->extras = $extra;}
                         
 
 }

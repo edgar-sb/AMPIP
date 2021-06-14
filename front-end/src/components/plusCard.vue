@@ -329,7 +329,7 @@
               outlined
               placeholder="http://"
               :rules="[rules.required]"
-              v-model="parquesData.name_contact"
+              v-model="parquesData.web"
             >
             </v-text-field>
           </v-col>
@@ -1172,6 +1172,7 @@ export default {
         direccion: "",
         employeds: "",
         record: "",
+        web:""
       },
       parkToEdit: null,
       records: [
@@ -1287,16 +1288,23 @@ export default {
       }
 
       if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
+
+        var jsons = {
+          telefono: `${this.parquesData.code} ${this.parquesData.lada} ${this.parquesData.telefono}`,
+          direccion: this.parquesData.direccion,
+          col:this.corp.col,
+          edo:this.edo,
+          mun:this.mun,
+          web:this.parquesData.web
+        }
+        
         var params = new URLSearchParams();
         params.append("key_corp", key);
         params.append("nombre_es", this.parquesData.name_es);
         params.append("nombre_en", this.parquesData.name_en);
         params.append("adminParq", this.parquesData.admins);
         params.append("parqProp", this.parquesData.propi);
-        params.append(
-          "parqIntoParq",
-          this.corp.col + "-" + this.edo + "-" + this.mun
-        );
+        params.append("parqIntoParq","");
         params.append("region", this.parquesData.region);
         params.append("mercado", this.parquesData.Mercado);
         params.append("tipoDeIndustria", this.parquesData.industria);
@@ -1306,15 +1314,14 @@ export default {
         params.append("superficieDisp", this.sup_disComputed);
         params.append("tipoDePropiedad", this.parquesData.tipo);
         params.append("ifraestructura", this.parquesData.infra);
-        /* numEmpleados */
         params.append("numEmpleados", this.parquesData.employeds);
-        params.append("observacion", this.parquesData.region);
-        params.append("kmz", this.parquesData.name_contact);
-        params.append("planMaestro", this.parquesData.direccion);
-        params.append("contactName", this.parquesData.telefono);
-        params.append("contactEmail", this.parquesData.region);
+        params.append("observacion", "");
+        params.append("kmz", "");
+        params.append("planMaestro", "");
+        params.append("contactName", "");
+        params.append("contactEmail", "");
         params.append("reconocimientoPracticas", this.parquesData.record);
-
+        params.append("extras", JSON.stringify(jsons));
         axios
           .post(`${this.$store.state.url}/createpark`, params)
           .then((res) => {
