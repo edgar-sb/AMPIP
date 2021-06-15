@@ -3,6 +3,7 @@
     <!-- Nave -->
     <v-card v-if="dialogs == 1">
       <v-card-actions>
+        
         <v-card-title>Inquilinos </v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
@@ -97,13 +98,13 @@
 
             <v-col sm="12" v-if="id">
               <v-select
-                :items="parks"
+                :items="Allspace"
                 v-model="parque"
                 label="Espacio en *"
                 outlined
-                @click="getAllParks"
-                item-text="nombre_en"
-                item-value="id"
+                @click="getAllspace"
+                item-text="tipo"
+                item-value="tipo"
               >
               </v-select>
             </v-col>
@@ -688,6 +689,7 @@
         <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
+    <!-- espacio  -->
     <v-card v-if="dialogs == 7">
       <v-card-actions>
         <v-card-title>
@@ -700,13 +702,21 @@
       </v-card-actions>
       <v-card-text>
         <v-row>
+          <v-col cols="12">
+            <v-text-field
+              outlined
+              label="Nombre *"
+              placeholder="Nombre"
+              v-model="spaces.type"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               outlined
-              title="Tipo"
               label="Tipo de espacio *"
               placeholder="Tipo de espacio"
-              v-model="spaces.type"
+              v-model="spaces.nameSpace"
               :rules="[rules.required]"
             ></v-text-field>
           </v-col>
@@ -1308,6 +1318,7 @@ export default {
       society: "",
       parks: ["Modelo"],
       spaces: {},
+      Allspace:[]
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
@@ -1720,7 +1731,8 @@ export default {
       let extras = {
         name:this.spaces.contact_name,
         phone: this.spaces.contact_phone,
-        medidas: [this.spaces.height, this.spaces.width]
+        medidas: [this.spaces.height, this.spaces.width],
+        nameSpace: this.spaces.name
       };
       if(this.id[0] != null && this.spaces.price != undefined && this.spaces.type != undefined &&  this.spaces.use != undefined){
         let params = new URLSearchParams();
@@ -1744,6 +1756,14 @@ export default {
       } else{
         Swal.fire({text:"Por favor llena todos los datos", icon:"error"})
       }
+    },
+    getAllspace(){
+      let params = new URLSearchParams();
+      params.append("query", 3);
+      params.append("id", this.id);
+      axios.post(`${this.$store.state.url}/espacio`,params).then(res => {
+        this.Allspace = res.data;
+      }).catch(e => console.log(e));
     }
   },
   computed: {

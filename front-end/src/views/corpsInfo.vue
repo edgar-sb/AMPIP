@@ -39,7 +39,7 @@
       <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
         Inquilinos
       </v-tab>
-      <v-tab>
+      <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
         Oferta de espacios
       </v-tab>
       <v-tab>
@@ -169,7 +169,7 @@
       </v-tab-item>
 
       <!-- Espacios disponibles -->
-      <v-tab-item>
+      <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
             <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">

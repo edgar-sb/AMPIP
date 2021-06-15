@@ -395,7 +395,8 @@ export default {
         name: extras.name,
         phone: extras.phone,
         medidas: extras.medidas,
-        date:date
+        date:date,
+        nameSpace :extras.name
       }
       console.log(newExtras)
       params.append("query",4);

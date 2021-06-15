@@ -125,7 +125,7 @@
           </v-container>
         </v-tab-item>
         <!-- inquilinos -->
-        <v-tab-item>
+        <v-tab-item> 
           <v-container>
             <v-row>
               <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
