@@ -336,7 +336,7 @@ class apiController extends AbstractActionController
                     $idKey_corp["id"] = $i->getId();
                 }
 
-                $update = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->updateUser(".key_corp", $idKey_corp["id"], $idDeUsuario);
+                $this->entityManager->getRepository(datosDeUsuarioEntity::class)->updateUser(".key_corp", $idKey_corp["id"], $idDeUsuario);
 
 
                 return new JsonModel(["message", "listo"]);
@@ -1547,11 +1547,13 @@ class apiController extends AbstractActionController
                         case "p":
                             $this->entityManager->getRepository(parqueEntity::class)->updatePark(".key_corp", 0, $id);
                             return new JsonModel(["message" => "listo"]);
-
-                    
                         case "n":
                             $this->entityManager->getRepository(naveEntity::class)->updateData(".parque_id", 0, $id);
                             $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", false, $id);
+                            return new JsonModel(["message" => "Desactivado"]);
+                        case "s":
+                            $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".corporativo", 0, $id);
+                            $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".id_parque", 0, $id);
                             return new JsonModel(["message" => "Desactivado"]);
                     }
                     return new JsonModel(["message" => "listo"]);
@@ -1980,39 +1982,78 @@ class apiController extends AbstractActionController
  */
     public function espacioAction()
     {
-        if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost("id");
-            $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findById($id);
-
-            $roleList = [];
-            foreach ($inquilino as $role) {
-                if ($role->getId() != "") {
-                    $roleList["id"] = $role->getid();
-                    $roleList["corporativo"] = $role->getcorporativo();
-                    $roleList["ubicacion"] = $role->getubicacion();
-                    $roleList["tipo"] = $role->gettipo();
-                    $roleList["tipoDeDispo"] = $role->gettipoDeDispo();
-                    $roleList["uso"] = $role->getuso();
-                    $roleList["municipio"] = $role->getmunicipio();
-                    $roleList["estado"] = $role->getestado();
-                    $roleList["web"] = $role->getweb();
-                    $roleList["contacto"] = $role->getcontacto();
-                    $roleList["precioPromedio"] = $role->getprecioPromedio();
-                    $roleList["datoDeContacto"] = $role->getdatoDeContacto();
-                    $roleList["id_parque"] = $role->getid_parque();
-                    $roleList["x"] = $role->getmedidaX();
-                    $roleList["y"] = $role->getmedidaY();
-                    $roleList["z"] = $role->getmedidaZ();
-                } else {
-                    $roleList["error"] = "2541";
+        $query = $this->params()->fromPost("query");
+        switch($query){
+            case 1:
+                $id = $this->params()->fromPost("id");
+                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["corporativo"=>$id]);
+                $arr = array();
+                $roleList = [];
+                foreach ($inquilino as $role) {
+                    if ($role->getId() != "") {
+                        $roleList["id"] = $role->getid();
+                        $roleList["corporativo"] = $role->getcorporativo();
+                        $roleList["extras"] = $role->getextras();
+                        $roleList["tipo"] = $role->gettipo();
+                        $roleList["uso"] = $role->getuso();
+                        $roleList["precio_promedio"] = $role->getprecioPromedio();
+                        $roleList["id_parque"] = $role->getid_parque();
+                        array_push($arr, $roleList);
+                    } else {
+                        $roleList["error"] = "2541";
+                    }
                 }
-            }
+    
+                return new JsonModel($arr);
+            break;
+            case 2:
+                $newSpace = new espacio_disponibleEntity();
+                $id = $this->params()->fromPost("id");
+                $tipo = $this->params()->fromPost("tipo");
+                $uso = $this->params()->fromPost("uso");
+                $precio = $this->params()->fromPost("precio");
+                $parque = $this->params()->fromPost("parque");
+                $extras = $this->params()->fromPost("extras");
+               
 
-            return new JsonModel($roleList);
-        } else {
-            return $this->redirect()->toUrl(
-                $this->url
-            );
+                $newSpace->setCorporativo($id);
+                $newSpace->settipo($tipo);
+                $newSpace->setuso($uso);
+                $newSpace->setprecioPromedio($precio);
+                $newSpace->setid_parque($parque);
+                $newSpace->setextras($extras);
+                $this->entityManager->persist($newSpace);
+                $this->entityManager->flush();
+                return new JsonModel(["message"=>1]);
+            break;
+            case 3:
+                $id = $this->params()->fromPost("id");
+                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["id_parque"=>$id]);
+                $arr = array();
+                $roleList = [];
+                foreach ($inquilino as $role) {
+                    if ($role->getId() != "") {
+                        $roleList["id"] = $role->getid();
+                        $roleList["corporativo"] = $role->getcorporativo();
+                        $roleList["extras"] = $role->getextras();
+                        $roleList["tipo"] = $role->gettipo();
+                        $roleList["uso"] = $role->getuso();
+                        $roleList["precio_promedio"] = $role->getprecioPromedio();
+                        $roleList["id_parque"] = $role->getid_parque();
+                        array_push($arr, $roleList);
+                    } else {
+                        $roleList["error"] = "2541";
+                    }
+                }
+    
+                return new JsonModel($arr);
+            break;
+            case 4:
+                $id = $this->params()->fromPost("id");
+                $extras = $this->params()->fromPost("extras");
+                $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".extras",$extras, $id);
+                return new JsonModel(["message"=>"activado"]);
+            break;
         }
     }
 

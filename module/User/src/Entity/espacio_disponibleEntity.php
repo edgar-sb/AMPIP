@@ -25,45 +25,17 @@ class espacio_disponibleEntity
      */
     protected $corporativo;
     /**
-     * @ORM\Column(name="ubicacion")
-     */
-    protected $ubicacion;
-    /**
      * @ORM\Column(name="tipo")
      */
     protected $tipo;
-    /**
-     * @ORM\Column(name="tipoDeDispo")
-     */
-    protected $tipoDeDispo;
     /**
      * @ORM\Column(name="uso")
      */
     protected $uso;
     /**
-     * @ORM\Column(name="municipio")
-     */
-    protected $municipio;
-    /**
-     * @ORM\Column(name="estado")
-     */
-    protected $estado;
-    /**
-     * @ORM\Column(name="web")
-     */
-    protected $web;
-    /**
-     * @ORM\Column(name="contacto")
-     */
-    protected $contacto;
-    /**
      * @ORM\Column(name="precioPromedio")
      */
     protected $precioPromedio;
-    /**
-     * @ORM\Column(name="datoDeContacto")
-     */
-    protected $datoDeContacto;
     /**
      * @ORM\Column(name="id_parque")
      */
@@ -100,16 +72,6 @@ class espacio_disponibleEntity
      */
 
     function getextras(){return $this->extras;}
-    
-
-    /**
-     * Returns ubicacion.
-     * @return string 
-     */
-    public function getubicacion()
-    {
-        return $this->ubicacion;
-    }
 
 
     /**
@@ -123,16 +85,6 @@ class espacio_disponibleEntity
 
 
     /**
-     * Returns tipoDeDispo.
-     * @return string 
-     */
-    public function gettipoDeDispo()
-    {
-        return $this->tipoDeDispo;
-    }
-
-
-    /**
      * Returns uso.
      * @return string 
      */
@@ -142,44 +94,6 @@ class espacio_disponibleEntity
     }
 
 
-    /**
-     * Returns municipio.
-     * @return string 
-     */
-    public function getmunicipio()
-    {
-        return $this->municipio;
-    }
-
-
-    /**
-     * Returns estado.
-     * @return string 
-     */
-    public function getestado()
-    {
-        return $this->estado;
-    }
-
-
-    /**
-     * Returns web.
-     * @return string 
-     */
-    public function getweb()
-    {
-        return $this->web;
-    }
-
-
-    /**
-     * Returns contacto.
-     * @return string 
-     */
-    public function getcontacto()
-    {
-        return $this->contacto;
-    }
 
 
     /**
@@ -192,14 +106,6 @@ class espacio_disponibleEntity
     }
 
 
-    /**
-     * Returns datoDeContacto.
-     * @return string 
-     */
-    public function getdatoDeContacto()
-    {
-        return $this->datoDeContacto;
-    }
 
 
     /**
@@ -233,15 +139,6 @@ class espacio_disponibleEntity
     }
 
     /**
-     * Sets ubicacion
-     * @param int $ubicacion
-     */
-    public function setubicacion($ubicacion)
-    {
-        $this->ubicacion = $ubicacion;
-    }
-
-    /**
      * Sets tipo
      * @param int $tipo
      */
@@ -250,14 +147,6 @@ class espacio_disponibleEntity
         $this->tipo = $tipo;
     }
 
-    /**
-     * Sets tipoDeDispo
-     * @param int $tipoDeDispo
-     */
-    public function settipoDeDispo($tipoDeDispo)
-    {
-        $this->tipoDeDispo = $tipoDeDispo;
-    }
 
     /**
      * Sets uso
@@ -268,41 +157,6 @@ class espacio_disponibleEntity
         $this->uso = $uso;
     }
 
-    /**
-     * Sets municipio
-     * @param int $municipio
-     */
-    public function setmunicipio($municipio)
-    {
-        $this->municipio = $municipio;
-    }
-
-    /**
-     * Sets estado
-     * @param int $estado
-     */
-    public function setestado($estado)
-    {
-        $this->estado = $estado;
-    }
-
-    /**
-     * Sets web
-     * @param int $web
-     */
-    public function setweb($web)
-    {
-        $this->web = $web;
-    }
-
-    /**
-     * Sets contacto
-     * @param int $contacto
-     */
-    public function setcontacto($contacto)
-    {
-        $this->contacto = $contacto;
-    }
 
     /**
      * Sets precioPromedio
@@ -311,15 +165,6 @@ class espacio_disponibleEntity
     public function setprecioPromedio($precioPromedio)
     {
         $this->precioPromedio = $precioPromedio;
-    }
-
-    /**
-     * Sets datoDeContacto
-     * @param int $datoDeContacto
-     */
-    public function setdatoDeContacto($datoDeContacto)
-    {
-        $this->datoDeContacto = $datoDeContacto;
     }
 
     /**

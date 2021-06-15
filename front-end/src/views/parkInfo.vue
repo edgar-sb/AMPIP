@@ -7,44 +7,48 @@
         </v-icon>
       </v-btn>
 
-      <v-btn icon @click="getTab" v-if="tab != 2">
+      <v-btn icon @click="getTab" v-if="tab != 3">
         <v-icon>mdi-plus</v-icon>
-        <v-dialog width="500" v-model="addUser">
+        <v-dialog width="700" v-model="addUser">
           <v-card>
             <v-card-title>
               Usuario
+              <v-spacer></v-spacer>
+              <v-btn icon @click="closeAction">
+                <v-icon>mdi-window-close</v-icon>
+              </v-btn>
             </v-card-title>
-            <v-container>
+            <v-card-text>
               <v-row>
-                <v-col sm="12">
+                <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
                     label="Nombre"
                     v-model="dataUser.name"
                   ></v-text-field>
                 </v-col>
-                <v-col sm="12">
+                <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
                     label="Apellido Paterno"
                     v-model="dataUser.lastName"
                   ></v-text-field>
                 </v-col>
-                <v-col sm="12">
+                <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
                     label="Apellido Materno"
                     v-model="dataUser.last"
                   ></v-text-field>
                 </v-col>
-                <v-col sm="12">
+                <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
                     label="Correo"
                     v-model="dataUser.email"
                   ></v-text-field>
                 </v-col>
-                <v-col sm="12">
+                <v-col cols="12">
                   <v-select
                     outlined
                     v-model="permiso"
@@ -56,11 +60,11 @@
                   ></v-select>
                 </v-col>
               </v-row>
-            </v-container>
+            </v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="red" @click="closeAction" text>Cerrar</v-btn>
-              <v-btn color="green darken-1" text @click="addUserAction">
+              <v-btn @click="closeAction" text>Cerrar</v-btn>
+              <v-btn @click="addUserAction">
                 Agregar
               </v-btn>
             </v-card-actions>
@@ -83,16 +87,20 @@
         <v-tab>
           Inquilinos
         </v-tab>
+        <v-tab>
+          Espacio disponible
+        </v-tab>
         <v-tab v-if="parque.nombre_es != 'standalone'">
           Informacion
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
-        <v-tab-item>
+        <!-- Usuarios -->
+        <v-tab-item v-if="parque.nombre_es != 'standalone'">
           <v-container>
             <v-row>
               <v-col sm="12" md="3" v-for="(i, key) in users_parqs" :key="key">
-                <v-card>
+                <v-card v-if="i.fullName">
                   <v-card-title>{{ i.fullName }}</v-card-title>
                   <v-card-text>
                     {{ i.email }}
@@ -116,6 +124,7 @@
             </v-row>
           </v-container>
         </v-tab-item>
+        <!-- inquilinos -->
         <v-tab-item>
           <v-container>
             <v-row>
@@ -149,7 +158,32 @@
             </v-row>
           </v-container>
         </v-tab-item>
+        <!-- Espacio disponible -->
         <v-tab-item>
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="4"  v-for="(i, key) in spacesAll" :key="key">
+                <v-card>
+                <v-card-title>
+                  Espacio disponible  <v-spacer>$ {{i.precio_promedio}} Km2</v-spacer>
+                </v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn icon @click="inactiveSpace(i.id)">
+                    <v-icon>mdi-delete</v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+              </v-col>
+            </v-row>
+            <!-- dialogo agregar espacio -->
+            <v-dialog persistent width="700" v-model="addSpace">
+              <plusCard :dialogs="7" :id="[parque.id, parque.key_corp]" @close="closePlusCard"></plusCard>
+            </v-dialog>
+          </v-container>
+        </v-tab-item>
+        <!-- Informacion -->
+        <v-tab-item v-if="parque.nombre_es != 'standalone'">
           <v-container>
             <v-row>
               <v-col sm="12" md="6">
@@ -310,10 +344,11 @@ export default {
   name: "parque",
   data() {
     return {
-      tab: 0,
+      tab: 1,
       parque: [],
       addUser: null,
       addNave: null,
+      addSpace: null,
       permisos: ["Eliminar", "Editar", "Agregar"],
       dataUser: {
         name: "",
@@ -389,6 +424,7 @@ export default {
       newInfra: null,
       newRecords: null,
       addUserToNave: false,
+      spacesAll:null
     };
   },
   beforeMount() {
@@ -400,21 +436,32 @@ export default {
         this.parque = res.data[0];
         this.getUserFromPark(res.data[0].id);
         this.getallnaves(res.data[0].key_corp);
+        this.getallspacesAction(res.data[0].id);
       })
       .catch((e) => console.log(e));
   },
   methods: {
     getTab() {
-      if(this.parque.nombre_es == 'standalone'){
-        this.addNave = true;
-      } else{
+      if (this.parque.nombre_es == "standalone") {
         switch (this.tab) {
-        case 0:
-          this.addUser = true;
-          break;
-        case 1:
-          this.addNave = true;
-      }
+          case 0:
+            this.addNave = true;
+            break;
+          case 1:
+            this.addSpace = true;
+        }
+      } else {
+        switch (this.tab) {
+          case 0:
+            this.addUser = true;
+            break;
+          case 1:
+            this.addNave = true;
+            break;
+          case 2:
+            this.addSpace = true;
+            
+        }
       }
     },
     closeAction() {
@@ -458,12 +505,6 @@ export default {
           icon: "error",
           title: "Ooops ...",
           text: "Por favor asegurate de llenar todos los datos",
-          backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
         });
       }
     },
@@ -508,6 +549,7 @@ export default {
       this.addNave = false;
       this.data_user = false;
       this.addUserToNave = false;
+      this.addSpace = false;
     },
     openDialog(i) {
       this.data_user = true;
@@ -578,6 +620,30 @@ export default {
     addUserToNaveAction() {
       this.addUserToNave = true;
     },
+    getallspacesAction(id){
+      let params = new URLSearchParams();
+      params.append("query", 3);
+      params.append("id", id);
+      axios.post(`${this.$store.state.url}/espacio`,params)
+      .then(res => this.spacesAll = res.data)
+      .catch(e => console.log(e))
+    },
+    inactiveSpace(id){
+      let params = new URLSearchParams();
+      params.append("type", 'i');
+      params.append("table", 's');
+      params.append("id", id);
+      axios.post(`${this.$store.state.url}/activeinactive`,params)
+      .then(res => {
+        if(res.data.message == 'Desactivado'){
+          Swal.fire({text:"Listo", icon:"success"})
+          this.getallspacesAction(this.$store.state.parque)
+        } else{
+          Swal.fire({text:"Algo salio mal", icon:"error"})
+        }
+      })
+      .catch(e => console.log(e))
+    }
   },
   components: { plusCard, infoCard },
 };

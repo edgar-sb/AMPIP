@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
 
       <v-btn text @click="setProfileActionModel" id="more">
-        Editar perfil
+        oPcIoNeS
         <v-dialog v-model="getProfileActionModel" width="700" persistent>
           <profile />
         </v-dialog>

@@ -40,6 +40,9 @@
         Inquilinos
       </v-tab>
       <v-tab>
+        Oferta de espacios
+      </v-tab>
+      <v-tab>
         Informacion
       </v-tab>
     </v-tabs>
@@ -50,15 +53,22 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
-            <v-col sm="12" md="4" v-for="(i, key) in users" :key="key">
+            <v-col
+              cols="12"
+              sm="12"
+              md="4"
+              v-for="(i, key) in users"
+              :key="key"
+            >
               <v-card>
                 <v-card-title v-text="i.fullname"></v-card-title>
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn icon @click="infoUserAction(i.id)">
                     <v-icon> mdi-eye </v-icon>
                   </v-btn>
                   <v-dialog width="700" v-model="cards.infoUser">
-                    <info-card
+                    <InfoCard
                       :id="propsToComponents.user"
                       :type="'user'"
                       @closeInfo="closeInfo"
@@ -78,11 +88,20 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
-            <v-col sm="12" md="4" v-for="i in parks" :key="i.id" v-show="i.nombre_es != 'standalone'">
+            <v-col
+              sm="12"
+              md="4"
+              v-for="i in parks"
+              :key="i.id"
+              v-show="i.nombre_es != 'standalone'"
+            >
               <v-card>
-                <span v-if="i.edit != 'null'">Ultima actualizacion : {{ i.edit }}</span>
+                <span v-if="i.edit != 'null'"
+                  >Ultima actualizacion : {{ i.edit }}</span
+                >
                 <v-card-title v-text="i.nombre_es"></v-card-title>
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn
                     icon
                     @click="infoParkAction(i.id)"
@@ -96,18 +115,13 @@
                     @click="infoParkAction(i.id)"
                     v-if="i.edit == 'null'"
                   >
-                    <v-badge
-                      content="1"
-                      value="1"
-                      color="green"
-                      overlap
-                    >
+                    <v-badge content="1" value="1" color="green" overlap>
                       <v-icon>mdi-eye</v-icon>
                     </v-badge>
                   </v-btn>
 
                   <v-dialog v-model="cards.infoPark" width="700">
-                    <info-card
+                    <InfoCard
                       :id="propsToComponents.park[0]"
                       :type="'park'"
                       @closeInfo="closeInfo"
@@ -133,11 +147,12 @@
               <v-card>
                 <v-card-title v-text="i.name"></v-card-title>
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn icon @click="infoNaveAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
                   <v-dialog v-model="cards.infoNave" persistent width="700">
-                    <info-card
+                    <InfoCard
                       :id="propsToComponents.nave"
                       :type="'nave'"
                       @closeInfo="closeInfo"
@@ -153,11 +168,36 @@
         </v-container>
       </v-tab-item>
 
+      <!-- Espacios disponibles -->
+      <v-tab-item>
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">
+              <v-card>
+                <v-card-title>
+                  Espacio disponible
+                  <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                </v-card-title>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn icon @click="spaces = true">
+                    <v-icon>mdi-eye</v-icon>
+                  </v-btn>
+                  <v-dialog v-model="spaces" width="700">
+                    <InfoCard :id="i" :type="'space'" @close="closeInfo" />
+                  </v-dialog>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-tab-item>
+
       <!--Info-->
       <v-tab-item>
         <v-container>
           <v-row>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.corporativo"
                 label="Corporativo"
@@ -166,7 +206,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.nombre_es"
                 label="Nombre en Español"
@@ -175,7 +215,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.nombre_en"
                 label="Nombre en Inglés"
@@ -184,14 +224,14 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.rfc" label="RFC" outlined>
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <span>Dirección / Contacto</span>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.direccion"
                 label="Calle y numero"
@@ -200,22 +240,22 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.cp" label="C.P" outlined>
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.colonia" label="Colonia" outlined>
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.estado" label="Estado" outlined>
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.municipio"
                 label="Municipio/ Alcaldía"
@@ -224,14 +264,14 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.celular" label="Celular" outlined>
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <span>Inversiones</span>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
@@ -239,7 +279,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.inversionRealizadaActual"
                 label="Inversión anual realizada (año en curso) MXN"
@@ -247,7 +287,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-text-field
                 v-model="id.inversionRealizadaAnterior"
                 label="Inversión anual realizada (año anterior) MXN"
@@ -255,31 +295,31 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <span>Redes Sociales:</span>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-text-field
                 label="Facebook"
                 v-model="social.facebook"
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-text-field
                 label="Twiter"
                 v-model="social.twiter"
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-text-field
                 label="LinkdIn"
                 v-model="social.linkdin"
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-text-field
                 label="Instagram"
                 v-model="social.instagram"
@@ -287,10 +327,15 @@
               ></v-text-field>
             </v-col>
 
-            <v-col sm="12">
-              <v-text-field disabled v-model="id.fechaDeValidacion" label="Ultima actualizacion" v-if="id.fechaDeValidacion"></v-text-field>
+            <v-col cols="12" sm="12">
+              <v-text-field
+                disabled
+                v-model="id.fechaDeValidacion"
+                label="Ultima actualizacion"
+                v-if="id.fechaDeValidacion"
+              ></v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <v-btn
                 text
                 color="green"
@@ -311,7 +356,8 @@
 <script>
 import axios from "axios";
 import plusCard from "../components/plusCard";
-import infoCard from "../components/infoCard";
+import InfoCard from "../components/infoCard";
+import Swal from "sweetalert2";
 
 export default {
   data() {
@@ -347,11 +393,13 @@ export default {
         instagram: null,
         linkdin: null,
       },
+      places: {},
+      spaces: false,
     };
   },
   components: {
     plusCard,
-    infoCard,
+    InfoCard,
   },
   methods: {
     saveInfoCorp() {
@@ -399,13 +447,14 @@ export default {
               ctx.users = res.data;
             })
             .catch((e) => console.log(e));
-          
+
           let paramsExtra = new URLSearchParams();
-          paramsExtra.append("query",1);
-          paramsExtra.append("id",this.id.id);
-          axios.post(`${this.$store.state.url}/extras`,paramsExtra)
-          .then(res=> this.social = JSON.parse(res.data.data))
-          .catch((e) => console.log(e));
+          paramsExtra.append("query", 1);
+          paramsExtra.append("id", this.id.id);
+          axios
+            .post(`${this.$store.state.url}/extras`, paramsExtra)
+            .then((res) => (this.social = JSON.parse(res.data.data)))
+            .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
       this.getCorpInfo = true;
@@ -454,6 +503,32 @@ export default {
           this.getInfoCorpAction();
           this.getParks();
           this.getAllNaves();
+          let timerInterval;
+          Swal.fire({
+            title: "Recuperando informacion",
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading();
+              timerInterval = setInterval(() => {
+                const content = Swal.getHtmlContainer();
+                if (content) {
+                  const b = content.querySelector("b");
+                  if (b) {
+                    b.textContent = Swal.getTimerLeft();
+                  }
+                }
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            },
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log("...");
+            }
+          });
         })
         .catch((e) => console.log(e));
     },
@@ -487,6 +562,7 @@ export default {
       this.cards.infoUser = false;
       this.cards.infoNave = false;
       this.cards.infoUser = false;
+      this.spaces = false;
     },
 
     closePlusCard() {
@@ -510,11 +586,24 @@ export default {
         .catch((e) => console.log(e));
       this.cards.infoNave = true;
     },
+
+    getSpaces() {
+      let params = new URLSearchParams();
+      params.append("query", 1);
+      params.append("id", this.$store.state.id_corp);
+      axios
+        .post(`${this.$store.state.url}/espacio`, params)
+        .then((res) => {
+          this.places = res.data;
+        })
+        .catch((e) => console.log(e));
+    },
   },
   beforeMount() {
     this.getInfoCorpAction();
     this.getParks();
     this.getAllNaves();
+    this.getSpaces();
   },
   computed: {
     imgRoute() {

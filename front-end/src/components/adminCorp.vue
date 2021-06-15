@@ -32,7 +32,7 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
-            <v-col sm="12" md="4" v-for="i in parks" :key="i.id">
+            <v-col cols="12" sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
                 <v-card-title v-if="i.nombre_es != 'standalone'" v-text="i.nombre_es"></v-card-title>
                 <v-card-title  v-if="i.nombre_es == 'standalone'" >Stand-a·lone</v-card-title>
@@ -55,7 +55,7 @@
       <v-tab-item>
         <v-container>
           <v-row>
-            <v-col sm="12" class="my-4">
+            <v-col cols="12" sm="12" class="my-4">
               <span style="color : red" v-if="id.habilitar == 0"
                 >Aun no se Autoriza la ultima actualizacion</span
               >
@@ -69,7 +69,7 @@
                 style="color:#fff"
               />
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.corporativo"
                 label="Corporativo"
@@ -78,7 +78,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.nombre_es"
                 label="Nombre de Corporativo (Español)"
@@ -87,7 +87,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.nombre_en"
                 label="Nombre de Corporativo (Ingles)"
@@ -96,14 +96,14 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field v-model="id.rfc" label="RFC" outlined>
               </v-text-field>
             </v-col>
             <v-col sm="12">
               <span>Direccion / Contacto</span>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.direccion"
                 label="Calle y Número"
@@ -112,7 +112,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 outlined
                 label="Código Postal"
@@ -121,7 +121,7 @@
               ></v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <span>{{ id.colonia }}</span>
               <v-select
                 :items="cp"
@@ -129,18 +129,18 @@
                 placeholder="Colonia"
                 outlined
                 v-model="id.colonia"
-                item-text="colonia"
-                item-value="colonia"
+                 item-text="d_asenta"
+              item-value="d_asenta"
               ></v-select>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <span>{{ id.estado }}</span>
               <v-text-field v-model="edo" label="Estado" outlined disabled>
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <spam>{{ id.municipio }}</spam>
               <v-text-field
                 v-model="mun"
@@ -151,7 +151,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <span>Numero celular: </span>
               <v-text-field v-model="id.celular" label="Celular" outlined>
               </v-text-field>
@@ -159,7 +159,7 @@
             <v-col sm="12">
               <span>Inversión: </span>
             </v-col>
-            <v-col sm="12" md="12">
+            <v-col cols="12" sm="12" md="12">
               <v-text-field
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
@@ -167,7 +167,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.inversionRealizadaActual"
                 label="Inversión anual programada (pipeline año actual) MXN"
@@ -176,7 +176,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12" md="6">
+            <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.inversionRealizadaAnterior"
                 label="Inversión anual programada (pipeline año anterior) MXN"
@@ -184,7 +184,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col cols="12" sm="12">
               <span>Social: </span>
             </v-col>
             <v-col sm="12" md="12">
@@ -192,12 +192,12 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="12">
+            <v-col cols="12" sm="12" md="12">
               <v-text-field v-model="social.twiter" label="Twiter" outlined>
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="12">
+            <v-col cols="12" sm="12" md="12">
               <v-text-field
                 v-model="social.instagram"
                 label="Instagram"
@@ -206,7 +206,7 @@
               </v-text-field>
             </v-col>
 
-            <v-col sm="12" md="12">
+            <v-col cols="12" sm="12" md="12">
               <v-text-field v-model="social.linkdin" label="LinkedIn" outlined>
               </v-text-field>
             </v-col>
@@ -426,7 +426,7 @@ export default {
           console.log(error);
         });
     },
-
+ 
     extrasAction() {
       let params = new URLSearchParams();
       params.append("query", 2);
@@ -445,12 +445,11 @@ export default {
     },
     watchCp() {
       if (this.id.cp.length > 4) {
-        let params = new URLSearchParams();
-        params.append("cp", this.id.cp);
+        
         axios
-          .post(`${this.$store.state.url}/copomex`, params)
+          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.id.cp}`)
           .then((res) => {
-            this.cp = res.data;
+            this.cp = res.data.zip_codes;
           })
           .catch((e) => {
             console.log(e);
@@ -469,14 +468,14 @@ export default {
     },
     edo() {
       if (this.cp.length > 0) {
-        return this.cp[0].estado;
+        return this.cp[0].d_estado;
       } else {
         return "Sin datos";
       }
     },
     mun() {
       if (this.cp.length > 0) {
-        return this.cp[0].municipip;
+        return this.cp[0].d_mnpio;
       } else {
         return "Sin datos";
       }

@@ -9,7 +9,7 @@
     </v-card-actions>
     <v-card-text>
       <v-row>
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <UploadImages
             @change="handleImages"
             :max="1"
@@ -17,14 +17,14 @@
             style="color:#fff"
           />
         </v-col>
-        <v-col sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
           <v-text-field outlined label="Nombre completo" v-model="name">
           </v-text-field>
         </v-col>
-        <v-col sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
           <v-text-field outlined label="email" v-model="email"> </v-text-field>
         </v-col>
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <span>Direccion:</span> <br />
           <span> {{ dataUser.direccionDeOfficina }}</span>
           <v-switch
@@ -33,7 +33,7 @@
             :value="changeAddres"
           ></v-switch>
         </v-col>
-        <v-col sm="12" md="12" v-if="changeAddres">
+        <v-col cols="12" sm="12" md="12" v-if="changeAddres">
           <v-text-field
             label="Calle y Número"
             v-model="address_street"
@@ -42,7 +42,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col md="6" v-if="changeAddres">
+        <v-col cols="12" md="6" v-if="changeAddres">
           <v-text-field
             outlined
             label="Codigo postal"
@@ -50,7 +50,7 @@
             @keyup="watchCp"
           ></v-text-field>
         </v-col>
-        <v-col md="6" v-if="changeAddres">
+        <v-col cols="12" md="6" v-if="changeAddres">
           <v-select
             :items="cp"
             label="Colonia"
@@ -61,7 +61,7 @@
             item-value="d_asenta"
           ></v-select>
         </v-col>
-        <v-col md="6" v-if="changeAddres">
+        <v-col cols="12" md="6" v-if="changeAddres">
           <v-text-field
             outlined
             label="Estado"
@@ -69,7 +69,7 @@
             disabled
           ></v-text-field>
         </v-col>
-        <v-col md="6" v-if="changeAddres">
+        <v-col cols="12" md="6" v-if="changeAddres">
           <v-text-field
             outlined
             label="Municipio/Alcaldía"
@@ -78,10 +78,10 @@
           ></v-text-field>
         </v-col>
 
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <span>Contacto:</span>
         </v-col>
-        <v-col sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
           <v-text-field
             label="Teléfono de oficina"
             v-model="dataUser.telefonoOfficina"
@@ -89,7 +89,7 @@
           >
           </v-text-field>
         </v-col>
-        <v-col sm="12" md="6">
+        <v-col cols="12" sm="12" md="6">
           <v-text-field
             label="Teléfono personal"
             outlined
@@ -127,17 +127,17 @@
             </v-date-picker>
           </v-dialog>
         </v-col>
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <span>Seguridad:</span>
         </v-col>
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <v-switch
             label="¿Deseas modificar tu contraseña?"
             v-model="changePass"
             :value="changePass"
           ></v-switch>
         </v-col>
-        <v-col sm="12" md="6" v-if="changePass">
+        <v-col cols="12" sm="12" md="6" v-if="changePass">
           <v-text-field
             type="password"
             label="Nueva contraseña"
@@ -147,7 +147,7 @@
           </v-text-field>
         </v-col>
 
-        <v-col sm="12" md="6" v-if="changePass">
+        <v-col cols="12" sm="12" md="6" v-if="changePass">
           <v-text-field
             type="password"
             label="Confirma tu nueva contraseña"
@@ -157,7 +157,7 @@
           >
           </v-text-field>
         </v-col>
-        <v-col sm="12">
+        <v-col cols="12" sm="12">
           <v-text-field
             type="password"
             label="Confirma tu contraseña actual"
@@ -255,14 +255,9 @@ export default {
               pars.append("id", ids);
               pars.append("telefonoOfficina", this.dataUser.telefonoOfficina);
               pars.append("celular", this.dataUser.celular);
-              pars.append(
-                "direccionDeOfficina",
-                `${this.address_street}  ${this.cpUser}  ${this.col} ${this.edo} ${this.mun}`
-              );
+              pars.append("direccionDeOfficina",`${this.address_street}  ${this.cpUser}  ${this.col} ${this.edo} ${this.mun}`);
               pars.append("cumpleanios", this.dataUser.cumpleanios);
-              axios
-                .post(`${this.$store.state.url}/updatedatauser`, pars)
-                .then(() => {
+              axios.post(`${this.$store.state.url}/updatedatauser`, pars).then(() => {
                   let timerInterval;
                   Swal.fire({
                     title: "Datos guardados",
@@ -307,8 +302,11 @@ export default {
                       console.log("I was closed by the timer");
                     }
                   });
-                })
-                .catch((e) => console.log(e));
+                }).catch((e) => console.log(e));
+            } else{
+              Swal.fire({icon: "error",
+          title: "Oops...",
+          text: "Contraseña incorrecta",})
             }
           })
           .catch((e) => console.log(e));

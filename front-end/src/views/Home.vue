@@ -107,12 +107,6 @@ export default {
                 icon: "error",
                 title: "Ooops ...",
                 text: "No pudimos iniciar secion revisa tus credenciales",
-                backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
               });
             } else {
               console.log(res.data[0]);

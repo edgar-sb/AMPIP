@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Nave -->
-    <v-card v-show="dialogs == 1">
+    <v-card v-if="dialogs == 1">
       <v-card-actions>
         <v-card-title>Inquilinos </v-card-title>
         <v-spacer></v-spacer>
@@ -119,7 +119,7 @@
       </v-card-actions>
     </v-card>
     <!-- Crear Parque -->
-    <v-card v-show="dialogs == 2">
+    <v-card v-if="dialogs == 2">
       <v-card-actions>
         <v-card-title>Parque *</v-card-title>
         <v-spacer></v-spacer>
@@ -416,7 +416,7 @@
       </v-card-actions>
     </v-card>
     <!-- Corporativo -->
-    <v-card v-show="dialogs == 4">
+    <v-card v-if="dialogs == 4">
       <v-card-title>
         Nuevo {{ type_society }}
         <v-spacer></v-spacer>
@@ -428,159 +428,158 @@
       </v-card-title>
 
       <v-card-text>
-        
-          <v-row>
-            <v-col cols="12" sm="12" md="12">
-              <v-cotainer>
-                <v-row align="center" justify="center">
-                  <v-col sm="12" md="6">
-                    <UploadImages
-                      @change="handleImages"
-                      :max="3"
-                      style="color:#fff"
-                    />
-                    <span>Sube aquí tu logotipo *</span>
-                  </v-col>
-                </v-row>
-              </v-cotainer>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                outlined
-                label="Razón Social *"
-                :rules="[rules.required]"
-                v-model="corp.spcial"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12"  sm="12" md="6">
-              <v-text-field
-                outlined
-                label="Nombre de Corporativo (Español) *"
-                :rules="[rules.required]"
-                v-model="corp.name_es"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="12">
-              <v-text-field
-                outlined
-                label="Nombre de Corporativo (Inglés) *"
-                :rules="[rules.required]"
-                v-model="corp.name_en"
-              ></v-text-field>
-            </v-col>
-            <!-- Apartado de direccion -->
-            <v-col cols="12" sm="12">
-              <span>Dirección </span>
-            </v-col>
-            <v-col cols="12" sm="12" md="12">
-              <v-text-field
-                outlined
-                label="Calle y Número *"
-                :rules="[rules.required]"
-                v-model="corp.address"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="12">
-              <v-text-field
-                outlined
-                label="Código Postal *"
-                :rules="[rules.required]"
-                v-model="corp.cp"
-                @keyup="watchCp"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="12">
-              <v-select
-                :items="cp"
-                label="Colonia *"
-                placeholder="Colonia"
-                :rules="[rules.required]"
-                outlined
-                v-model="corp.col"
-                item-text="d_asenta"
-                item-value="d_asenta"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                outlined
-                label="Estado *"
-                :rules="[rules.required]"
-                v-model="edo"
-                disabled
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                outlined
-                label="Municipio/Alcaldía *"
-                :rules="[rules.required]"
-                v-model="mun"
-                disabled
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="12">
-              <label>Teléfono de Oficina: {{ officePhone }}</label>
-            </v-col>
-            <v-col cols="12" sm="3">
-              <v-select
-                :items="codigoPais"
-                label="Código país *"
-                outlined
-                :rules="[rules.required]"
-                v-model="codigoPaisValue"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="2">
-              <v-text-field
-                label="Lada *"
-                outlined
-                v-model="ladaValue"
-                :rules="[rules.required, rules.phone, rules.phoneLada]"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="7">
-              <v-text-field
-                outlined
-                label="Número local *"
-                :rules="[rules.required, rules.phone, rules.phoneLenght]"
-                v-model="corp.cel"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <span>Clasificación</span>
-            </v-col>
-            <v-col cols="12" sm="12" v-if="type_society === 'Desarrollador'">
-              <v-select
-                outlined
-                :rules="[rules.required]"
-                label="Clasificación de Socio *"
-                v-model="society"
-                :items="types"
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="12" v-if="type_society === 'Patrocinador'">
-              <v-select
-                outlined
-                :rules="[rules.required]"
-                label="Clasificación de patrocinador *"
-                v-model="society"
-                :items="types_pats"
-              ></v-select>
-            </v-col>
-          </v-row>
+        <v-row>
+          <v-col cols="12" sm="12" md="12">
+            <v-cotainer>
+              <v-row align="center" justify="center">
+                <v-col sm="12" md="6">
+                  <UploadImages
+                    @change="handleImages"
+                    :max="3"
+                    style="color:#fff"
+                  />
+                  <span>Sube aquí tu logotipo *</span>
+                </v-col>
+              </v-row>
+            </v-cotainer>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <v-text-field
+              outlined
+              label="Razón Social *"
+              :rules="[rules.required]"
+              v-model="corp.spcial"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <v-text-field
+              outlined
+              label="Nombre de Corporativo (Español) *"
+              :rules="[rules.required]"
+              v-model="corp.name_es"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <v-text-field
+              outlined
+              label="Nombre de Corporativo (Inglés) *"
+              :rules="[rules.required]"
+              v-model="corp.name_en"
+            ></v-text-field>
+          </v-col>
+          <!-- Apartado de direccion -->
+          <v-col cols="12" sm="12">
+            <span>Dirección </span>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <v-text-field
+              outlined
+              label="Calle y Número *"
+              :rules="[rules.required]"
+              v-model="corp.address"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <v-text-field
+              outlined
+              label="Código Postal *"
+              :rules="[rules.required]"
+              v-model="corp.cp"
+              @keyup="watchCp"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <v-select
+              :items="cp"
+              label="Colonia *"
+              placeholder="Colonia"
+              :rules="[rules.required]"
+              outlined
+              v-model="corp.col"
+              item-text="d_asenta"
+              item-value="d_asenta"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <v-text-field
+              outlined
+              label="Estado *"
+              :rules="[rules.required]"
+              v-model="edo"
+              disabled
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="6">
+            <v-text-field
+              outlined
+              label="Municipio/Alcaldía *"
+              :rules="[rules.required]"
+              v-model="mun"
+              disabled
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12" md="12">
+            <label>Teléfono de Oficina: {{ officePhone }}</label>
+          </v-col>
+          <v-col cols="12" sm="3">
+            <v-select
+              :items="codigoPais"
+              label="Código país *"
+              outlined
+              :rules="[rules.required]"
+              v-model="codigoPaisValue"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="2">
+            <v-text-field
+              label="Lada *"
+              outlined
+              v-model="ladaValue"
+              :rules="[rules.required, rules.phone, rules.phoneLada]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="7">
+            <v-text-field
+              outlined
+              label="Número local *"
+              :rules="[rules.required, rules.phone, rules.phoneLenght]"
+              v-model="corp.cel"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" sm="12">
+            <span>Clasificación</span>
+          </v-col>
+          <v-col cols="12" sm="12" v-if="type_society === 'Desarrollador'">
+            <v-select
+              outlined
+              :rules="[rules.required]"
+              label="Clasificación de Socio *"
+              v-model="society"
+              :items="types"
+            ></v-select>
+          </v-col>
+          <v-col cols="12" sm="12" v-if="type_society === 'Patrocinador'">
+            <v-select
+              outlined
+              :rules="[rules.required]"
+              label="Clasificación de patrocinador *"
+              v-model="society"
+              :items="types_pats"
+            ></v-select>
+          </v-col>
+        </v-row>
       </v-card-text>
 
       <v-card-actions>
         <v-spacer></v-spacer>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
         <v-btn color="green darken-1" text @click="addCorp">
           Añadir
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Usuario --->
-    <v-card v-show="dialogs == 5">
+    <v-card v-if="dialogs == 5">
       <v-card-actions>
         <v-card-title>
           Usuario
@@ -620,7 +619,7 @@
             <v-text-field
               outlined
               label="Correo"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.email]"
               v-model="addUser.email"
             ></v-text-field>
           </v-col>
@@ -628,14 +627,14 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
         <v-btn color="green darken-1" text @click="addUserAction">
           Agregar
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- ultimo usuario -->
-    <v-card v-show="dialogs == 6">
+    <v-card v-if="dialogs == 6">
       <v-card-actions>
         <v-card-title>
           Usuario
@@ -684,6 +683,97 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="green darken-1" text @click="addUserActionUltimo">
+          Agregar
+        </v-btn>
+        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-card v-if="dialogs == 7">
+      <v-card-actions>
+        <v-card-title>
+          Espacio
+        </v-card-title>
+        <v-spacer></v-spacer>
+        <v-btn icon @click="closeAction">
+          <v-icon>mdi-window-close</v-icon>
+        </v-btn>
+      </v-card-actions>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field
+              outlined
+              title="Tipo"
+              label="Tipo de espacio *"
+              placeholder="Tipo de espacio"
+              v-model="spaces.type"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              outlined
+              title="Uso"
+              label="Uso del espacio *"
+              placeholder="Uso del espacio"
+              v-model="spaces.use"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              outlined
+              title="Precio"
+              label="Precio promedio *"
+              placeholder="Ej. 89.00"
+              v-model="spaces.price"
+              :rules="[rules.required,rules.promPrice]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              title="nombe de contacto *"
+              placeholder="nombe de contacto"
+              label="Nombre del contacto"
+              outlined
+              v-model="spaces.contact_name"
+              :rules="[rules.required]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              label="Telefono del contacto *"
+              placeholder="Telefono del contacto"
+              outlined
+              v-model="spaces.contact_phone"
+              :rules="[rules.required, rules.phone, rules.phoneTen]"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              placeholder="Ancho"
+              label="Ancho *"
+              outlined
+              v-model="spaces.width"
+              :rules="[rules.required,rules.phone]"
+              suffix="Km2"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="12">
+            <v-text-field
+              placeholder="Largo"
+              label="Largo *"
+              outlined
+              v-model="spaces.height"
+              suffix="Km2"
+              :rules="[rules.required,rules.phone]"
+            ></v-text-field>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="green darken-1" text @click="addSpaceAction">
           Agregar
         </v-btn>
         <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
@@ -782,6 +872,7 @@ export default {
         inv_sig: "",
         rfc: "",
         spcial: "",
+        decimalPoint: /\^[0-9]+([,][0-9]+)?$/
       },
       space: null,
       cp: [],
@@ -791,16 +882,18 @@ export default {
         counter: (value) => value.length >= 8 || "Minimo 8 characters",
         email: (value) => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid e-mail.";
+          return pattern.test(value) || "Ingresa un correo valido.";
         },
         phone: (value) => {
           const pattern = /^([0-9])*$/;
           return pattern.test(value) || "Numero no valido";
         },
-        cp: (value) => value.length <= 5 || "maximo 5 numeros",
+        cp: (value) => value.length <= 5 || "Maximo 5 numeros",
         waitingSpace: (value) => value <= this.space || "Espacio insuficiente",
-        phoneLenght: (value) => value.length <= 8 || "maximo 8 digitos",
-        phoneLada: (value) => value.length <= 2 || "maximo 2 digitos",
+        phoneLenght: (value) => value.length <= 8 || "Maximo 8 digitos",
+        phoneLada: (value) => value.length <= 2 || "Maximo 2 digitos",
+        phoneTen:(value) => value.length > 9  || "Minimo 10 digitos",
+        promPrice: (value) => this.decimalPoint.test(value) || "Numero Incorrecto"
       },
       corps: [],
       park: false,
@@ -1214,6 +1307,7 @@ export default {
       ],
       society: "",
       parks: ["Modelo"],
+      spaces: {},
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
@@ -1421,9 +1515,7 @@ export default {
         this.corp.cp != "" &&
         this.corp.col != "" &&
         this.edo != "" &&
-        this.mun != "" &&
-        this.corp.cel != "" &&
-        this.corp.logo != ""
+        this.mun != ""
       ) {
         var ctx = this;
         axios
@@ -1440,16 +1532,15 @@ export default {
               data: data,
             };
             axios(config)
-              .then(function(response) {
+              .then(function() {
+                Swal.fire("Se agrego correctamente");
                 ctx.$router.push("/");
-                console.log(JSON.stringify(response.data));
               })
               .catch(function(error) {
                 console.log(error);
               });
           })
           .catch((e) => console.log(e));
-        /* this.reload(); */
       } else {
         Swal.fire({
           icon: "error",
@@ -1512,7 +1603,7 @@ export default {
         axios
           .post(`${this.$store.state.url}/createuser`, params)
           .then((res) => {
-            if (res.data.message) {
+            if (res.data.message == 1) {
               let par = new URLSearchParams();
               par.append("email", ctx.addUser.email);
               par.append("pass", ctx.addUser.pass);
@@ -1526,6 +1617,11 @@ export default {
                   ctx.createdataUser(res.data);
                 })
                 .catch((e) => console.log(e));
+            } else {
+              Swal.fire({
+                text: "El correo electronico ya esta en uso",
+                icon: "error",
+              });
             }
           })
           .catch((e) => console.log(e));
@@ -1533,7 +1629,6 @@ export default {
         this.alerts();
       }
     },
-
     addUserActionUltimo() {
       let params = new URLSearchParams();
       params.append("email", this.addUser.email);
@@ -1616,17 +1711,40 @@ export default {
         icon: "error",
         title: "Ooops ...",
         text: "Por favor asegurate de llenar todos los datos",
-        backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
       });
     },
     reload() {
       this.$router.push("/");
     },
+    addSpaceAction(){
+      let extras = {
+        name:this.spaces.contact_name,
+        phone: this.spaces.contact_phone,
+        medidas: [this.spaces.height, this.spaces.width]
+      };
+      if(this.id[0] != null && this.spaces.price != undefined && this.spaces.type != undefined &&  this.spaces.use != undefined){
+        let params = new URLSearchParams();
+      params.append("query",2);
+      params.append("id", this.id[1]);
+      params.append("parque", this.id[0]);
+      params.append("precio", this.spaces.price);
+      params.append("tipo", this.spaces.type);
+      params.append("uso", this.spaces.use);
+      params.append("extras", JSON.stringify(extras));
+
+      axios.post(`${this.$store.state.url}/espacio`, params)
+      .then(res => {
+        if(res.data.message == 1){
+          this.closeAction();
+        } else {
+          Swal.fire({text:"Ah ocurrido un error", icon:"error"})
+        }
+      })
+      .catch(e => console.log(e))
+      } else{
+        Swal.fire({text:"Por favor llena todos los datos", icon:"error"})
+      }
+    }
   },
   computed: {
     edo() {
