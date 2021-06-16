@@ -121,7 +121,7 @@
     <!-- Crear Parque -->
     <v-card v-if="dialogs == 2">
       <v-card-actions>
-        <v-card-title>Parque *</v-card-title>
+        <v-card-title>Parque</v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
           <v-icon> mdi-window-close </v-icon>
@@ -398,10 +398,10 @@
 
             <v-col sm="12">
               <UploadImages
-                @change="handleImages"
-                :max="4"
+                @change="chargeImages"
+                :max="3"
                 maxError="Solamente una imagen"
-                style="color:#fff"
+                style="color:#000"
               />
             </v-col>
           </v-row>
@@ -818,6 +818,7 @@ export default {
   components: { UploadImages },
   data() {
     return {
+      multiImage: [],
       codigoPais: ["+52"],
       gmapsLat: true,
       editPark: false,
@@ -1349,7 +1350,7 @@ export default {
         this.inquilino.origin != "" &&
         this.inquilino.insignia != "" &&
         this.inquilino.sector != "" &&
-        this.inquilino.antiguedad != "" 
+        this.inquilino.antiguedad != ""
       ) {
         /* var parqueId = null;
         if (this.parque != false) {
@@ -1388,15 +1389,16 @@ export default {
           })
           .catch((e) => console.log(e));
 
-          if(this.parque != false){
-            let params = new URLSearchParams();
-            params.append("type","i")
-            params.append("table", "s")
-            params.append("id",this.parque)
-            axios.post(`${this.$store.state.url}/activeinactive`, params)
-            .then(res => console.log(res))
+        if (this.parque != false) {
+          let params = new URLSearchParams();
+          params.append("type", "i");
+          params.append("table", "s");
+          params.append("id", this.parque);
+          axios
+            .post(`${this.$store.state.url}/activeinactive`, params)
+            .then((res) => console.log(res))
             .catch((e) => console.log(e));
-          } 
+        }
       } else {
         Swal.fire({
           icon: "error",
@@ -1406,8 +1408,6 @@ export default {
       }
     },
     addparque() {
-      
-
       if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
         var jsons = {
           telefono: `${this.parquesData.code} ${this.parquesData.lada} ${this.parquesData.telefono}`,
@@ -1442,32 +1442,35 @@ export default {
         params.append("contactEmail", "");
         params.append("reconocimientoPracticas", this.parquesData.record);
         params.append("extras", JSON.stringify(jsons));
+        var ctx = this;
         axios
           .post(`${this.$store.state.url}/createpark`, params)
           .then((res) => {
             if (res.data.message == "Listo") {
-              let data = new URLSearchParams();
-              data.append("name", this.name_es);
-              data.append("lat", this.markers.lat);
-              data.append("lng", this.markers.lng);
-
-              axios
-                .post(`${this.$store.state.url}/mapsup`, data)
-                .then(() => {
-                  Swal.fire({
-                    icon: "success",
-                    title: "Listo",
-                    text: "Guardado",
+              for (let i = 0; i < ctx.multiImage.length; i++) {
+                let data = new FormData();
+                data.append("query", "parks");
+                data.append("uniqueName", `${ctx.parquesData.name_es}-${i}`);
+                data.append("fichero_usuario", ctx.multiImage[i]);
+                var config = {
+                  method: "post",
+                  url: `${ctx.$store.state.baseUrl}/api/uploadfiles`,
+                  headers: { "Content-Type": "image/jpeg" },
+                  data: data,
+                };
+                axios(config)
+                  .then(function() {
+                    ctx.$router.push("/");
+                  })
+                  .catch(function(error) {
+                    console.log(error);
                   });
-                  this.closeAction();
-                })
-                .catch((e) => console.log(e));
+              }
             } else {
               Swal.fire({
                 icon: "error",
                 title: "Ooops ...",
                 text: res.data.err,
-              
               });
             }
             this.closeAction();
@@ -1585,6 +1588,11 @@ export default {
     },
     handleImages(files) {
       this.corp.logo = files[0];
+      console.log(this.corp.logo);
+    },
+
+    chargeImages(files) {
+      this.multiImage = files;
     },
     addUserAction() {
       let params = new URLSearchParams();

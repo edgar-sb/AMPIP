@@ -1628,7 +1628,7 @@ class apiController extends AbstractActionController
             case "parks":
                 try {
                     move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], "./public/uploads/parks/"  . $uniqueName . ".jpg");
-                    return new JsonModel(["message" => "http://" . $host . "/uploads/" . $uniqueName . ".jpg"]);
+                    return new JsonModel(["message" => "http://" . $host . "/uploads/parks/" . $uniqueName . ".jpg"]);
                 } catch (\Exception $e) {
                     return new JsonModel(["message" => $e]);
                 }
