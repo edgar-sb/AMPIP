@@ -103,7 +103,7 @@
                 outlined
                 @click="getAllspace"
                 item-text="tipo"
-                item-value="tipo"
+                item-value="id"
               >
               </v-select>
             </v-col>
@@ -1349,18 +1349,18 @@ export default {
         this.inquilino.origin != "" &&
         this.inquilino.insignia != "" &&
         this.inquilino.sector != "" &&
-        this.inquilino.antiguedad != ""
+        this.inquilino.antiguedad != "" 
       ) {
-        var parqueId = null;
+        /* var parqueId = null;
         if (this.parque != false) {
           parqueId = this.parque;
         } else {
           parqueId = this.id;
-        }
+        } */
 
         var params = new URLSearchParams();
         params.append("name", this.inquilino.name);
-        params.append("idParque", parqueId);
+        params.append("idParque", this.id);
 
         axios
           .post(`${this.$store.state.url}/createnave`, params)
@@ -1387,17 +1387,21 @@ export default {
               .catch((e) => console.log(e));
           })
           .catch((e) => console.log(e));
+
+          if(this.parque != false){
+            let params = new URLSearchParams();
+            params.append("type","i")
+            params.append("table", "s")
+            params.append("id",this.parque)
+            axios.post(`${this.$store.state.url}/activeinactive`, params)
+            .then(res => console.log(res))
+            .catch((e) => console.log(e));
+          } 
       } else {
         Swal.fire({
           icon: "error",
           title: "Ooops ...",
           text: "Por favor asegurate de llenar todos los datos",
-          backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
         });
       }
     },
@@ -1490,12 +1494,6 @@ export default {
           icon: "error",
           title: "Ooops ...",
           text: "Por favor asegurate de llenar todos los datos",
-          backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
         });
       }
     },
@@ -1574,12 +1572,6 @@ export default {
           icon: "error",
           title: "Ooops ...",
           text: "Por favor asegurate de llenar todos los datos",
-          backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
         });
       }
     },

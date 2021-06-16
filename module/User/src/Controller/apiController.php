@@ -35,8 +35,7 @@ class apiController extends AbstractActionController
     {
         $this->url = "http://localhost:8000/panel/#/";
         $this->entityManager = $entityManager;
-        $this->mailFactory =$mailFactoy;
-
+        $this->mailFactory = $mailFactoy;
     }
 
     //******************SOLO PERMISOS*********************
@@ -89,7 +88,7 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $query = $this->params()->fromPost("query");
-            switch ($query){
+            switch ($query) {
                 case 1:
                     $id = $this->params()->fromPost("id");
                     $permisos = $this->entityManager->getRepository(parquesuserEntity::class)->findBy(["persona" => $id]);
@@ -103,21 +102,21 @@ class apiController extends AbstractActionController
                     }
 
                     return new JsonModel($arr);
-                break;
+                    break;
                 case 2:
                     $id = $this->params()->fromPost("id_parque");
                     $permisos = $this->entityManager->getRepository(parquesuserEntity::class)->findBy(["id_parque" => $id]);
                     $arr = array();
-                    
+
 
                     foreach ($permisos as $permiso) {
                         $id_people = $permiso->getPersona();
                         $search = $this->entityManager->getRepository(userEntity::class)->findById($id_people);
                         $items = [];
-                        foreach($search as $item){
+                        foreach ($search as $item) {
                             $items['id']  = $item->getId();
                             $items['email']  = $item->getEmail();
-                            $items['fullName']= $item->getFullName();
+                            $items['fullName'] = $item->getFullName();
                             $items['status'] = $item->getStatus();
                             $items['permisos'] = $permiso->getpermiso();
                         }
@@ -125,9 +124,9 @@ class apiController extends AbstractActionController
                     }
 
                     return new JsonModel($arr);
-                break;
+                    break;
                 default:
-                    return new JsonModel(["message"=>"sin query"]);
+                    return new JsonModel(["message" => "sin query"]);
             }
         } else {
             return new JsonModel(["message" => "ruta post"]);
@@ -191,85 +190,83 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
 
-                $query = $this->params()->fromPost("query");
-                
-                switch ($query) {
-                    case 1:
-                        $response = $this->entityManager->getRepository(corpEntity::class)->findBy(["tipoDeSocio"=>"Desarrollador"]);
-                        $arrCorps = array();
-                        $result = [];
-                        foreach ($response as $role) {
-                            if ($role->getId() != "") {
-                                $result["id"] = $role->getid();
-                                $result["corporativo"] = $role->getcorporativo();
-                                $result["nombre_es"] = $role->getnombre_es();
-                                $result["nombre_en"] = $role->getnombre_en();
-                                $result["tipoDeSocio"] = $role->gettipoDeSocio();
-                                $result["rfc"] = $role->getrfc();
-                                $result["direccion"] = $role->getdireccion();
-                                $result["cp"] = $role->getcp();
-                                $result["colonia"] = $role->getcolonia();
-                                $result["estado"] = $role->getestado();
-                                $result["municipio"] = $role->getmunicipio();
-                                $result["celular"] = $role->getcelular();
-                                $result["logo"] = $role->getlogo();
-                                $result["inversionAnualSiguiente"] = $role->getinversionAnualSiguiente();
-                                $result["inversionRealizadaActual"] = $role->getinversionRealizadaActual();
-                                $result["inversionRealizadaAnterior"] = $role->getinversionRealizadaAnterior();
-                                $result["validadoPor"] = $role->getvalidadoPor();
-                                $result["fechaDeValidacion"] = $role->getfechaDeValidacion();
-                                $result["fechaDeAlta"] = $role->getfechaDeAlta();
-                                $result["fechaDeBaja"] = $role->getfechaDeBaja();
-                                $result["status"] = $role->getstatus();
-                                $result["habilitar"] = $role->gethabilitar();
-                                $result["type"] = $role->getType();
-                                array_push($arrCorps, $result);
-                            } else {
-                                $result["error"] = "2541";
-                            }
-                        }
-                        return new JsonModel($arrCorps);
-                        break;
-                    case 2:
-                        $response = $this->entityManager->getRepository(corpEntity::class)->findBy(["tipoDeSocio"=>"Patrocinador"]);
-                        $arrCorps = array();
-                        $result = [];
-                        foreach ($response as $role) {
-                            if ($role->getId() != "") {
-                                $result["id"] = $role->getid();
-                                $result["corporativo"] = $role->getcorporativo();
-                                $result["nombre_es"] = $role->getnombre_es();
-                                $result["nombre_en"] = $role->getnombre_en();
-                                $result["tipoDeSocio"] = $role->gettipoDeSocio();
-                                $result["rfc"] = $role->getrfc();
-                                $result["direccion"] = $role->getdireccion();
-                                $result["cp"] = $role->getcp();
-                                $result["colonia"] = $role->getcolonia();
-                                $result["estado"] = $role->getestado();
-                                $result["municipio"] = $role->getmunicipio();
-                                $result["celular"] = $role->getcelular();
-                                $result["logo"] = $role->getlogo();
-                                $result["inversionAnualSiguiente"] = $role->getinversionAnualSiguiente();
-                                $result["inversionRealizadaActual"] = $role->getinversionRealizadaActual();
-                                $result["inversionRealizadaAnterior"] = $role->getinversionRealizadaAnterior();
-                                $result["validadoPor"] = $role->getvalidadoPor();
-                                $result["fechaDeValidacion"] = $role->getfechaDeValidacion();
-                                $result["fechaDeAlta"] = $role->getfechaDeAlta();
-                                $result["fechaDeBaja"] = $role->getfechaDeBaja();
-                                $result["status"] = $role->getstatus();
-                                $result["habilitar"] = $role->gethabilitar();
-                                array_push($arrCorps, $result);
-                            } else {
-                                $result["error"] = "2541";
-                            }
-                        }
-                        return new JsonModel($arrCorps);
-                        break;
-                    default:
-                        return new JsonModel(["message"=>"eror"]);
-                }
+            $query = $this->params()->fromPost("query");
 
-
+            switch ($query) {
+                case 1:
+                    $response = $this->entityManager->getRepository(corpEntity::class)->findBy(["tipoDeSocio" => "Desarrollador"]);
+                    $arrCorps = array();
+                    $result = [];
+                    foreach ($response as $role) {
+                        if ($role->getId() != "") {
+                            $result["id"] = $role->getid();
+                            $result["corporativo"] = $role->getcorporativo();
+                            $result["nombre_es"] = $role->getnombre_es();
+                            $result["nombre_en"] = $role->getnombre_en();
+                            $result["tipoDeSocio"] = $role->gettipoDeSocio();
+                            $result["rfc"] = $role->getrfc();
+                            $result["direccion"] = $role->getdireccion();
+                            $result["cp"] = $role->getcp();
+                            $result["colonia"] = $role->getcolonia();
+                            $result["estado"] = $role->getestado();
+                            $result["municipio"] = $role->getmunicipio();
+                            $result["celular"] = $role->getcelular();
+                            $result["logo"] = $role->getlogo();
+                            $result["inversionAnualSiguiente"] = $role->getinversionAnualSiguiente();
+                            $result["inversionRealizadaActual"] = $role->getinversionRealizadaActual();
+                            $result["inversionRealizadaAnterior"] = $role->getinversionRealizadaAnterior();
+                            $result["validadoPor"] = $role->getvalidadoPor();
+                            $result["fechaDeValidacion"] = $role->getfechaDeValidacion();
+                            $result["fechaDeAlta"] = $role->getfechaDeAlta();
+                            $result["fechaDeBaja"] = $role->getfechaDeBaja();
+                            $result["status"] = $role->getstatus();
+                            $result["habilitar"] = $role->gethabilitar();
+                            $result["type"] = $role->getType();
+                            array_push($arrCorps, $result);
+                        } else {
+                            $result["error"] = "2541";
+                        }
+                    }
+                    return new JsonModel($arrCorps);
+                    break;
+                case 2:
+                    $response = $this->entityManager->getRepository(corpEntity::class)->findBy(["tipoDeSocio" => "Patrocinador"]);
+                    $arrCorps = array();
+                    $result = [];
+                    foreach ($response as $role) {
+                        if ($role->getId() != "") {
+                            $result["id"] = $role->getid();
+                            $result["corporativo"] = $role->getcorporativo();
+                            $result["nombre_es"] = $role->getnombre_es();
+                            $result["nombre_en"] = $role->getnombre_en();
+                            $result["tipoDeSocio"] = $role->gettipoDeSocio();
+                            $result["rfc"] = $role->getrfc();
+                            $result["direccion"] = $role->getdireccion();
+                            $result["cp"] = $role->getcp();
+                            $result["colonia"] = $role->getcolonia();
+                            $result["estado"] = $role->getestado();
+                            $result["municipio"] = $role->getmunicipio();
+                            $result["celular"] = $role->getcelular();
+                            $result["logo"] = $role->getlogo();
+                            $result["inversionAnualSiguiente"] = $role->getinversionAnualSiguiente();
+                            $result["inversionRealizadaActual"] = $role->getinversionRealizadaActual();
+                            $result["inversionRealizadaAnterior"] = $role->getinversionRealizadaAnterior();
+                            $result["validadoPor"] = $role->getvalidadoPor();
+                            $result["fechaDeValidacion"] = $role->getfechaDeValidacion();
+                            $result["fechaDeAlta"] = $role->getfechaDeAlta();
+                            $result["fechaDeBaja"] = $role->getfechaDeBaja();
+                            $result["status"] = $role->getstatus();
+                            $result["habilitar"] = $role->gethabilitar();
+                            array_push($arrCorps, $result);
+                        } else {
+                            $result["error"] = "2541";
+                        }
+                    }
+                    return new JsonModel($arrCorps);
+                    break;
+                default:
+                    return new JsonModel(["message" => "eror"]);
+            }
         } else {
             return $this->redirect()->toUrl(
                 $this->url
@@ -279,7 +276,7 @@ class apiController extends AbstractActionController
 
     //admin permisos
     public function createcorpAction()
-    { 
+    {
         if ($this->getRequest()->isPost()) {
             $corporativo = $this->params()->fromPost("corporativo");
             $nombre_es = $this->params()->fromPost("nombre_es");
@@ -355,7 +352,7 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             //Id del usuario que edita
-            $id_key = $this->params()->fromPost("id" );
+            $id_key = $this->params()->fromPost("id");
             if (true) {
                 //id del corporativo no cambiable
 
@@ -426,7 +423,7 @@ class apiController extends AbstractActionController
             $this->logs("Se intento acceder a la ruta obtener corporaciones", "desc");
             return $this->redirect()->toUrl(
                 $this->url
-            );   
+            );
         }
     }
 
@@ -442,11 +439,11 @@ class apiController extends AbstractActionController
                 $listUsuario['id'] = $item->getId();
                 $listUsuario['email'] = $item->getEmail();
                 $listUsuario['name'] = $item->getFullName();
-                $listUsuario['pass'] = $this->encript("dec", $item->getPassword() , "4MP1P");
+                $listUsuario['pass'] = $this->encript("dec", $item->getPassword(), "4MP1P");
 
-                if( $item->getStatus() != 0  && $item->getFullName() != "Administrator"){
+                if ($item->getStatus() != 0  && $item->getFullName() != "Administrator") {
                     array_push($arregloUsuario, $listUsuario);
-                } 
+                }
             }
             $this->logs("Se obtubieron todos los usuarios", "ADMIN");
             return new JsonModel($arregloUsuario);
@@ -567,7 +564,7 @@ class apiController extends AbstractActionController
             $status = $this->params()->fromPost("status");
 
             $decryptPass = $this->encript("enc", $password, "4MP1P");
-            $user = $this->entityManager->getRepository(userEntity::class)->findBy (['email' => $email, 'password' => $decryptPass]);
+            $user = $this->entityManager->getRepository(userEntity::class)->findBy(['email' => $email, 'password' => $decryptPass]);
             if ($user != null) {
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".email", $email, $id);
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".fullName", $full_name, $id);
@@ -625,7 +622,7 @@ class apiController extends AbstractActionController
             $id = $this->params()->fromPost("id");
             $parqueasig = $this->params()->fromPost("parqueasig");
 
-            
+
             if (true) {
                 $this->logs("Se activo el usuario con id : $id", $id_key);
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".status", 1, $id);
@@ -634,7 +631,7 @@ class apiController extends AbstractActionController
                 return new JsonModel(["message" => "activado"]);
             } else {
                 $this->logs("el usuario con id $id_key intento activar al usuario con id $id (permisos insuficientes)", $id_key);
-                return new JsonModel(["message"=>"error"]);
+                return new JsonModel(["message" => "error"]);
             }
 
             return new JsonModel(["message" => "echo"]);
@@ -729,7 +726,7 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
 
-            $id = $this->params()->fromPost("id","");
+            $id = $this->params()->fromPost("id", "");
             $telefonoOfficina = $this->params()->fromPost("telefonoOfficina");
             $celular = $this->params()->fromPost("celular");
             $direccionDeOfficina = $this->params()->fromPost("direccionDeOfficina");
@@ -818,7 +815,7 @@ class apiController extends AbstractActionController
             $key_corp = $this->params()->fromPost("key_corp");
             $key_user = $this->params()->fromPost("key_user", null);
             $nombre_es = $this->params()->fromPost("nombre_es", null);
-            $nombre_en = $this->params()->fromPost("nombre_en",null);
+            $nombre_en = $this->params()->fromPost("nombre_en", null);
             $adminParq = $this->params()->fromPost("adminParq", null);
             $parqProp = $this->params()->fromPost("parqProp");
             $parqIntoParq = $this->params()->fromPost("parqIntoParq", 0);
@@ -842,7 +839,7 @@ class apiController extends AbstractActionController
             $contactEmail = $this->params()->fromPost("contactEmail");
             $extras = $this->params()->fromPost("extras", "{}");
             $isDispo = $this->entityManager->getRepository(parqueEntity::class)->findBy(["nombre_es" => $nombre_es, "key_corp" => $key_corp]);
-            
+
 
             if ($isDispo == null) {
                 $newpark = new parqueEntity();
@@ -911,7 +908,7 @@ class apiController extends AbstractActionController
             $planMaestro = $this->params()->fromPost("planMaestro");
             $contactName = $this->params()->fromPost("contactName");
             $contactEmail = $this->params()->fromPost("contactEmail");
-            $date= $this->params()->fromPost("date", date("Y-m-d"));
+            $date = $this->params()->fromPost("date", date("Y-m-d"));
 
             $user = $this->entityManager->getRepository(parqueEntity::class)->findById($id);
             $permiso = $this->getPermision($key_id);
@@ -936,7 +933,7 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".planMaestro", $planMaestro, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".contactName", $contactName, $id);
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".contactEmail", $contactEmail, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".edit", $date,$id);
+                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".edit", $date, $id);
                     return new JsonModel(["message" => "echo"]);
                 } else {
                     return new JsonModel(["message" => "El id no existe"]);
@@ -961,7 +958,7 @@ class apiController extends AbstractActionController
             $roleList = [];
 
             foreach ($result as $role) {
-                if ($role->getId() != "" ) {
+                if ($role->getId() != "") {
                     $roleList["id"] = $role->getid();
                     $roleList["key_corp"] = $role->getkey_corp();
                     $roleList["key_user"] = $role->getkey_user();
@@ -990,8 +987,8 @@ class apiController extends AbstractActionController
                     $roleList["contactEmail"] = $role->getcontactEmail();
                     $roleList["edit"] = $role->getedit();
                     $roleList["extras"] = $role->getextras();
-                    if($role->getkey_corp() != "" ){
-                    array_push($arr, $roleList);
+                    if ($role->getkey_corp() != "") {
+                        array_push($arr, $roleList);
                     }
                 } else {
                     $roleList["error"] = "2541";
@@ -1006,16 +1003,17 @@ class apiController extends AbstractActionController
         }
     }
 
-    public function getallnaveforparkAction(){
+    public function getallnaveforparkAction()
+    {
         if ($this->getRequest()->isPost()) {
             $id = $this->params()->fromPost("id");
-            $parques = $this->entityManager->getRepository(parqueEntity::class)->findBy(["key_corp"=>$id]);
+            $parques = $this->entityManager->getRepository(parqueEntity::class)->findBy(["key_corp" => $id]);
             $items = [];
             $arr = array();
-            foreach($parques as $parque){
-                
-                $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id"=>$parque->getid()]);
-                foreach($naves as $nave){
+            foreach ($parques as $parque) {
+
+                $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id" => $parque->getid()]);
+                foreach ($naves as $nave) {
                     $items['id'] = $nave->getid();
                     $items['name'] = $nave->getname();
                     $items['parque_id'] = $nave->getparque_id();
@@ -1107,20 +1105,21 @@ class apiController extends AbstractActionController
     }
 
 
-    public function setspaceAction(){
+    public function setspaceAction()
+    {
         if ($this->getRequest()->isPost()) {
             //id para poder editar
             $id = $this->params()->fromPost("id", "");
-           
+
             $superficieDisp = $this->params()->fromPost("superficieDisp");
             $dates = date("d.m.y");
 
             $user = $this->entityManager->getRepository(parqueEntity::class)->findById($id);
             if (true) {
                 if ($user != null) {
-                    
+
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".superficieDisp", $superficieDisp, $id);
-                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".dates", $dates,$id);
+                    $this->entityManager->getRepository(parqueEntity::class)->updatePark(".dates", $dates, $id);
 
                     return new JsonModel(["message" => "El parque fue modificado"]);
                 } else {
@@ -1141,24 +1140,24 @@ class apiController extends AbstractActionController
 
     public function createnaveAction()
     {
-        $space = $this->params()->fromPost("space");        
+        $space = $this->params()->fromPost("space");
         $name = $this->params()->fromPost("name");
         $idParque = $this->params()->fromPost("idParque");
 
         $newNave = new naveEntity();
         $newNave->setname($name);
         $newNave->setparque_id($idParque);
-       /*  $this->entityManager->getRepository(parqueEntity::class)->updatePark(".nombre_es", $space, $idParque); */
+        /*  $this->entityManager->getRepository(parqueEntity::class)->updatePark(".nombre_es", $space, $idParque); */
         $this->entityManager->persist($newNave);
         $this->entityManager->flush();
-        $naveData = $this->entityManager->getRepository(naveEntity::class)->findBy(["name"=>$name, "parque_id"=>$idParque]);
+        $naveData = $this->entityManager->getRepository(naveEntity::class)->findBy(["name" => $name, "parque_id" => $idParque]);
 
-        $data = null ;
+        $data = null;
         foreach ($naveData as $naveDatum) {
-            $data= $naveDatum->getid();
+            $data = $naveDatum->getid();
         }
 
-        return new JsonModel(["id"=>$data]);
+        return new JsonModel(["id" => $data]);
     }
 
     public function getnaveAction()
@@ -1225,7 +1224,7 @@ class apiController extends AbstractActionController
     {
         if ($this->getRequest()->isPost()) {
             $id = $this->params()->fromPost("id");
-            $inquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["id_nave"=>$id]);
+            $inquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["id_nave" => $id]);
 
             $allsinqui = array();
             $roleList = [];
@@ -1340,7 +1339,7 @@ class apiController extends AbstractActionController
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".id_DENUE", $id_DENUE, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".antiguedad", $antiguedad, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaX", $medidaX, $id);
-                
+
                 return new JsonModel(["message" => "listo"]);
             } else {
                 return new JsonModel(["message" => "permiso Insuficiente"]);
@@ -1469,7 +1468,7 @@ class apiController extends AbstractActionController
 
     public function getuseridloginAction()
     {
-        $email = $this->params()->fromPost('email' );
+        $email = $this->params()->fromPost('email');
         $pass = $this->params()->fromPost('pass');
         $decryptPass = $this->encript("enc", $pass, "4MP1P");
         $response = $this->entityManager->getRepository(userEntity::class)->findBy(['email' => $email]);
@@ -1484,7 +1483,7 @@ class apiController extends AbstractActionController
         $this->logs("el usuario $email inicio secion", $email);
         return new JsonModel([$roleList]);
     }
- 
+
     public function setpermisosAction()
     {
         if ($this->getRequest()->isPost()) {
@@ -1527,7 +1526,7 @@ class apiController extends AbstractActionController
                         case "p":
                             $this->entityManager->getRepository(parqueEntity::class)->updatePark(".key_corp", $key_corp, $id);
                             return new JsonModel(["" => ""]);
-                        
+
                         case "n":
                             $this->entityManager->getRepository(naveEntity::class)->updateData(".parque_id", $key_corp, $id);
                             return new JsonModel(["message" => "listo"]);
@@ -1570,7 +1569,7 @@ class apiController extends AbstractActionController
             $makersArray = array();
             $arr = [];
 
-            foreach ($maker as $make){
+            foreach ($maker as $make) {
                 $arr['id'] = $make->getId();
                 $arr['name'] = $make->getname();
                 $arr['lat'] = $make->getlat();
@@ -1580,7 +1579,6 @@ class apiController extends AbstractActionController
             }
             $this->logs("Se obtubieron todos los parques", "WM");
             return new JsonModel($makersArray);
-
         } else {
             return new JsonModel(["message" => "solo post"]);
         }
@@ -1599,58 +1597,58 @@ class apiController extends AbstractActionController
             $newMaps->setlng($lng);
             $this->entityManager->persist($newMaps);
             $this->entityManager->flush();
-            return  new JsonModel(["message"=>"Listo"]);
-
+            return  new JsonModel(["message" => "Listo"]);
         } else {
             return new JsonModel(["message" => 0]);
         }
     }
 
 
-    public function testAction() 
+    public function testAction()
     {
         return new JsonModel(["message" => "Hello de nueno world"]);
     }
 
 
-    public function uploadfilesAction(){
-        $host= $_SERVER["HTTP_HOST"];
+    public function uploadfilesAction()
+    {
+        $host = $_SERVER["HTTP_HOST"];
         $query = $this->params()->fromPost("query");
         $uniqueName = $this->params()->fromPost("uniqueName");
 
-        switch ($query){
+        switch ($query) {
             case "logo":
                 try {
                     move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], "./public/uploads/logos/"  . $uniqueName . ".jpg");
-                    return new JsonModel(["message"=>"http://". $host . "/uploads/". $uniqueName . ".jpg"]);
-                } catch (\Exception $e){
-                    return new JsonModel(["message"=>$e]);
+                    return new JsonModel(["message" => "http://" . $host . "/uploads/" . $uniqueName . ".jpg"]);
+                } catch (\Exception $e) {
+                    return new JsonModel(["message" => $e]);
                 }
                 break;
             case "parks":
                 try {
                     move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], "./public/uploads/parks/"  . $uniqueName . ".jpg");
-                    return new JsonModel(["message"=>"http://". $host . "/uploads/". $uniqueName . ".jpg"]);
-                } catch (\Exception $e){
-                    return new JsonModel(["message"=>$e]);
+                    return new JsonModel(["message" => "http://" . $host . "/uploads/" . $uniqueName . ".jpg"]);
+                } catch (\Exception $e) {
+                    return new JsonModel(["message" => $e]);
                 }
                 break;
             case "perfil":
                 try {
                     move_uploaded_file($_FILES['fichero_usuario']['tmp_name'], "./public/uploads/perfil/"  . $uniqueName . ".jpg");
-                    return new JsonModel(["message"=>"http://". $host . "/uploads/". $uniqueName . ".jpg"]);
-                } catch (\Exception $e){
-                    return new JsonModel(["message"=>$e]);
+                    return new JsonModel(["message" => "http://" . $host . "/uploads/" . $uniqueName . ".jpg"]);
+                } catch (\Exception $e) {
+                    return new JsonModel(["message" => $e]);
                 }
                 break;
             default:
-                return new JsonModel(["message"=>"Error"]);
-
+                return new JsonModel(["message" => "Error"]);
         }
     }
 
 
-    public function getparkssheetsAction(){
+    public function getparkssheetsAction()
+    {
         if ($this->getRequest()->isPost()) {
             $date = date("Y-m-d");
             $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["dates" => $date]);
@@ -1685,7 +1683,7 @@ class apiController extends AbstractActionController
                     $roleList["planMaestro"] = $role->getplanMaestro();
                     $roleList["contactName"] = $role->getcontactName();
                     $roleList["contactEmail"] = $role->getcontactEmail();
-                    if($role->getkey_corp() != "" ){
+                    if ($role->getkey_corp() != "") {
                         array_push($arr, $roleList);
                     }
                 } else {
@@ -1695,74 +1693,75 @@ class apiController extends AbstractActionController
 
             return new JsonModel($roleList);
         } else {
-            
-            return new JsonModel(["message"=>"err"]);
+
+            return new JsonModel(["message" => "err"]);
         }
     }
 
 
-    public function getlogAction(){
+    public function getlogAction()
+    {
     }
 
-    public function getnumbercorpspatAction(){
+    public function getnumbercorpspatAction()
+    {
         $query = $this->params()->fromPost("query");
-        
-        switch ($query){
+
+        switch ($query) {
             case "corp":
                 $search = $this->entityManager->getRepository(corpEntity::class)->findAll();
                 $all = array();
                 $items = [];
-                foreach ($search as $item){
+                foreach ($search as $item) {
                     $items["id"] = $item->getid();
                     array_push($all, $items);
                 }
 
                 return new JsonModel($all);
-            break;
+                break;
             case "pat":
-                $search = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->findBy(["cargo"=>"Patrocinador"]);
+                $search = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->findBy(["cargo" => "Patrocinador"]);
                 $all = array();
                 $items = [];
-                foreach ($search as $item){
+                foreach ($search as $item) {
                     $items["id"] = $item->getid();
                     array_push($all, $items);
                 }
                 return new JsonModel($all);
-            break;
+                break;
         }
 
-        return new JsonModel(["s"=>"s"]);
+        return new JsonModel(["s" => "s"]);
     }
 
-    public function getuserbykeycorpAction(){
+    public function getuserbykeycorpAction()
+    {
         if ($this->getRequest()->isPost()) {
             $id = $this->params()->fromPost("id");
             $nave = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->findBy(["key_corp" => $id]);
 
             $arr = array();
-            
+
 
             foreach ($nave as $role) {
-                
-                    $ints = intval($role->getidAmpip());
-                    array_push($arr, $ints);                
-               
+
+                $ints = intval($role->getidAmpip());
+                array_push($arr, $ints);
             }
 
-            
+
             $arrs = array();
             $roleList = [];
-            for($i = 0 ; $i < count($arr) ; ++$i){
-                $user = $this->entityManager->getRepository(userEntity::class)->findBy(["id"=> $arr[$i]]);
-                foreach ($user as $us){
+            for ($i = 0; $i < count($arr); ++$i) {
+                $user = $this->entityManager->getRepository(userEntity::class)->findBy(["id" => $arr[$i]]);
+                foreach ($user as $us) {
                     $roleList['id'] = $us->getId();
                     $roleList['email'] = $us->getEmail();
                     $roleList['fullname'] = $us->getFullName();
-                    if($us->getStatus() == 1){
+                    if ($us->getStatus() == 1) {
                         array_push($arrs, $roleList);
                     }
                 }
-                
             }
 
             return new JsonModel($arrs);
@@ -1771,34 +1770,33 @@ class apiController extends AbstractActionController
                 $this->url
             );
         }
-
     }
 
     public function resetAction()
     {
         $id = $this->params()->fromPost("id");
-        $pass= $this->params()->fromPost("pass");
+        $pass = $this->params()->fromPost("pass");
         $type = $this->params()->fromPost("type");
         $user = $this->entityManager->getRepository(userEntity::class)->findById($id);
 
-        switch ($type){
+        switch ($type) {
             case 1:
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".password", $this->encript("enc", $pass, "4MP1P"), $id);
                 return new JsonModel(["message" => "ok"]);
                 break;
             case 2:
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".password", "", $id);
-                return  new JsonModel(["message"=>"red"]);
+                return  new JsonModel(["message" => "red"]);
                 break;
         }
-
     }
 
-    public function getemailyidAction(){
+    public function getemailyidAction()
+    {
         $id = $this->params()->fromPost("id");
         $email = $this->entityManager->getRepository(userEntity::class)->findById($id);
         $ems = [];
-        foreach ($email as $em){
+        foreach ($email as $em) {
             $ems['email'] = $em->getEmail();
             $ems['name'] = $em->getFullName();
             $ems['id'] = $em->getId();
@@ -1806,12 +1804,13 @@ class apiController extends AbstractActionController
         return new JsonModel([$ems]);
     }
 
-    public function copomexAction(){
+    public function copomexAction()
+    {
         $cp = $this->params()->fromPost("cp");
-        $cp = $this->entityManager->getRepository(copomexEntity::class)->findBy(["cp"=>$cp]);
+        $cp = $this->entityManager->getRepository(copomexEntity::class)->findBy(["cp" => $cp]);
         $data = array();
         $list = [];
-        foreach($cp as $item){
+        foreach ($cp as $item) {
             $list['id'] = $item->getId();
             $list['colonia'] = $item->getColonia();
             $list['estado'] = $item->getEstado();
@@ -1820,79 +1819,78 @@ class apiController extends AbstractActionController
         }
 
         return new JsonModel($data);
-
     }
 
-    public function updatepassAction(){
+    public function updatepassAction()
+    {
         $email = $this->params()->fromPost("email");
         $pass = $this->params()->fromPost("pass");
         $newPass = $this->params()->fromPost("newPass");
         $decryptPass = $this->encript("enc", $pass, "4MP1P");
         $encript = $this->encript("enc", $newPass, "4MP1P");
         $id = $this->params()->fromPost("id");
-        $searchUser = $this->entityManager->getRepository(userEntity::class)->findBy(["email"=>$email, "password"=>$decryptPass]);
-        if($searchUser != null){
+        $searchUser = $this->entityManager->getRepository(userEntity::class)->findBy(["email" => $email, "password" => $decryptPass]);
+        if ($searchUser != null) {
             $this->entityManager->getRepository(userEntity::class)->updateUser(".password", $encript, $id);
-            return new JsonModel(["message"=>"change Pass"]);
-        } else{
+            return new JsonModel(["message" => "change Pass"]);
+        } else {
             return new JsonModel(["message" => 0]);
         }
-
     }
 
-    public function extrasAction(){
+    public function extrasAction()
+    {
         $query = $this->params()->fromPost("query");
-        switch ($query){
+        switch ($query) {
             case 1:
                 $id = $this->params()->fromPost("id");
-                $result = $this->entityManager->getRepository(extrasEntity::class)->findBy(["id_entity"=>$id]);
+                $result = $this->entityManager->getRepository(extrasEntity::class)->findBy(["id_entity" => $id]);
                 $data = [];
-                foreach($result as $item){
+                foreach ($result as $item) {
                     $data['id'] = $item->getId();
                     $data['id_entity'] = $item->getId_entity();
                     $data['data'] = $item->getdataextra();
-                    
                 }
                 return new JsonModel($data);
                 break;
-            case 2 :
+            case 2:
                 $id = $this->params()->fromPost("id");
                 $data = $this->params()->fromPost("data");
-                $result = $this->entityManager->getRepository(extrasEntity::class)->findBy(["id_entity"=>$id]);
-                if($result == null){
+                $result = $this->entityManager->getRepository(extrasEntity::class)->findBy(["id_entity" => $id]);
+                if ($result == null) {
                     $dataExtra = new extrasEntity();
                     $dataExtra->setid_entity($id);
                     $dataExtra->setDataExtra($data);
                     $this->entityManager->persist($dataExtra);
                     $this->entityManager->flush();
-                    return new JsonModel(["message"=>"Creado"]);
+                    return new JsonModel(["message" => "Creado"]);
                 } else {
-                    $this->entityManager->getRepository(extrasEntity::class)->updateData(".dataExtra",$data, $id);
+                    $this->entityManager->getRepository(extrasEntity::class)->updateData(".dataExtra", $data, $id);
                     return new JsonModel(["message" => "Se actualizaron los datos"]);
                 }
                 break;
             default:
-                return new JsonModel(["message"=>"hello"]);
-
+                return new JsonModel(["message" => "hello"]);
         }
     }
 
-    public function naveadminAction(){
+    public function naveadminAction()
+    {
         $query = $this->params()->fromPost("query");
 
         switch ($query) {
             case 1:
                 $id_nave = $this->params()->fromPost("id");
                 $id_user = $this->params()->fromPost("id_user");
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $id_user,$id_nave);  
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".isAmpip", $id_user, $id_nave);
 
-                return new JsonModel(["message"=>"ok"]);
+                return new JsonModel(["message" => "ok"]);
                 break;
             case 2:
                 $id_user = $this->params()->fromPost("id_user");
-                $inquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["isAmpip"=>$id_user]);
+                $inquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["isAmpip" => $id_user]);
                 $roleList = [];
-                foreach($inquilino as $item){
+                foreach ($inquilino as $item) {
                     $roleList["id"] = $item->getid();
                     $roleList["corp"] = $item->getcorporativo();
                     $roleList["nombre_es"] = $item->getnombre_es();
@@ -1909,20 +1907,19 @@ class apiController extends AbstractActionController
                 }
                 return new JsonModel([$roleList]);
                 break;
-
         }
-
     }
 
 
-    public function getnavebyparqueAction(){
+    public function getnavebyparqueAction()
+    {
         /* resivimos el id del parque */
         $id = $this->params()->fromPost("id");
-        $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id"=>$id]);
+        $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id" => $id]);
         $allNavesArray = array();
         $allNaves = [];
-        
-        foreach ($naves as $nave){
+
+        foreach ($naves as $nave) {
             $allNaves['id'] = $nave->getid();
             $allNaves['name'] = $nave->getname();
             $allNaves['parque'] = $nave->getparque_id();
@@ -1935,45 +1932,44 @@ class apiController extends AbstractActionController
     public function apiforsheetsAction()
     {
         $dates = date('Y-m-d');
-            /* 2021-06-14  
+        /* 2021-06-14  
                2021-06-1
             */
-            $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["edit" => $dates]);
-            $arr = array();
-            $roleList = [];
+        $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["edit" => $dates]);
+        $arr = array();
+        $roleList = [];
 
-            foreach ($result as $role) {
-                $roleList["date"] = $dates;
-                $roleList["id"] = $role->getid();
-                    $roleList["key_corp"] = $role->getkey_corp();
-                    $roleList["key_user"] = $role->getkey_user();
-                    $roleList["nombre_es"] = $role->getnombre_es();
-                    $roleList["nombre_en"] = $role->getnombre_en();
-                    $roleList["adminParq"] = $role->getadminParq();
-                    $roleList["parqProp"] = $role->getparqProp();
-                    $roleList["parqIntoParq"] = $role->getparqIntoParq();
-                    $roleList["region"] = $role->getregion();
-                    $roleList["mercado"] = $role->getmercado();
-                    $roleList["tipoDeIndustria"] = $role->gettipoDeIndustria();
-                    $roleList["superficieTotal"] = $role->getsuperficieTotal();
-                    $roleList["superficieUrban"] = $role->getsuperficieUrban();
-                    $roleList["superficieOcup"] = $role->getsuperficieOcup();
-                    $roleList["superficieDisp"] = $role->getsuperficieDisp();
-                    $roleList["tipoDePropiedad"] = $role->gettipoDePropiedad();
-                    $roleList["inicioOperaciones"] = $role->getinicioOperaciones();
-                    $roleList["numEmpleados"] = $role->getnumEmpleados();
-                    $roleList["reconocimientoPracticas"] = $role->getreconocimientoPracticas();
-                    $roleList["ifraestructura"] = $role->getifraestructura();
-                    $roleList["numeroDeNaves"] = $role->getnumeroDeNaves();
-                    $roleList["observacion"] = $role->getobservacion();
-                    $roleList["kmz"] = $role->getkmz();
-                    $roleList["planMaestro"] = $role->getplanMaestro();
-                    $roleList["contactName"] = $role->getcontactName();
-                    $roleList["contactEmail"] = $role->getcontactEmail();
-                    $roleList["extras"] = $role->getextras();
-                array_push($arr, $roleList);
-
-            }
+        foreach ($result as $role) {
+            $roleList["date"] = $dates;
+            $roleList["id"] = $role->getid();
+            $roleList["key_corp"] = $role->getkey_corp();
+            $roleList["key_user"] = $role->getkey_user();
+            $roleList["nombre_es"] = $role->getnombre_es();
+            $roleList["nombre_en"] = $role->getnombre_en();
+            $roleList["adminParq"] = $role->getadminParq();
+            $roleList["parqProp"] = $role->getparqProp();
+            $roleList["parqIntoParq"] = $role->getparqIntoParq();
+            $roleList["region"] = $role->getregion();
+            $roleList["mercado"] = $role->getmercado();
+            $roleList["tipoDeIndustria"] = $role->gettipoDeIndustria();
+            $roleList["superficieTotal"] = $role->getsuperficieTotal();
+            $roleList["superficieUrban"] = $role->getsuperficieUrban();
+            $roleList["superficieOcup"] = $role->getsuperficieOcup();
+            $roleList["superficieDisp"] = $role->getsuperficieDisp();
+            $roleList["tipoDePropiedad"] = $role->gettipoDePropiedad();
+            $roleList["inicioOperaciones"] = $role->getinicioOperaciones();
+            $roleList["numEmpleados"] = $role->getnumEmpleados();
+            $roleList["reconocimientoPracticas"] = $role->getreconocimientoPracticas();
+            $roleList["ifraestructura"] = $role->getifraestructura();
+            $roleList["numeroDeNaves"] = $role->getnumeroDeNaves();
+            $roleList["observacion"] = $role->getobservacion();
+            $roleList["kmz"] = $role->getkmz();
+            $roleList["planMaestro"] = $role->getplanMaestro();
+            $roleList["contactName"] = $role->getcontactName();
+            $roleList["contactEmail"] = $role->getcontactEmail();
+            $roleList["extras"] = $role->getextras();
+            array_push($arr, $roleList);
+        }
         return new JsonModel($arr);
     }
 
@@ -1983,10 +1979,10 @@ class apiController extends AbstractActionController
     public function espacioAction()
     {
         $query = $this->params()->fromPost("query");
-        switch($query){
+        switch ($query) {
             case 1:
                 $id = $this->params()->fromPost("id");
-                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["corporativo"=>$id]);
+                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["corporativo" => $id]);
                 $arr = array();
                 $roleList = [];
                 foreach ($inquilino as $role) {
@@ -2003,9 +1999,9 @@ class apiController extends AbstractActionController
                         $roleList["error"] = "2541";
                     }
                 }
-    
+
                 return new JsonModel($arr);
-            break;
+                break;
             case 2:
                 $newSpace = new espacio_disponibleEntity();
                 $id = $this->params()->fromPost("id");
@@ -2014,7 +2010,7 @@ class apiController extends AbstractActionController
                 $precio = $this->params()->fromPost("precio");
                 $parque = $this->params()->fromPost("parque");
                 $extras = $this->params()->fromPost("extras");
-               
+
 
                 $newSpace->setCorporativo($id);
                 $newSpace->settipo($tipo);
@@ -2024,11 +2020,11 @@ class apiController extends AbstractActionController
                 $newSpace->setextras($extras);
                 $this->entityManager->persist($newSpace);
                 $this->entityManager->flush();
-                return new JsonModel(["message"=>1]);
-            break;
+                return new JsonModel(["message" => 1]);
+                break;
             case 3:
                 $id = $this->params()->fromPost("id");
-                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["id_parque"=>$id]);
+                $inquilino = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findBy(["id_parque" => $id]);
                 $arr = array();
                 $roleList = [];
                 foreach ($inquilino as $role) {
@@ -2045,20 +2041,42 @@ class apiController extends AbstractActionController
                         $roleList["error"] = "2541";
                     }
                 }
-    
+
                 return new JsonModel($arr);
-            break;
+                break;
             case 4:
                 $id = $this->params()->fromPost("id");
                 $extras = $this->params()->fromPost("extras");
-                $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".extras",$extras, $id);
-                return new JsonModel(["message"=>"activado"]);
-            break;
+                $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".extras", $extras, $id);
+                return new JsonModel(["message" => "activado"]);
+                break;
         }
     }
 
 
+    public function mapsupdateAction()
+    {
+        $filters = $this->params()->fromPost("filters");
+        $id = $this->params()->fromPost("id");
+        $this->entityManager->getRepository(mapsEntity::class)->updateData(".filters", $filters, $id);
+        return new JsonModel(["message" => 1]);
+    }
 
+    public function getfiltersAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $maker = $this->entityManager->getRepository(mapsEntity::class)->findAll();
+            $makersArray = array();
+            $arr = [];
 
+            foreach ($maker as $make) {
+                $arr['filters'] = $make->getfilters();
+                array_push($makersArray, $arr);
+            }
+            $this->logs("Se obtubieron todos los parques", "WM");
+            return new JsonModel($makersArray);
+        } else {
+            return new JsonModel(["message" => 0]);
+        }
+    }
 }
-
