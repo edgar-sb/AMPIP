@@ -1458,12 +1458,6 @@ export default {
                     icon: "success",
                     title: "Listo",
                     text: "Guardado",
-                    backdrop: `
-                  rgba(0,0,0,.01)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
                   });
                   this.closeAction();
                 })
@@ -1473,12 +1467,7 @@ export default {
                 icon: "error",
                 title: "Ooops ...",
                 text: res.data.err,
-                backdrop: `
-                  rgba(255,0,0,0.1)
-                  url("/images/nyan-cat.gif")
-                  left top
-                  no-repeat
-                `,
+              
               });
             }
             this.closeAction();

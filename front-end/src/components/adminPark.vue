@@ -11,7 +11,7 @@
           ></plusCard>
         </v-dialog>
       </v-btn>
-      </v-card-actions>
+    </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
         <v-tab>
@@ -197,7 +197,9 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark" v-if="options.u">Guardar Informacion</v-btn>
+              <v-btn @click="updatePark" v-if="options.u"
+                >Guardar Informacion</v-btn
+              >
             </v-card-actions>
           </v-container>
         </v-tab-item>
@@ -206,7 +208,6 @@
   </content>
 </template>
 <script>
-
 import axios from "axios";
 import plusCard from "../components/plusCard";
 import Swal from "sweetalert2";
@@ -294,50 +295,42 @@ export default {
       newRecords: null,
       roles: [],
 
-      options:{
-        u:false,
-        d:false,
+      options: {
+        u: false,
+        d: false,
         i: false,
-      }
+      },
     };
   },
   beforeMount() {
-
-      setTimeout(() => {
-        let params = new URLSearchParams();
-        params.append("query", 1);
-        params.append("id", this.$store.state.data.id_A);
-        axios.post(`${this.$store.state.url}/getparquesusuarios`,params)
-        .then(res => {
-            this.roles = res.data[0].permiso;
-            console.log(res)
-            let paramsD = new URLSearchParams();
-            paramsD.append("id", res.data[0].id);
-            axios
-              .post(`${this.$store.state.url}/getpark`, paramsD)
-              .then((res) => {
-                this.parque = res.data[0];
-                this.getUserFromPark(res.data[0].id);
-                this.getallnaves(res.data[0].key_corp);
-              })
-              .catch((e) => console.log(e));
-
-
-
-
-
-
+    setTimeout(() => {
+      let params = new URLSearchParams();
+      params.append("query", 1);
+      params.append("id", this.$store.state.data.id_A);
+      axios
+        .post(`${this.$store.state.url}/getparquesusuarios`, params)
+        .then((res) => {
+          this.roles = res.data[0].permiso;
+          console.log(res);
+          let paramsD = new URLSearchParams();
+          paramsD.append("id", res.data[0].id);
+          axios
+            .post(`${this.$store.state.url}/getpark`, paramsD)
+            .then((res) => {
+              this.parque = res.data[0];
+              this.getUserFromPark(res.data[0].id);
+              this.getallnaves(res.data[0].key_corp);
+            })
+            .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
-      }, 1000);
-
+    }, 1000);
   },
   methods: {
     getTab() {
       switch (this.tab) {
         case 0:
           this.addNave = true;
-          
       }
     },
     closeAction() {
@@ -430,6 +423,51 @@ export default {
     closePlusCard() {
       this.addNave = false;
       this.data_user = false;
+      this.getallnaves(this.parque.key_corp);
+      let timerInterval;
+      Swal.fire({
+        title: "Recuperando datos",
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          timerInterval = setInterval(() => {
+            const content = Swal.getHtmlContainer();
+            if (content) {
+              const b = content.querySelector("b");
+              if (b) {
+                b.textContent = Swal.getTimerLeft();
+              }
+            }
+          }, 100);
+        },
+        willClose: () => {
+          let data = new FormData();
+          data.append("query", "perfil");
+          data.append("uniqueName", this.$store.state.data.id);
+          data.append("fichero_usuario", this.imgProfile);
+          var config = {
+            method: "post",
+            url: `${this.$store.state.baseUrl}/api/uploadfiles`,
+            headers: { "Content-Type": "image/jpeg" },
+            data: data,
+          };
+          axios(config)
+            .then(function(response) {
+              console.log(JSON.stringify(response.data));
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
     },
     openDialog(i) {
       this.data_user = true;
@@ -494,25 +532,25 @@ export default {
         })
         .catch((e) => console.log(e));
     },
-    back(){
-      this.$ro
-    }
+    back() {
+      this.$ro;
+    },
   },
   components: { plusCard },
-  props:["parque_id"],
-  watch:{
-    roles(){
+  props: ["parque_id"],
+  watch: {
+    roles() {
       var roles = this.roles.split(",");
-      var findValueEdit = roles.find(i => i == 'Editar')
-      var findValueAdd = roles.find(i => i == 'Agregar')
-      if(findValueEdit != undefined){
-        this.options.u = true
-      } 
+      var findValueEdit = roles.find((i) => i == "Editar");
+      var findValueAdd = roles.find((i) => i == "Agregar");
+      if (findValueEdit != undefined) {
+        this.options.u = true;
+      }
 
-      if(findValueAdd != undefined){
-        this.options.i = true
-      } 
-    }
-  }
+      if (findValueAdd != undefined) {
+        this.options.i = true;
+      }
+    },
+  },
 };
 </script>
