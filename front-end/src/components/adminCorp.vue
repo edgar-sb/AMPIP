@@ -34,8 +34,13 @@
           <v-row>
             <v-col cols="12" sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
-                <v-card-title v-if="i.nombre_es != 'standalone'" v-text="i.nombre_es"></v-card-title>
-                <v-card-title  v-if="i.nombre_es == 'standalone'" >Stand-a·lone</v-card-title>
+                <v-card-title
+                  v-if="i.nombre_es != 'standalone'"
+                  v-text="i.nombre_es"
+                ></v-card-title>
+                <v-card-title v-if="i.nombre_es == 'standalone'"
+                  >Stand-a·lone</v-card-title
+                >
                 <v-card-actions>
                   <v-btn icon @click="infoParkAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
@@ -129,8 +134,8 @@
                 placeholder="Colonia"
                 outlined
                 v-model="id.colonia"
-                 item-text="d_asenta"
-              item-value="d_asenta"
+                item-text="d_asenta"
+                item-value="d_asenta"
               ></v-select>
             </v-col>
 
@@ -172,7 +177,6 @@
                 v-model="id.inversionRealizadaActual"
                 label="Inversión anual programada (pipeline año actual) MXN"
                 outlined
-                
               >
               </v-text-field>
             </v-col>
@@ -259,7 +263,7 @@ export default {
         linkdin: "",
       },
       cp: [],
-      logo:null
+      logo: null,
     };
   },
   props: ["id_corp"],
@@ -335,7 +339,9 @@ export default {
       params.append("id", id);
       axios
         .post(`${this.$store.state.url}/activeinactive`, params)
-        .then((res) => console.log(res.data))
+        .then(() => {
+          this.getParks();
+        })
         .catch((e) => console.log(e));
     },
 
@@ -387,10 +393,7 @@ export default {
       params.append("municipio", this.id.municipio);
       params.append("telefono", this.id.celular);
       params.append("inversionAnualSiguiente", this.id.inversionAnualSiguiente);
-      params.append(
-        "inversionAnualActual",
-        this.id.inversionRealizadaActual
-      );
+      params.append("inversionAnualActual", this.id.inversionRealizadaActual);
       params.append(
         "inversionAnualAnterior",
         this.id.inversionRealizadaAnterior
@@ -416,7 +419,7 @@ export default {
         headers: { "Content-Type": "image/jpeg" },
         data: data,
       };
-    let ctx = this;
+      let ctx = this;
       axios(config)
         .then(function(response) {
           ctx.$router.push("/");
@@ -426,7 +429,7 @@ export default {
           console.log(error);
         });
     },
- 
+
     extrasAction() {
       let params = new URLSearchParams();
       params.append("query", 2);
@@ -439,15 +442,18 @@ export default {
     },
     x() {
       this.addPark = false;
+      this.getInfoCorpAction();
+      this.getParks();
     },
     handleImages(files) {
       this.logo = files[0];
     },
     watchCp() {
       if (this.id.cp.length > 4) {
-        
         axios
-          .get(`http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.id.cp}`)
+          .get(
+            `http://sepomex.icalialabs.com/api/v1/zip_codes?zip_code=${this.id.cp}`
+          )
           .then((res) => {
             this.cp = res.data.zip_codes;
           })
@@ -480,6 +486,6 @@ export default {
         return "Sin datos";
       }
     },
-  }
+  },
 };
 </script>

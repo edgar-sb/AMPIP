@@ -471,6 +471,10 @@ export default {
     closeAction() {
       this.addUser = false;
       this.addNave = false;
+
+      this.getUserFromPark(this.parque.id);
+      this.getallnaves(this.parque.key_corp);
+      this.getallspacesAction(this.parque.id);
     },
     addUserAction() {
       if (
@@ -491,7 +495,7 @@ export default {
         axios
           .post(`${this.$store.state.url}/createuser`, params)
           .then((res) => {
-            if (res.data.message) {
+            if (res.data.message != 0) {
               let par = new URLSearchParams();
               par.append("email", ctx.dataUser.email);
               par.append("pass", ctx.dataUser.password);
@@ -501,6 +505,8 @@ export default {
                   ctx.createdataUser(res.data);
                 })
                 .catch((e) => console.log(e));
+            } else {
+              Swal.fire({ text: "Correo electronico en uso", icon: "error" });
             }
           })
           .catch((e) => console.log(e));
@@ -521,7 +527,7 @@ export default {
       axios
         .post(`${this.$store.state.url}/createdatauser`, params)
         .then(() => {
-          Swal.fire("Usuario agregado Puede cerrar esta pantalla");
+          this.closeAction();
         })
         .catch((e) => console.log(e));
       axios.get(
