@@ -1599,10 +1599,10 @@ class apiController extends AbstractActionController
             $newMaps->setlng($lng);
             $this->entityManager->persist($newMaps);
             $this->entityManager->flush();
-            return  new JsonModel(["message"=>"Mapa agregado"]);
+            return  new JsonModel(["message"=>"Listo"]);
 
         } else {
-            return new JsonModel(["message" => "solo post"]);
+            return new JsonModel(["message" => 0]);
         }
     }
 

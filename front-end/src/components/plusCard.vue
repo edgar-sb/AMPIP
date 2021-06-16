@@ -3,7 +3,6 @@
     <!-- Nave -->
     <v-card v-if="dialogs == 1">
       <v-card-actions>
-        
         <v-card-title>Inquilinos </v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
@@ -737,7 +736,7 @@
               label="Precio promedio *"
               placeholder="Ej. 89.00"
               v-model="spaces.price"
-              :rules="[rules.required,rules.promPrice]"
+              :rules="[rules.required, rules.promPrice]"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -765,7 +764,7 @@
               label="Ancho *"
               outlined
               v-model="spaces.width"
-              :rules="[rules.required,rules.phone]"
+              :rules="[rules.required, rules.phone]"
               suffix="Km2"
             ></v-text-field>
           </v-col>
@@ -776,8 +775,25 @@
               outlined
               v-model="spaces.height"
               suffix="Km2"
-              :rules="[rules.required,rules.phone]"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
+          </v-col>
+
+          <v-col cols="12">
+            <span>Selecciona la ubicacion</span>
+            <GmapMap
+              :center="{ lat: 19.794509121420788, lng: -99.0424054958186 }"
+              :zoom="7"
+              map-type-id="terrain"
+              style="width: 100%; height: 300px"
+              @click="add"
+            >
+              <GmapMarker
+                :position="markers"
+                :clickable="true"
+                :draggable="true"
+              />
+            </GmapMap>
           </v-col>
         </v-row>
       </v-card-text>
@@ -882,7 +898,7 @@ export default {
         inv_sig: "",
         rfc: "",
         spcial: "",
-        decimalPoint: /\^[0-9]+([,][0-9]+)?$/
+        decimalPoint: /\^[0-9]+([,][0-9]+)?$/,
       },
       space: null,
       cp: [],
@@ -902,8 +918,9 @@ export default {
         waitingSpace: (value) => value <= this.space || "Espacio insuficiente",
         phoneLenght: (value) => value.length <= 8 || "Maximo 8 digitos",
         phoneLada: (value) => value.length <= 2 || "Maximo 2 digitos",
-        phoneTen:(value) => value.length > 9  || "Minimo 10 digitos",
-        promPrice: (value) => this.decimalPoint.test(value) || "Numero Incorrecto"
+        phoneTen: (value) => value.length > 9 || "Minimo 10 digitos",
+        promPrice: (value) =>
+          this.decimalPoint.test(value) || "Numero Incorrecto",
       },
       corps: [],
       park: false,
@@ -1318,7 +1335,7 @@ export default {
       society: "",
       parks: ["Modelo"],
       spaces: {},
-      Allspace:[]
+      Allspace: [],
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
@@ -1727,44 +1744,63 @@ export default {
     reload() {
       this.$router.push("/");
     },
-    addSpaceAction(){
+    addSpaceAction() {
       let extras = {
-        name:this.spaces.contact_name,
+        name: this.spaces.contact_name,
         phone: this.spaces.contact_phone,
         medidas: [this.spaces.height, this.spaces.width],
-        nameSpace: this.spaces.name
+        nameSpace: this.spaces.name,
       };
-      if(this.id[0] != null && this.spaces.price != undefined && this.spaces.type != undefined &&  this.spaces.use != undefined){
+      if (
+        this.id[0] != null &&
+        this.spaces.price != undefined &&
+        this.spaces.type != undefined &&
+        this.spaces.use != undefined
+      ) {
         let params = new URLSearchParams();
-      params.append("query",2);
-      params.append("id", this.id[1]);
-      params.append("parque", this.id[0]);
-      params.append("precio", this.spaces.price);
-      params.append("tipo", this.spaces.type);
-      params.append("uso", this.spaces.use);
-      params.append("extras", JSON.stringify(extras));
-
-      axios.post(`${this.$store.state.url}/espacio`, params)
-      .then(res => {
-        if(res.data.message == 1){
-          this.closeAction();
-        } else {
-          Swal.fire({text:"Ah ocurrido un error", icon:"error"})
-        }
-      })
-      .catch(e => console.log(e))
-      } else{
-        Swal.fire({text:"Por favor llena todos los datos", icon:"error"})
+        params.append("query", 2);
+        params.append("id", this.id[1]);
+        params.append("parque", this.id[0]);
+        params.append("precio", this.spaces.price);
+        params.append("tipo", this.spaces.type);
+        params.append("uso", this.spaces.use);
+        params.append("extras", JSON.stringify(extras));
+        let ctx = this;
+        axios
+          .post(`${this.$store.state.url}/espacio`, params)
+          .then((res) => {
+            if (res.data.message == 1) {
+              let paramsMaps = new URLSearchParams();
+              paramsMaps.append("name", ctx.spaces.type);
+              paramsMaps.append("lat", ctx.markers.lat);
+              paramsMaps.append("lng", ctx.markers.lng);
+              axios
+                .post(`${this.$store.state.url}/mapsup`, paramsMaps)
+                .then((res) => {
+                  Swal.fire({ text: res.data.message, icon: "success" });
+                  ctx.closeAction();
+                })
+                .catch((e) => console.log(e));
+            } else {
+              Swal.fire({ text: "Ah ocurrido un error", icon: "error" });
+            }
+          })
+          .catch((e) => console.log(e));
+      } else {
+        Swal.fire({ text: "Por favor llena todos los datos", icon: "error" });
       }
     },
-    getAllspace(){
+    getAllspace() {
       let params = new URLSearchParams();
       params.append("query", 3);
       params.append("id", this.id);
-      axios.post(`${this.$store.state.url}/espacio`,params).then(res => {
-        this.Allspace = res.data;
-      }).catch(e => console.log(e));
-    }
+      axios
+        .post(`${this.$store.state.url}/espacio`, params)
+        .then((res) => {
+          this.Allspace = res.data;
+        })
+        .catch((e) => console.log(e));
+    },
   },
   computed: {
     edo() {

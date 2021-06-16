@@ -125,7 +125,7 @@
           </v-container>
         </v-tab-item>
         <!-- inquilinos -->
-        <v-tab-item> 
+        <v-tab-item>
           <v-container>
             <v-row>
               <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
@@ -162,23 +162,28 @@
         <v-tab-item>
           <v-container>
             <v-row>
-              <v-col cols="12" md="4"  v-for="(i, key) in spacesAll" :key="key">
+              <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
                 <v-card>
-                <v-card-title>
-                  Espacio disponible  <v-spacer>$ {{i.precio_promedio}} Km2</v-spacer>
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn icon @click="inactiveSpace(i.id)">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
+                  <v-card-title>
+                    Espacio disponible
+                    <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="inactiveSpace(i.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
               </v-col>
             </v-row>
             <!-- dialogo agregar espacio -->
             <v-dialog persistent width="700" v-model="addSpace">
-              <plusCard :dialogs="7" :id="[parque.id, parque.key_corp]" @close="closePlusCard"></plusCard>
+              <plusCard
+                :dialogs="7"
+                :id="[parque.id, parque.key_corp]"
+                @close="closePlusCard"
+              ></plusCard>
             </v-dialog>
           </v-container>
         </v-tab-item>
@@ -424,7 +429,7 @@ export default {
       newInfra: null,
       newRecords: null,
       addUserToNave: false,
-      spacesAll:null
+      spacesAll: null,
     };
   },
   beforeMount() {
@@ -460,7 +465,6 @@ export default {
             break;
           case 2:
             this.addSpace = true;
-            
         }
       }
     },
@@ -550,6 +554,9 @@ export default {
       this.data_user = false;
       this.addUserToNave = false;
       this.addSpace = false;
+      this.getUserFromPark(this.parque.id);
+      this.getallnaves(this.parque.key_corp);
+      this.getallspacesAction(this.parque.id);
     },
     openDialog(i) {
       this.data_user = true;
@@ -620,30 +627,32 @@ export default {
     addUserToNaveAction() {
       this.addUserToNave = true;
     },
-    getallspacesAction(id){
+    getallspacesAction(id) {
       let params = new URLSearchParams();
       params.append("query", 3);
       params.append("id", id);
-      axios.post(`${this.$store.state.url}/espacio`,params)
-      .then(res => this.spacesAll = res.data)
-      .catch(e => console.log(e))
+      axios
+        .post(`${this.$store.state.url}/espacio`, params)
+        .then((res) => (this.spacesAll = res.data))
+        .catch((e) => console.log(e));
     },
-    inactiveSpace(id){
+    inactiveSpace(id) {
       let params = new URLSearchParams();
-      params.append("type", 'i');
-      params.append("table", 's');
+      params.append("type", "i");
+      params.append("table", "s");
       params.append("id", id);
-      axios.post(`${this.$store.state.url}/activeinactive`,params)
-      .then(res => {
-        if(res.data.message == 'Desactivado'){
-          Swal.fire({text:"Listo", icon:"success"})
-          this.getallspacesAction(this.$store.state.parque)
-        } else{
-          Swal.fire({text:"Algo salio mal", icon:"error"})
-        }
-      })
-      .catch(e => console.log(e))
-    }
+      axios
+        .post(`${this.$store.state.url}/activeinactive`, params)
+        .then((res) => {
+          if (res.data.message == "Desactivado") {
+            Swal.fire({ text: "Listo", icon: "success" });
+            this.getallspacesAction(this.$store.state.parque);
+          } else {
+            Swal.fire({ text: "Algo salio mal", icon: "error" });
+          }
+        })
+        .catch((e) => console.log(e));
+    },
   },
   components: { plusCard, infoCard },
 };
