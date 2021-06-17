@@ -493,44 +493,56 @@ export default {
     },
 
     inactive(type, table, id) {
-      let params = new URLSearchParams();
-      params.append("type", type);
-      params.append("table", table);
-      params.append("id", id);
-      axios
-        .post(`${this.$store.state.url}/activeinactive`, params)
-        .then(() => {
-          this.getInfoCorpAction();
-          this.getParks();
-          this.getAllNaves();
-          let timerInterval;
-          Swal.fire({
-            title: "Recuperando informacion",
-            timer: 1000,
-            timerProgressBar: true,
-            didOpen: () => {
-              Swal.showLoading();
-              timerInterval = setInterval(() => {
-                const content = Swal.getHtmlContainer();
-                if (content) {
-                  const b = content.querySelector("b");
-                  if (b) {
-                    b.textContent = Swal.getTimerLeft();
-                  }
+      Swal.fire({
+        title: "Esta seguro de esta accion?",
+        text: "Esta apunto de Eliminar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar",
+        cancelButtonText : "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let params = new URLSearchParams();
+          params.append("type", type);
+          params.append("table", table);
+          params.append("id", id);
+          axios
+            .post(`${this.$store.state.url}/activeinactive`, params)
+            .then(() => {
+              this.getInfoCorpAction();
+              this.getParks();
+              this.getAllNaves();
+              let timerInterval;
+              Swal.fire({
+                title: "Recuperando informacion",
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading();
+                  timerInterval = setInterval(() => {
+                    const content = Swal.getHtmlContainer();
+                    if (content) {
+                      const b = content.querySelector("b");
+                      if (b) {
+                        b.textContent = Swal.getTimerLeft();
+                      }
+                    }
+                  }, 100);
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                },
+              }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log("...");
                 }
-              }, 100);
-            },
-            willClose: () => {
-              clearInterval(timerInterval);
-            },
-          }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-              console.log("...");
-            }
-          });
-        })
-        .catch((e) => console.log(e));
+              });
+            })
+            .catch((e) => console.log(e));
+        }
+      });
     },
 
     infoUserAction(id) {
