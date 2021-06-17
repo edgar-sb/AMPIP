@@ -23,21 +23,21 @@
                 <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
-                    label="Nombre"
+                    label="Nombre *"
                     v-model="dataUser.name"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
-                    label="Apellido Paterno"
+                    label="Apellido Paterno *"
                     v-model="dataUser.lastName"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                   <v-text-field
                     outlined
-                    label="Apellido Materno"
+                    label="Apellido Materno *"
                     v-model="dataUser.last"
                   ></v-text-field>
                 </v-col>
@@ -53,7 +53,7 @@
                     outlined
                     v-model="permiso"
                     :items="permisos"
-                    label="Seleccionar permisos"
+                    label="Seleccionar permisos *"
                     multiple
                     hint="Permisos de informacion en el parque"
                     persistent-hint

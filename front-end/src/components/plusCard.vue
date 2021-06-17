@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Nave -->
+    <!-- Nave *-->
     <v-card v-if="dialogs == 1">
       <v-card-actions>
         <v-card-title>Inquilinos </v-card-title>
@@ -594,7 +594,7 @@
           <v-col sm="12">
             <v-text-field
               outlined
-              label="Nombre"
+              label="Nombre *"
               :rules="[rules.required]"
               v-model="addUser.name"
             ></v-text-field>
@@ -602,7 +602,7 @@
           <v-col sm="6">
             <v-text-field
               outlined
-              label="Apellido Paterno"
+              label="Apellido Paterno *"
               :rules="[rules.required]"
               v-model="addUser.lastname"
             ></v-text-field>
@@ -610,7 +610,7 @@
           <v-col sm="6">
             <v-text-field
               outlined
-              label="Apellido Materno"
+              label="Apellido Materno *"
               :rules="[rules.required]"
               v-model="addUser.last"
             ></v-text-field>
@@ -618,7 +618,7 @@
           <v-col sm="12">
             <v-text-field
               outlined
-              label="Correo"
+              label="Correo *"
               :rules="[rules.required, rules.email]"
               v-model="addUser.email"
             ></v-text-field>
@@ -649,7 +649,7 @@
           <v-col sm="12">
             <v-text-field
               outlined
-              label="Nombre"
+              label="Nombre *"
               :rules="[rules.required]"
               v-model="addUser.name"
             ></v-text-field>
@@ -657,7 +657,7 @@
           <v-col sm="6">
             <v-text-field
               outlined
-              label="Apellido Paterno"
+              label="Apellido Paterno *"
               :rules="[rules.required]"
               v-model="addUser.lastname"
             ></v-text-field>
@@ -665,7 +665,7 @@
           <v-col sm="6">
             <v-text-field
               outlined
-              label="Apellido Materno"
+              label="Apellido Materno *"
               :rules="[rules.required]"
               v-model="addUser.last"
             ></v-text-field>
@@ -673,7 +673,7 @@
           <v-col sm="12">
             <v-text-field
               outlined
-              label="Correo"
+              label="Correo *"
               :rules="[rules.required]"
               v-model="addUser.email"
             ></v-text-field>
@@ -688,7 +688,7 @@
         <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
-    <!-- espacio  -->
+    <!-- espacio * -->
     <v-card v-if="dialogs == 7">
       <v-card-actions>
         <v-card-title>

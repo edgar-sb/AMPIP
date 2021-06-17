@@ -23,16 +23,7 @@
                         rules.secure,
                       ]"
                       helper-text="Hola"
-                      hint="
-                      
-                        Minimo 8 caracteres
-                        Maximo 15
-                        Al menos una letra mayúscula
-                        Al menos una letra minucula 
-                        Al menos un dígito
-                        No espacios en blanco
-                        Al menos 1 caracter especial
-                  "
+                      hint="Mínimo 8 caracteres, máximo 15. Usar al menos una letra mayúscula, una letra minúscula, un número, un caracter especial (!, #, $, %, &, ?, /) y sin espacios en blanco."
                     ></v-text-field>
                   </v-col>
 
