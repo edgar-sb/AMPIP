@@ -9,7 +9,7 @@
 
       <v-btn icon @click="getTab" v-if="tab != 3">
         <v-icon>mdi-plus</v-icon>
-        <v-dialog width="700" v-model="addUser">
+        <v-dialog width="700" v-model="addUser" :retain-focus="false" >
           <v-card>
             <v-card-title>
               Usuario
@@ -70,7 +70,7 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog width="700" persistent v-model="addNave">
+        <v-dialog width="700" persistent v-model="addNave" :retain-focus="false">
           <plusCard
             dialogs="1"
             @close="closePlusCard"
@@ -111,7 +111,7 @@
                         mdi-eye
                       </v-icon>
                     </v-btn>
-                    <v-dialog width="300" persistent v-model="data_user">
+                    <v-dialog width="300" persistent v-model="data_user" :retain-focus="false">
                       <infoCard
                         :type="'user_from_parq'"
                         :id="data_to_info"
@@ -145,7 +145,7 @@
                     >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-dialog width="700" v-model="addUserToNave">
+                    <v-dialog width="700" v-model="addUserToNave" :retain-focus="false">
                       <plusCard
                         :dialogs="6"
                         :id="i"
@@ -178,7 +178,7 @@
               </v-col>
             </v-row>
             <!-- dialogo agregar espacio -->
-            <v-dialog persistent width="700" v-model="addSpace">
+            <v-dialog persistent width="700" v-model="addSpace" :retain-focus="false">
               <plusCard
                 :dialogs="7"
                 :id="[parque.id, parque.key_corp]"

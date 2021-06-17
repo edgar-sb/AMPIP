@@ -1,5 +1,6 @@
 <template>
   <componen>
+  <!-- Arreglado los dialogs -->
     <v-card-title>
       <v-btn icon @click="close">
         <v-icon color="red"> mdi-arrow-left-bold</v-icon>
@@ -67,7 +68,7 @@
                   <v-btn icon @click="infoUserAction(i.id)">
                     <v-icon> mdi-eye </v-icon>
                   </v-btn>
-                  <v-dialog width="700" v-model="cards.infoUser">
+                  <v-dialog width="700" v-model="cards.infoUser" :retain-focus="false">
                     <InfoCard
                       :id="propsToComponents.user"
                       :type="'user'"
@@ -120,11 +121,12 @@
                     </v-badge>
                   </v-btn>
 
-                  <v-dialog v-model="cards.infoPark" width="700">
+                  <v-dialog v-model="cards.infoPark" width="700"  :retain-focus="false">
                     <InfoCard
                       :id="propsToComponents.park[0]"
                       :type="'park'"
                       @closeInfo="closeInfo"
+                     
                     />
                   </v-dialog>
                   <v-btn icon>
@@ -151,7 +153,7 @@
                   <v-btn icon @click="infoNaveAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-dialog v-model="cards.infoNave" persistent width="700">
+                  <v-dialog v-model="cards.infoNave" persistent width="700" :retain-focus="false">
                     <InfoCard
                       :id="propsToComponents.nave"
                       :type="'nave'"
@@ -183,7 +185,7 @@
                   <v-btn icon @click="spaces = true">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-dialog v-model="spaces" width="700">
+                  <v-dialog v-model="spaces" width="700" :retain-focus="false">
                     <InfoCard :id="i" :type="'space'" @close="closeInfo" />
                   </v-dialog>
                 </v-card-actions>

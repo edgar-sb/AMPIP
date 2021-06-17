@@ -9,7 +9,7 @@
 
       <v-btn text @click="setProfileActionModel" id="more">
         oPcIoNeS
-        <v-dialog v-model="getProfileActionModel" width="700" persistent>
+        <v-dialog v-model="getProfileActionModel" width="700" persistent :retain-focus="false">
           <profile />
         </v-dialog>
       </v-btn>
@@ -38,7 +38,7 @@
                     <v-btn @click="addNewCorp = true" icon
                       ><v-icon>mdi-plus</v-icon></v-btn
                     >
-                    <v-dialog v-model="addNewCorp" width="700">
+                    <v-dialog v-model="addNewCorp" width="700" :retain-focus="false">
                       <plusCard
                         :dialogs="4"
                         :type_society="'Desarrollador'"
@@ -90,7 +90,7 @@
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
-                          <v-dialog v-model="getCorpInfo" persistent>
+                          <v-dialog v-model="getCorpInfo" persistent :retain-focus="false">
                             <getCorpInfo :id="infoToCorp" :users="users" />
                           </v-dialog>
                         </v-card>
@@ -109,7 +109,7 @@
                     <v-btn @click="addNewPat = true" icon>
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-dialog v-model="addNewPat" width="700">
+                    <v-dialog v-model="addNewPat" width="700" :retain-focus="false">
                       <plusCard
                         :dialogs="4"
                         :type_society="'Patrocinador'"
@@ -163,7 +163,7 @@
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
-                          <v-dialog v-model="getCorpInfo" persistent>
+                          <v-dialog v-model="getCorpInfo" persistent :retain-focus="false">
                             <getCorpInfo
                               :id="infoToCorp"
                               :users="users"
