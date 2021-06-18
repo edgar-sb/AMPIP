@@ -9,7 +9,7 @@
 
       <v-btn icon @click="getTab" v-if="tab != 3">
         <v-icon>mdi-plus</v-icon>
-        <v-dialog width="700" v-model="addUser" :retain-focus="false" >
+        <v-dialog width="700" v-model="addUser" :retain-focus="false">
           <v-card>
             <v-card-title>
               Usuario
@@ -70,7 +70,12 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
-        <v-dialog width="700" persistent v-model="addNave" :retain-focus="false">
+        <v-dialog
+          width="700"
+          persistent
+          v-model="addNave"
+          :retain-focus="false"
+        >
           <plusCard
             dialogs="1"
             @close="closePlusCard"
@@ -111,7 +116,12 @@
                         mdi-eye
                       </v-icon>
                     </v-btn>
-                    <v-dialog width="300" persistent v-model="data_user" :retain-focus="false">
+                    <v-dialog
+                      width="300"
+                      persistent
+                      v-model="data_user"
+                      :retain-focus="false"
+                    >
                       <infoCard
                         :type="'user_from_parq'"
                         :id="data_to_info"
@@ -145,7 +155,11 @@
                     >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-dialog width="700" v-model="addUserToNave" :retain-focus="false">
+                    <v-dialog
+                      width="700"
+                      v-model="addUserToNave"
+                      :retain-focus="false"
+                    >
                       <plusCard
                         :dialogs="6"
                         :id="i"
@@ -178,7 +192,12 @@
               </v-col>
             </v-row>
             <!-- dialogo agregar espacio -->
-            <v-dialog persistent width="700" v-model="addSpace" :retain-focus="false">
+            <v-dialog
+              persistent
+              width="700"
+              v-model="addSpace"
+              :retain-focus="false"
+            >
               <plusCard
                 :dialogs="7"
                 :id="[parque.id, parque.key_corp]"
@@ -339,8 +358,7 @@
   </content>
 </template>
 <script>
-/*
- */
+
 import infoCard from "../components/infoCard";
 import axios from "axios";
 import plusCard from "../components/plusCard";
@@ -643,21 +661,48 @@ export default {
         .catch((e) => console.log(e));
     },
     inactiveSpace(id) {
-      let params = new URLSearchParams();
-      params.append("type", "i");
-      params.append("table", "s");
-      params.append("id", id);
-      axios
-        .post(`${this.$store.state.url}/activeinactive`, params)
-        .then((res) => {
-          if (res.data.message == "Desactivado") {
-            Swal.fire({ text: "Listo", icon: "success" });
-            this.getallspacesAction(this.$store.state.parque);
-          } else {
-            Swal.fire({ text: "Algo salio mal", icon: "error" });
-          }
+      const swalWithBootstrapButtons = Swal.mixin();
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "Esta seguro de esta accion?",
+          text: "Esta apunto de eliminar!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si!",
+          cancelButtonText: "Cancelar",
+          reverseButtons: true,
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
         })
-        .catch((e) => console.log(e));
+        .then((result) => {
+          if (result.isConfirmed) {
+            let params = new URLSearchParams();
+            params.append("type", "i");
+            params.append("table", "s");
+            params.append("id", id);
+            axios
+              .post(`${this.$store.state.url}/activeinactive`, params)
+              .then((res) => {
+                if (res.data.message == "Desactivado") {
+                  Swal.fire({ text: "Listo", icon: "success" });
+                  this.getallspacesAction(this.$store.state.parque);
+                } else {
+                  Swal.fire({ text: "Algo salio mal", icon: "error" });
+                }
+              })
+              .catch((e) => console.log(e));
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire(
+              "Cancelado",
+              "...",
+              "error"
+            );
+          }
+        });
     },
   },
   components: { plusCard, infoCard },

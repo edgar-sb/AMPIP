@@ -2,15 +2,15 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 Vue.use(Vuex);
-/* 
+/*
 http://18.207.162.106/api
 http://localhost:8000/api,
 */
 export default new Vuex.Store({
   state: {
-    url: "http://18.207.162.106/api",
-    img: "http://18.207.162.106/uploads",
-    baseUrl: "http://18.207.162.106",
+    url: "http://localhost:8000/api",
+    img: "http://localhost:8000/uploads",
+    baseUrl: "http://localhost:8000",
     data: null,
     permisos: null,
     token: "a270c78c-a633-4e22-bb98-172615781bb8",
@@ -19,7 +19,6 @@ export default new Vuex.Store({
     profileDialog:false,
     parque:null,
     nave:null
-    
   },
   mutations: {
     adddata(state, value) {
