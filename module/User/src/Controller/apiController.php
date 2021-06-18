@@ -1781,12 +1781,19 @@ class apiController extends AbstractActionController
 
         switch ($type) {
             case 1:
-                $this->entityManager->getRepository(userEntity::class)->updateUser(".password", $this->encript("enc", $pass, "4MP1P"), $id);
-                return new JsonModel(["message" => "ok"]);
+                $getUser = $this->entityManager->getRepository(userEntity::class)->findById($id);
+                foreach($getUser as $item){
+                    if($item->getPassword() == ""){
+                        $this->entityManager->getRepository(userEntity::class)->updateUser(".password", $this->encript("enc", $pass, "4MP1P"), $id);
+                        return new JsonModel(["message" => "Contraseña modificada"]);
+                    } else{
+                        return new JsonModel(["message"=>"No se ah podido cambiar la contraseña"]);
+                    }
+                }
                 break;
             case 2:
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".password", "", $id);
-                return  new JsonModel(["message" => "red"]);
+                return  new JsonModel(["message" => 1]);
                 break;
         }
     }

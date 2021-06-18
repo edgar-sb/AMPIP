@@ -306,13 +306,18 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="closeInfo">Cerrar</v-btn>
-        <v-btn @click="updateSpace"  v-if="JSON.parse(id.extras).date == undefined">Aprobar</v-btn>
+        <v-btn
+          @click="updateSpace"
+          v-if="JSON.parse(id.extras).date == undefined"
+          >Aprobar</v-btn
+        >
       </v-card-actions>
     </v-card>
   </componen>
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import axios from "axios";
 export default {
   name: "infoCard",
@@ -362,32 +367,49 @@ export default {
         });
     },
     reset(id) {
-      let params = new URLSearchParams();
-      params.append("id", id);
-      params.append("type", 2);
-      axios
-        .post(`${this.$store.state.url}/reset`, params)
-        .then((res) => {
-          console.log(res.data);
-        })
-        .catch((e) => console.log(e));
-      axios
-        .post(`${this.$store.state.url}/getemailyid`, params)
-        .then((res) => {
-          console.log(res.data);
+      const ctx = this;
+      Swal.fire({
+        title: "¿Esta seguro de esta acción?",
+        text: "Se reenviara la contraseña",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si",
+        cancelButtonText: "Cancelar"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let params = new URLSearchParams();
+          params.append("id", id);
+          params.append("type", 2);
           axios
-            .get(
-              `${this.$store.state.baseUrl}/mailler?email=${res.data[0].email}&name=${res.data[0].name}&link=${id}`
-            )
-            .then((res) => console.log(res.data))
+            .post(`${this.$store.state.url}/reset`, params)
+            .then((res) => {
+              console.log(res.data);
+            })
             .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
+          axios
+            .post(`${this.$store.state.url}/getemailyid`, params)
+            .then((res) => {
+              console.log(res.data);
+              axios
+                .get(
+                  `${this.$store.state.baseUrl}/mailler?email=${res.data[0].email}&name=${res.data[0].name}&link=${id}`
+                )
+                .then((res) => {
+                  console.log(res.data)
+                  })
+                .catch((e) => console.log(e));
+            })
+            .catch((e) => console.log(e));
+          ctx.emitsClose();
+        }
+      });
     },
     closeInfo() {
       this.$emit("close");
     },
-    updateSpace(){
+    updateSpace() {
       let params = new URLSearchParams();
       let extras = JSON.parse(this.id.extras);
       let date = Date.now();
@@ -395,19 +417,20 @@ export default {
         name: extras.name,
         phone: extras.phone,
         medidas: extras.medidas,
-        date:date,
-        nameSpace :extras.name
-      }
-      console.log(newExtras)
-      params.append("query",4);
-      params.append("id",this.id.id);
-      params.append("extras",JSON.stringify(newExtras));
+        date: date,
+        nameSpace: extras.name,
+      };
+      console.log(newExtras);
+      params.append("query", 4);
+      params.append("id", this.id.id);
+      params.append("extras", JSON.stringify(newExtras));
 
-      axios.post(`${this.$store.state.url}/espacio`, params)
-      .then(res => console.log(res))
-      .catch(e => console.log(e));
+      axios
+        .post(`${this.$store.state.url}/espacio`, params)
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
       this.emitsClose();
-    }
+    },
   },
 };
 </script>

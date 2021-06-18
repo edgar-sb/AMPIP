@@ -665,7 +665,7 @@ export default {
 
       swalWithBootstrapButtons
         .fire({
-          title: "Esta seguro de esta accion?",
+          title: "¿Esta seguro de esta accion?",
           text: "Esta apunto de eliminar!",
           icon: "warning",
           showCancelButton: true,

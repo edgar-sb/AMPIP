@@ -1528,7 +1528,12 @@ export default {
         this.corp.cp != "" &&
         this.corp.col != "" &&
         this.edo != "" &&
-        this.mun != ""
+        this.mun != "" &&
+        this.corp.address != "" &&
+        this.ladaValue != "" &&
+        this.codigoPaisValue != "" &&
+        this.corp.cel != "" &&
+        this.corp.logo
       ) {
         var ctx = this;
         axios

@@ -126,7 +126,6 @@
                       :id="propsToComponents.park[0]"
                       :type="'park'"
                       @closeInfo="closeInfo"
-                     
                     />
                   </v-dialog>
                   <v-btn icon>
@@ -496,7 +495,7 @@ export default {
 
     inactive(type, table, id) {
       Swal.fire({
-        title: "Esta seguro de esta accion?",
+        title: "¿Esta seguro de esta accion?",
         text: "Esta apunto de Eliminar",
         icon: "warning",
         showCancelButton: true,
