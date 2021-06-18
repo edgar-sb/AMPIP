@@ -1,5 +1,6 @@
 <template>
   <content>
+    <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
     <v-app-bar>
       <v-toolbar-title small>
         <label>{{ saludo }}</label>
@@ -14,6 +15,7 @@
         </v-dialog>
       </v-btn>
     </v-app-bar>
+
     <v-container>
       <v-col sm="12">
         <v-tabs
@@ -180,7 +182,7 @@
           </v-tab-item>
         </v-tabs-items>
 
-        <!-- administracion de corporativo -->
+        <!-- administracion de corporativo socio/patrocinador-->
         <v-tabs-items
           v-model="tab"
           v-if="userType == 'Administrador' && corpOfUser != null"

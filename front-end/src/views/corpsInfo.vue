@@ -1,6 +1,6 @@
 <template>
   <componen>
-  <!-- Arreglado los dialogs -->
+    <!-- Arreglado los dialogs -->
     <v-card-title>
       <v-btn icon @click="close">
         <v-icon color="red"> mdi-arrow-left-bold</v-icon>
@@ -31,7 +31,7 @@
     </v-card-title>
 
     <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
+      <v-tab v-if="id.tipoDeSocio">
         Usuarios
       </v-tab>
       <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
@@ -51,7 +51,7 @@
     <!-- Items -->
     <v-tabs-items v-model="tab">
       <!-- Usuarios listo-->
-      <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+      <v-tab-item>
         <v-container>
           <v-row>
             <v-col
@@ -68,7 +68,11 @@
                   <v-btn icon @click="infoUserAction(i.id)">
                     <v-icon> mdi-eye </v-icon>
                   </v-btn>
-                  <v-dialog width="700" v-model="cards.infoUser" :retain-focus="false">
+                  <v-dialog
+                    width="700"
+                    v-model="cards.infoUser"
+                    :retain-focus="false"
+                  >
                     <InfoCard
                       :id="propsToComponents.user"
                       :type="'user'"
@@ -121,7 +125,11 @@
                     </v-badge>
                   </v-btn>
 
-                  <v-dialog v-model="cards.infoPark" width="700"  :retain-focus="false">
+                  <v-dialog
+                    v-model="cards.infoPark"
+                    width="700"
+                    :retain-focus="false"
+                  >
                     <InfoCard
                       :id="propsToComponents.park[0]"
                       :type="'park'"
@@ -152,7 +160,12 @@
                   <v-btn icon @click="infoNaveAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-dialog v-model="cards.infoNave" persistent width="700" :retain-focus="false">
+                  <v-dialog
+                    v-model="cards.infoNave"
+                    persistent
+                    width="700"
+                    :retain-focus="false"
+                  >
                     <InfoCard
                       :id="propsToComponents.nave"
                       :type="'nave'"
@@ -502,7 +515,7 @@ export default {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Eliminar",
-        cancelButtonText : "Cancelar"
+        cancelButtonText: "Cancelar",
       }).then((result) => {
         if (result.isConfirmed) {
           let params = new URLSearchParams();
@@ -579,6 +592,7 @@ export default {
     },
 
     closePlusCard() {
+      /* */
       this.getInfoCorpAction();
       this.getParks();
       this.getAllNaves();
@@ -586,6 +600,32 @@ export default {
       this.addUser = false;
       this.addPark = false;
       this.addNav = false;
+      let timerInterval;
+      Swal.fire({
+        title: "Actualizando datos",
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          timerInterval = setInterval(() => {
+            const content = Swal.getHtmlContainer();
+            if (content) {
+              const b = content.querySelector("b");
+              if (b) {
+                b.textContent = Swal.getTimerLeft();
+              }
+            }
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        },
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log("I was closed by the timer");
+        }
+      });
     },
 
     infoNaveAction(id) {

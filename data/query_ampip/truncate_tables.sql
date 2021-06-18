@@ -8,4 +8,7 @@ delete from ampip.datosDeUsuario where id != 1;
 
 /* seccion de contraseñas */
 select * from ampip.user;
-update ampip.user set password = 'saG9uaE=' where id = 27;
+select * from ampip.datosDeUsuario;
+update ampip.user set password = 'saG9uaE=';
+
+select * from ampip.parque;

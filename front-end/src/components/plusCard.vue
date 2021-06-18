@@ -185,9 +185,9 @@
               <v-text-field
                 outlined
                 label="Codigo postal *"
-                :rules="[rules.required, rules.phone]"
+                :rules="[rules.required, rules.phone, rules.cpLenghtMax]"
                 v-model="corp.cp"
-                @keyup="watchCp"
+                @change="watchCp"
               ></v-text-field>
             </v-col>
             <v-col md="6">
@@ -326,7 +326,7 @@
                 label="Página web *"
                 outlined
                 placeholder="http://"
-                :rules="[rules.required]"
+                :rules="[rules.required, rules.link]"
                 v-model="parquesData.web"
               >
               </v-text-field>
@@ -387,7 +387,7 @@
                 attach
                 chips
                 outlined
-                label="Reconocimientos *"
+                label="Reconocimientos"
                 multiple
               ></v-select>
             </v-col>
@@ -483,9 +483,9 @@
             <v-text-field
               outlined
               label="Código Postal *"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.cpLenghtMax]"
               v-model="corp.cp"
-              @keyup="watchCp"
+              @change="watchCp"
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="12">
@@ -733,10 +733,10 @@
             <v-text-field
               outlined
               title="Precio"
-              label="Precio promedio *"
-              placeholder="Ej. 89.00"
+              label="Precio promedio * MXN"
+              placeholder="Ej. 89"
               v-model="spaces.price"
-              :rules="[rules.required, rules.promPrice]"
+              :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
@@ -917,11 +917,16 @@ export default {
         },
         cp: (value) => value.length <= 5 || "Maximo 5 numeros",
         waitingSpace: (value) => value <= this.space || "Espacio insuficiente",
-        phoneLenght: (value) => value.length <= 8 || "Maximo 8 digitos",
+        phoneLenght: (value) => value.length == 8 || "Necesariamente 8 digitos",
         phoneLada: (value) => value.length <= 2 || "Maximo 2 digitos",
         phoneTen: (value) => value.length > 9 || "Minimo 10 digitos",
         promPrice: (value) =>
           this.decimalPoint.test(value) || "Numero Incorrecto",
+        cpLenghtMax: (c) => c.length == 5 || "Necesariamente 5 digitos",
+        link: (i) => {
+          let pattern = /^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/;
+          return pattern.test(i) || "Link no valido";
+        },
       },
       corps: [],
       park: false,
@@ -1408,7 +1413,22 @@ export default {
       }
     },
     addparque() {
-      if (this.parquesData.name_es != "" && this.parquesData.name_en != "") {
+      if (
+        this.parquesData.name_es != "" &&
+        this.parquesData.name_en != "" &&
+        this.parquesData.admins != "" &&
+        this.parquesData.propi != "" &&
+        this.parquesData.region != "" &&
+        this.parquesData.Mercado != "" &&
+        this.parquesData.industria != "" &&
+        this.parquesData.sup_tot != "" &&
+        this.parquesData.sup_urb != "" &&
+        this.parquesData.sup_urb != "" &&
+        this.sup_disComputed != "" &&
+        this.parquesData.tipo != "" &&
+        this.parquesData.infra != "" &&
+        this.parquesData.employeds != ""
+      ) {
         var jsons = {
           telefono: `${this.parquesData.code} ${this.parquesData.lada} ${this.parquesData.telefono}`,
           direccion: this.parquesData.direccion,

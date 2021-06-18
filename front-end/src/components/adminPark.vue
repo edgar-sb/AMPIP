@@ -313,7 +313,7 @@ export default {
           this.roles = res.data[0].permiso;
           console.log(res);
           let paramsD = new URLSearchParams();
-          paramsD.append("id", res.data[0].id);
+          paramsD.append("id", res.data[0].persona);
           axios
             .post(`${this.$store.state.url}/getpark`, paramsD)
             .then((res) => {

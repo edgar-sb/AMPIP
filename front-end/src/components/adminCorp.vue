@@ -42,11 +42,12 @@
                   >Stand-a·lone</v-card-title
                 >
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn icon @click="infoParkAction(i.id)">
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-                  <v-btn icon v-if="i.nombre_es != 'standalone'">
-                    <v-icon @click="inactive('i', 'p', i.id)"
+                  <v-btn icon v-if="i.nombre_es != 'standalone'" @click="inactive('i', 'p', i.id)">
+                    <v-icon
                       >mdi-delete</v-icon
                     >
                   </v-btn>
@@ -77,8 +78,9 @@
             <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.corporativo"
-                label="Corporativo"
+                label="jkghjghjghgh"
                 outlined
+                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
@@ -88,6 +90,7 @@
                 v-model="id.nombre_es"
                 label="Nombre de Corporativo (Español)"
                 outlined
+                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
@@ -97,12 +100,18 @@
                 v-model="id.nombre_en"
                 label="Nombre de Corporativo (Ingles)"
                 outlined
+                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.rfc" label="RFC" outlined>
+              <v-text-field
+                v-model="id.rfc"
+                label="RFC"
+                outlined
+                :rules="[rules.required, rules.rfcMin]"
+              >
               </v-text-field>
             </v-col>
             <v-col sm="12">
@@ -113,6 +122,7 @@
                 v-model="id.direccion"
                 label="Calle y Número"
                 outlined
+                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
@@ -123,6 +133,7 @@
                 label="Código Postal"
                 v-model="id.cp"
                 @keyup="watchCp"
+                :rules="[rules.required, rules.number]"
               ></v-text-field>
             </v-col>
 
@@ -136,12 +147,19 @@
                 v-model="id.colonia"
                 item-text="d_asenta"
                 item-value="d_asenta"
+                :rules="[rules.required]"
               ></v-select>
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
               <span>{{ id.estado }}</span>
-              <v-text-field v-model="edo" label="Estado" outlined disabled>
+              <v-text-field
+                v-model="edo"
+                label="Estado"
+                :rules="[rules.required]"
+                outlined
+                disabled
+              >
               </v-text-field>
             </v-col>
 
@@ -152,13 +170,19 @@
                 label="municipio/alcaldía"
                 outlined
                 disabled
+                :rules="[rules.required]"
               >
               </v-text-field>
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
               <span>Numero celular: </span>
-              <v-text-field v-model="id.celular" label="Celular" outlined>
+              <v-text-field
+                v-model="id.celular"
+                label="Celular"
+                outlined
+                :rules="[rules.required, rules.phone, rules.number]"
+              >
               </v-text-field>
             </v-col>
             <v-col sm="12">
@@ -169,6 +193,7 @@
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
                 outlined
+                :rules="[rules.required, rules.number]"
               >
               </v-text-field>
             </v-col>
@@ -177,6 +202,7 @@
                 v-model="id.inversionRealizadaActual"
                 label="Inversión anual programada (pipeline año actual) MXN"
                 outlined
+                :rules="[rules.required, rules.number]"
               >
               </v-text-field>
             </v-col>
@@ -185,6 +211,7 @@
                 v-model="id.inversionRealizadaAnterior"
                 label="Inversión anual programada (pipeline año anterior) MXN"
                 outlined
+                :rules="[rules.required, rules.number]"
               >
               </v-text-field>
             </v-col>
@@ -192,12 +219,22 @@
               <span>Social: </span>
             </v-col>
             <v-col sm="12" md="12">
-              <v-text-field v-model="social.facebook" label="Facebook" outlined>
+              <v-text-field
+                v-model="social.facebook"
+                label="Facebook"
+                outlined
+                :rules="[rules.required, rules.link]"
+              >
               </v-text-field>
             </v-col>
 
             <v-col cols="12" sm="12" md="12">
-              <v-text-field v-model="social.twiter" label="Twiter" outlined>
+              <v-text-field
+                v-model="social.twiter"
+                label="Twiter"
+                outlined
+                :rules="[rules.required, rules.link]"
+              >
               </v-text-field>
             </v-col>
 
@@ -206,12 +243,18 @@
                 v-model="social.instagram"
                 label="Instagram"
                 outlined
+                :rules="[rules.required, rules.link]"
               >
               </v-text-field>
             </v-col>
 
             <v-col cols="12" sm="12" md="12">
-              <v-text-field v-model="social.linkdin" label="LinkedIn" outlined>
+              <v-text-field
+                v-model="social.linkdin"
+                label="LinkedIn"
+                outlined
+                :rules="[rules.required, rules.link]"
+              >
               </v-text-field>
             </v-col>
             <v-card-actions>
@@ -264,6 +307,20 @@ export default {
       },
       cp: [],
       logo: null,
+      rules: {
+        rfc: (i) => i.length > 11 || "RFC no valido",
+        rfcMin: (i) => i.length <= 13 || "RFC no valido",
+        required: (value) => !!value || "Requerido.",
+        phone: (i) => i.length == 10 || "Numero de telefono no valido",
+        number: (i) => {
+          const pattern = /^([0-9])*$/;
+          return pattern.test(i) || "Numero no valido";
+        },
+        link: (i) => {
+          let pattern = /^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/;
+          return pattern.test(i) || "Link no valido";
+        },
+      },
     };
   },
   props: ["id_corp"],
@@ -333,16 +390,29 @@ export default {
     },
 
     inactive(type, table, id) {
-      let params = new URLSearchParams();
-      params.append("type", type);
-      params.append("table", table);
-      params.append("id", id);
-      axios
-        .post(`${this.$store.state.url}/activeinactive`, params)
-        .then(() => {
-          this.getParks();
-        })
-        .catch((e) => console.log(e));
+      Swal.fire({
+        title: "¿Esta seguro de esta accion?",
+        text: "Esta apunto de elimiar",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Eliminar",
+        cancelButtonText: "Cancelar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          let params = new URLSearchParams();
+          params.append("type", type);
+          params.append("table", table);
+          params.append("id", id);
+          axios
+            .post(`${this.$store.state.url}/activeinactive`, params)
+            .then(() => {
+              this.getParks();
+            })
+            .catch((e) => console.log(e));
+        }
+      });
     },
 
     infoUserAction(id) {
@@ -400,34 +470,44 @@ export default {
       );
       params.append("habilitar", 0);
 
-      axios
-        .post(`${this.$store.state.url}/updatecorp`, params)
-        .then(() => {
-          this.extrasAction();
-          Swal.fire(
-            "La informacion se actualizo esta en espera de que se habilite"
-          );
-        })
-        .catch((e) => console.log(e));
-      let data = new FormData();
-      data.append("query", "logo");
-      data.append("uniqueName", this.id.nombre_es);
-      data.append("fichero_usuario", this.logo);
-      var config = {
-        method: "post",
-        url: `${this.$store.state.baseUrl}/api/uploadfiles`,
-        headers: { "Content-Type": "image/jpeg" },
-        data: data,
-      };
-      let ctx = this;
-      axios(config)
-        .then(function(response) {
-          ctx.$router.push("/");
-          console.log(JSON.stringify(response.data));
-        })
-        .catch(function(error) {
-          console.log(error);
+      if (
+        this.id.nombre_es != "" &&
+        this.id.nombre_en != "" &&
+        this.id.rfc != ""
+      ) {
+        axios
+          .post(`${this.$store.state.url}/updatecorp`, params)
+          .then(() => {
+            this.extrasAction();
+            Swal.fire(
+              "La informacion se actualizo esta en espera de que se habilite"
+            );
+          })
+          .catch((e) => console.log(e));
+        let data = new FormData();
+        data.append("query", "logo");
+        data.append("uniqueName", this.id.nombre_es);
+        data.append("fichero_usuario", this.logo);
+        var config = {
+          method: "post",
+          url: `${this.$store.state.baseUrl}/api/uploadfiles`,
+          headers: { "Content-Type": "image/jpeg" },
+          data: data,
+        };
+        let ctx = this;
+        axios(config)
+          .then(function(response) {
+            ctx.$router.push("/");
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      } else {
+        Swal.fire({
+          text: "No se puede guardar la informacion sin (Nombre de corporativo Ingles y Espáñol y RFC) asegurate de haberlos llenado",
         });
+      }
     },
 
     extrasAction() {
