@@ -48,6 +48,7 @@
             label="Codigo postal"
             v-model="cpUser"
             @keyup="watchCp"
+            :rules="[rules.required, rules.phone, rules.cpLenghtMax]"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="6" v-if="changeAddres">
@@ -83,9 +84,10 @@
         </v-col>
         <v-col cols="12" sm="12" md="6">
           <v-text-field
-            label="Teléfono de oficina"
+            label="Teléfono de oficinas"
             v-model="dataUser.telefonoOfficina"
             outlined
+            :rules="[rules.phone, rules.phoneLenghtMax, rules.phoneLenghtMin]"
           >
           </v-text-field>
         </v-col>
@@ -94,6 +96,7 @@
             label="Teléfono personal"
             outlined
             v-model="dataUser.celular"
+            :rules="[rules.phone, rules.phoneLenghtMax, rules.phoneLenghtMin]"
           >
           </v-text-field>
         </v-col>
@@ -143,6 +146,7 @@
             label="Nueva contraseña"
             v-model="newPass"
             outlined
+            :rules="[rules.passLengt,rules.passLengtminor, rules.secure]"
           >
           </v-text-field>
         </v-col>
@@ -152,7 +156,7 @@
             type="password"
             label="Confirma tu nueva contraseña"
             v-model="newPassConfirm"
-            :rules="[filters.pass]"
+            :rules="[rules.pass]"
             outlined
           >
           </v-text-field>
@@ -191,7 +195,6 @@ import axios from "axios";
 var CryptoJS = require("crypto-js");
 export default {
   props: ["id"],
-
   data() {
     return {
       dataUser: null,
@@ -203,8 +206,20 @@ export default {
       menu: false,
       modal: false,
       imgProfile: [],
+      secureTest: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/,
       rules: {
         required: (value) => !!value || "Valor requerido.",
+        pass: () => this.newPass == this.newPassConfirm || "Las contraseñas no coinsiden",
+        passLengt: () => this.newPass.length >= 8 || "Minimo 8 caracteres",
+        passLengtminor: () => this.newPass.length <= 19 || "Maximo 19 caracteres",
+        secure: () => this.secureTest.test(this.newPass) || "Contraseña Insegura",
+        phone: (value) => {
+          const pattern = /^([0-9])*$/;
+          return pattern.test(value) || "Numero no valido";
+        },
+        phoneLenghtMax : (v) =>  v.length >= 10 || "Minimo 10 digitos",
+        phoneLenghtMin : (m) =>  m.length <= 10 || "Maximo 10 digitos",
+        cpLenghtMax : (c) => c.length == 5 || "Necesariamente 5 digitos"
       },
       newPass: "",
       confirmPass: "",
@@ -215,10 +230,6 @@ export default {
       col: "",
       address_street: "",
       newPassConfirm: "",
-      filters: {
-        pass: () =>
-          this.newPass == this.newPassConfirm || "Las contraseñas no coinsiden",
-      },
     };
   },
 
@@ -334,7 +345,7 @@ export default {
             })
             .catch((e) => console.log(e));
         } else {
-          alert("Las contraseñas nuevas no coinsiden");
+          Swal.fire({text:"Las nuevas contraseñas parecen no coinsidir no se efectuara el cambio"})
         }
       }
     },
