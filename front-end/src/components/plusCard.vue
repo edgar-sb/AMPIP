@@ -636,9 +636,7 @@
     <!-- ultimo usuario -->
     <v-card v-if="dialogs == 6">
       <v-card-actions>
-        <v-card-title>
-          Usuario
-        </v-card-title>
+        <v-card-title> Usuario </v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
           <v-icon>mdi-window-close</v-icon>
@@ -1698,6 +1696,7 @@ export default {
               axios
                 .post(`${this.$store.state.url}/getuseridlogin`, par)
                 .then((res) => {
+                  ctx.linkinquilino(ctx.id.id, res.data);
                   ctx.createdataLast(res.data);
                 })
                 .catch((e) => console.log(e));
@@ -1707,6 +1706,16 @@ export default {
       } else {
         this.alerts();
       }
+    },
+    linkinquilino(id_nave, id_user) {
+      let params = new URLSearchParams();
+      params.append("query", 1);
+      params.append("id", id_nave);
+      params.append("id_user", id_user[0].id);
+      axios
+        .post(`${this.$store.state.url}/naveadmin`, params)
+        .then((res) => console.log(res))
+        .catch((e) => console.log(e));
     },
     createdataUser(id) {
       let params = new URLSearchParams();

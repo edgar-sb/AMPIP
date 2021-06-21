@@ -12,3 +12,6 @@ select * from ampip.datosDeUsuario;
 update ampip.user set password = 'saG9uaE=';
 
 select * from ampip.parque;
+select * from ampip.parques_usuarios;
+
+select * from parque;

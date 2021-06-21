@@ -1029,17 +1029,17 @@ class apiController extends AbstractActionController
         }
     }
 
-
-    /* 
-    if ($this->getRequest()->isPost()) {
+    public function getallnaveforparksAction()
+    {
+        if ($this->getRequest()->isPost()) {
             $id = $this->params()->fromPost("id");
-            $parques = $this->entityManager->getRepository(parqueEntity::class)->findBy(["key_corp"=>$id]);
+            $parques = $this->entityManager->getRepository(parqueEntity::class)->findBy(["id" => $id]);
             $items = [];
             $arr = array();
-            foreach($parques as $parque){
-                
-                $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id"=>$parque->getid()]);
-                foreach($naves as $nave){
+            foreach ($parques as $parque) {
+
+                $naves = $this->entityManager->getRepository(naveEntity::class)->findBy(["parque_id" => $parque->getid()]);
+                foreach ($naves as $nave) {
                     $items['id'] = $nave->getid();
                     $items['name'] = $nave->getname();
                     $items['parque_id'] = $nave->getparque_id();
@@ -1052,8 +1052,7 @@ class apiController extends AbstractActionController
                 $this->url
             );
         }
-    
-    */
+    }
 
     public function getparksAction()
     {
@@ -1164,7 +1163,7 @@ class apiController extends AbstractActionController
     public function getnaveAction()
     {
         if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost("id", "");
+            $id = $this->params()->fromPost("id");
             $nave = $this->entityManager->getRepository(naveEntity::class)->findById($id);
 
 
@@ -1174,6 +1173,10 @@ class apiController extends AbstractActionController
                     $roleList["id"] = $role->getId();
                     $roleList["name"] = $role->getname();
                     $roleList["parque_id"] = $role->getparque_id();
+                    $getInquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["id_nave"=>$role->getId()]);
+                    foreach($getInquilino as $i){
+                        $roleList['isAmpip'] = $i->getisAmpip();
+                    }
                 } else {
                     $roleList["error"] = "2541";
                 }
@@ -1932,6 +1935,10 @@ class apiController extends AbstractActionController
             $allNaves['id'] = $nave->getid();
             $allNaves['name'] = $nave->getname();
             $allNaves['parque'] = $nave->getparque_id();
+            $getInquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["id_nave"=>$nave->getid()]);
+            foreach($getInquilino as $i){
+                $allNaves['isAmpip'] = $i->getisAmpip();
+            }
             array_push($allNavesArray, $allNaves);
         }
 
@@ -1941,9 +1948,6 @@ class apiController extends AbstractActionController
     public function apiforsheetsAction()
     {
         $dates = date('Y-m-d');
-        /* 2021-06-14  
-               2021-06-1
-            */
         $result = $this->entityManager->getRepository(parqueEntity::class)->findBy(["edit" => $dates]);
         $arr = array();
         $roleList = [];

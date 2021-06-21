@@ -319,7 +319,7 @@ export default {
             .then((res) => {
               this.parque = res.data[0];
               this.getUserFromPark(res.data[0].id);
-              this.getallnaves(res.data[0].key_corp);
+              this.getallnaves(res.data[0].id);
             })
             .catch((e) => console.log(e));
         })
@@ -477,7 +477,7 @@ export default {
       let params = new URLSearchParams();
       params.append("id", id);
       axios
-        .post(`${this.$store.state.url}/getallnaveforpark`, params)
+        .post(`${this.$store.state.url}/getallnaveforparks`, params)
         .then((res) => (this.naves = res.data))
         .catch((e) => console.log(e));
     },
