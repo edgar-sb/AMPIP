@@ -271,6 +271,8 @@ import axios from "axios";
 import plusCard from "../components/plusCard";
 import UploadImages from "vue-upload-drop-images";
 import Swal from "sweetalert2";
+import VueCookies from "vue-cookies";
+var CryptoJS = require("crypto-js");
 export default {
   data() {
     return {
@@ -451,6 +453,13 @@ export default {
     },
 
     updatecorpAction() {
+      var emals = CryptoJS.AES.decrypt(VueCookies.get("email"), "ampip");
+      let  email = emals.toString(CryptoJS.enc.Utf8);
+      let status = {
+        email:email,
+        status:"evaluacion en espera", 
+        comments:null
+      };
       let params = new URLSearchParams();
       params.append("id", this.id.id);
       params.append("nombre_es", this.id.nombre_es);
@@ -468,6 +477,7 @@ export default {
         "inversionAnualAnterior",
         this.id.inversionRealizadaAnterior
       );
+      params.append("status", JSON.stringify(status));
       params.append("habilitar", 0);
 
       if (

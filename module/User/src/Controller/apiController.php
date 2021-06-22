@@ -370,6 +370,7 @@ class apiController extends AbstractActionController
                 $inversionAnualActual = $this->params()->fromPost("inversionAnualActual", null);
                 $inversionAnualAnterior = $this->params()->fromPost("inversionAnualAnterior", null);
                 $habilitar = $this->params()->fromPost("habilitar", null);
+                $status = $this->params()->fromPost("status", "Aprobado");
                 $search = $this->entityManager->getRepository(corpEntity::class)->findById($id_key);
 
                 if ($search != null) {
@@ -386,7 +387,8 @@ class apiController extends AbstractActionController
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionRealizadaActual", $inversionAnualActual, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".inversionRealizadaAnterior", $inversionAnualAnterior, $id_key);
                     $this->entityManager->getRepository(corpEntity::class)->updateUser(".habilitar", $habilitar, $id_key);
-                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".fechaDeValidacion", date('Y-m-d H:i:s'), $id_key);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".status", $status, $id_key);
+                    $this->entityManager->getRepository(corpEntity::class)->updateUser(".fechaDeValidacion",date('Y-m-d H:i:s'), $id_key);
                     return new JsonModel(["message" => "listo"]);
                 } else {
                     $this->logs("El usuario con id  intento actualizar la corporacion con id ", 0);
@@ -1596,7 +1598,7 @@ class apiController extends AbstractActionController
             $lng = $this->params()->fromPost("lng");
             $filters = $this->params()->fromPost("filters");
             $newMaps = new mapsEntity();
-            $newMaps->setname($name);
+            $newMaps->setname($name); 
             $newMaps->setlat($lat);
             $newMaps->setlng($lng);
             $newMaps->setfilters($filters);

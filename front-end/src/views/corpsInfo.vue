@@ -63,6 +63,7 @@
             >
               <v-card>
                 <v-card-title v-text="i.fullname"></v-card-title>
+                {{i.email}}
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn icon @click="infoUserAction(i.id)">
@@ -165,6 +166,7 @@
                     persistent
                     width="700"
                     :retain-focus="false"
+                    :elevation="0"
                   >
                     <InfoCard
                       :id="propsToComponents.nave"
@@ -196,6 +198,9 @@
                   <v-spacer></v-spacer>
                   <v-btn icon @click="spaces = true">
                     <v-icon>mdi-eye</v-icon>
+                  </v-btn>
+                  <v-btn icon @click="inactive('i', 's', i.id)">
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
                   <v-dialog v-model="spaces" width="700" :retain-focus="false">
                     <InfoCard :id="i" :type="'space'" @close="closeInfo" />
@@ -349,19 +354,19 @@
                 v-if="id.fechaDeValidacion"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
-              <v-btn
+          </v-row>
+          <v-card-actions>
+          <v-spacer></v-spacer>
+             <v-btn text color="red" v-if="id.habilitar == 0" @click="message"
+                >No Guardar</v-btn>
+             <v-btn
                 text
                 color="green"
                 v-if="id.habilitar == 0"
                 @click="saveInfoCorp"
                 >habilitar</v-btn
               >
-              <v-btn text color="red" v-if="id.habilitar == 0"
-                >No Guardar</v-btn
-              >
-            </v-col>
-          </v-row>
+          </v-card-actions>
         </v-container>
       </v-tab-item>
     </v-tabs-items>
@@ -417,6 +422,7 @@ export default {
   },
   methods: {
     saveInfoCorp() {
+      let dat = JSON.parse(this.id.status);
       let params = new URLSearchParams();
       params.append("id", this.id.id);
       params.append("nombre_es", this.id.nombre_es);
@@ -434,6 +440,7 @@ export default {
       axios
         .post(`${this.$store.state.url}/updatecorp`, params)
         .then(() => {
+          axios.get(`${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=Se autorizo la actualizacion`)
           this.$router.push("/");
         })
         .catch((e) => console.log(e));
@@ -546,6 +553,7 @@ export default {
                   }, 100);
                 },
                 willClose: () => {
+                  this.getSpaces();
                   clearInterval(timerInterval);
                 },
               }).then((result) => {
@@ -651,6 +659,39 @@ export default {
         })
         .catch((e) => console.log(e));
     },
+    message(){
+      let dat = JSON.parse(this.id.status);
+      Swal.fire({
+        title: 'Envia tus comentarios',
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Enviar',
+        cancelButtonText:'Cancelar',
+        cancelButtonColor:"red",
+        confirmButtonColor:"green",
+        showLoaderOnConfirm: true,
+        preConfirm: (comments) => {
+          return fetch(`${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=${comments}`)
+            .then(response => {
+              if (!response.ok) {
+                throw new Error(response.statusText)
+              }
+              return response.json()
+            })
+            .catch(() => {
+              Swal.fire({text:"Comentarios enviados"})
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({text:"Listo se enviaron comentarios"})
+        }
+      })
+    }
   },
   beforeMount() {
     this.getInfoCorpAction();

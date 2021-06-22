@@ -8,7 +8,7 @@
           <v-icon>mdi-window-close</v-icon>
         </v-btn>
       </v-card-title>
-      <v-card-text>
+      <v-card-text v-if="id.direccionDeOfficina">
         <v-row>
           <v-col cols="12" sm="12">
             <v-img
@@ -49,6 +49,10 @@
           </v-col>
         </v-row>
       </v-card-text>
+
+      <v-text v-if="!id.direccionDeOfficina">
+        <span>Este usuario aun no llena sus datos</span>
+      </v-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn @click="reset(id.id_A)">Reenviar contraseña</v-btn>
