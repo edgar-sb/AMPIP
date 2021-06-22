@@ -150,7 +150,7 @@
                     <!-- isAmpip -->
                     <v-btn
                       icon
-                      @click="addUserToNaveAction"
+                      @click="addUserToNaveAction(i.id)"
                       v-if="i.isAmpip == null"
                     >
                       <v-icon>mdi-plus</v-icon>
@@ -648,7 +648,8 @@ export default {
     back() {
       this.$router.push("/");
     },
-    addUserToNaveAction() {
+    addUserToNaveAction(id) {
+      this.$store.commit("parqueOfuser", id);
       this.addUserToNave = true;
     },
     getallspacesAction(id) {

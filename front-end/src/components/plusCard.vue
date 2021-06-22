@@ -1721,7 +1721,7 @@ export default {
     linkinquilino(id_nave, id_user) {
       let params = new URLSearchParams();
       params.append("query", 1);
-      params.append("id", id_nave);
+      params.append("id", this.$store.state.parqueOfuser);
       params.append("id_user", id_user[0].id);
       axios
         .post(`${this.$store.state.url}/naveadmin`, params)

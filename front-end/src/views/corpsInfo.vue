@@ -73,6 +73,8 @@
                     width="700"
                     v-model="cards.infoUser"
                     :retain-focus="false"
+                    :overlay-color="'#fff'"
+                    :overlay-opacity="'0'"
                   >
                     <InfoCard
                       :id="propsToComponents.user"

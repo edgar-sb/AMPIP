@@ -18,7 +18,8 @@ export default new Vuex.Store({
     type_society:null,
     profileDialog:false,
     parque:null,
-    nave:null
+    nave:null,
+    parqueOfuser:null
   },
   mutations: {
     adddata(state, value) {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     },
     setNave(state, value){
       state.nave = value;
+    },
+    setParqueOfUser(state, value){
+      state.parqueOfuser = value
     }
   },
   actions: {},
