@@ -1594,11 +1594,12 @@ class apiController extends AbstractActionController
             $name = $this->params()->fromPost("name");
             $lat = $this->params()->fromPost("lat");
             $lng = $this->params()->fromPost("lng");
-
+            $filters = $this->params()->fromPost("filters");
             $newMaps = new mapsEntity();
             $newMaps->setname($name);
             $newMaps->setlat($lat);
             $newMaps->setlng($lng);
+            $newMaps->setfilters($filters);
             $this->entityManager->persist($newMaps);
             $this->entityManager->flush();
             return  new JsonModel(["message" => "Listo"]);

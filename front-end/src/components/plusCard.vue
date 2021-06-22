@@ -776,7 +776,6 @@
               :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
-
           <v-col cols="12">
             <span>Selecciona la ubicacion</span>
             <GmapMap
@@ -792,6 +791,18 @@
                 :draggable="true"
               />
             </GmapMap>
+          </v-col>
+          <v-col cols="12">
+            <v-select
+              v-model="parquesData.infra"
+              :items="infraList"
+              attach
+              chips
+              outlined
+              label="Infraestructura *"
+              multiple
+              :rules="[rules.required]"
+            ></v-select>
           </v-col>
         </v-row>
       </v-card-text>
@@ -1792,6 +1803,7 @@ export default {
               paramsMaps.append("name", ctx.spaces.type);
               paramsMaps.append("lat", ctx.markers.lat);
               paramsMaps.append("lng", ctx.markers.lng);
+              paramsMaps.append("filters",ctx.parquesData.infra);
               axios
                 .post(`${this.$store.state.url}/mapsup`, paramsMaps)
                 .then((res) => {

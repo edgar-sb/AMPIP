@@ -136,8 +136,8 @@
                       @closeInfo="closeInfo"
                     />
                   </v-dialog>
-                  <v-btn icon>
-                    <v-icon @click="inactive('i', 'p', i.id)"
+                  <v-btn icon @click="inactive('i', 'p', i.id)">
+                    <v-icon
                       >mdi-delete</v-icon
                     >
                   </v-btn>
