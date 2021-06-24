@@ -25,6 +25,7 @@
                     outlined
                     label="Nombre *"
                     v-model="dataUser.name"
+                    :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
@@ -32,6 +33,7 @@
                     outlined
                     label="Apellido Paterno *"
                     v-model="dataUser.lastName"
+                    :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
@@ -39,6 +41,7 @@
                     outlined
                     label="Apellido Materno *"
                     v-model="dataUser.last"
+                    :rules="[rules.required]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
@@ -46,6 +49,7 @@
                     outlined
                     label="Correo"
                     v-model="dataUser.email"
+                    :rules="[rules.required, rules.email]"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12">
@@ -148,11 +152,7 @@
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
                     <!-- isAmpip -->
-                    <v-btn
-                      icon
-                      @click="addUserToNaveAction(i.id)"
-                      v-if="i.isAmpip == null"
-                    >
+                    <v-btn icon @click="addUserToNaveAction(i.id)" v-if="i.isAmpip == null" >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                     <v-dialog
@@ -358,7 +358,6 @@
   </content>
 </template>
 <script>
-
 import infoCard from "../components/infoCard";
 import axios from "axios";
 import plusCard from "../components/plusCard";
@@ -448,6 +447,13 @@ export default {
       newRecords: null,
       addUserToNave: false,
       spacesAll: null,
+      rules: {
+        required: (value) => !!value || "Requerido.",
+        email: (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "Ingresa un correo valido.";
+        },
+      },
     };
   },
   beforeMount() {
@@ -649,7 +655,7 @@ export default {
       this.$router.push("/");
     },
     addUserToNaveAction(id) {
-      this.$store.commit("parqueOfuser", id);
+      this.$store.commit("setParqueOfUser", id);
       this.addUserToNave = true;
     },
     getallspacesAction(id) {
@@ -697,11 +703,7 @@ export default {
             /* Read more about handling dismissals below */
             result.dismiss === Swal.DismissReason.cancel
           ) {
-            swalWithBootstrapButtons.fire(
-              "Cancelado",
-              "...",
-              "error"
-            );
+            swalWithBootstrapButtons.fire("Cancelado", "...", "error");
           }
         });
     },

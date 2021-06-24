@@ -1,7 +1,7 @@
 <template>
   <content>
     <v-card-actions>
-      <v-btn icon @click="getTab" v-if="tab == 0">
+      <v-btn icon @click="getTab" v-if="tab != 2">
         <v-icon v-if="options.i">mdi-plus</v-icon>
         <v-dialog width="700" persistent v-model="addNave">
           <plusCard
@@ -10,12 +10,22 @@
             :id="parque.id"
           ></plusCard>
         </v-dialog>
+        <v-dialog width="700" persistent v-model="addSpace">
+          <plusCard
+            dialogs="7"
+            @close="closePlusCard"
+            :id="[parque.id, parque.key_corp]"
+          ></plusCard>
+        </v-dialog>
       </v-btn>
     </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
         <v-tab>
           Inquilinos
+        </v-tab>
+        <v-tab>
+          Spacio disponible
         </v-tab>
         <v-tab>
           Informacion
@@ -33,6 +43,26 @@
                   <v-card-actions>
                     <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
+        <v-tab-item>
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
+                <v-card>
+                  <v-card-title>
+                    Espacio disponible
+                    <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="inactiveSpace(i.id)">
+                      <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </v-card-actions>
                 </v-card>
@@ -219,6 +249,8 @@ export default {
       parque: [],
       addUser: null,
       addNave: null,
+      addSpace: null,
+      spacesAll: [],
       permisos: ["Eliminar", "Editar", "Agregar"],
       dataUser: {
         name: "",
@@ -320,6 +352,7 @@ export default {
               this.parque = res.data[0];
               this.getUserFromPark(res.data[0].id);
               this.getallnaves(res.data[0].id);
+              this.getallspacesAction(res.data[0].id);
             })
             .catch((e) => console.log(e));
         })
@@ -331,11 +364,15 @@ export default {
       switch (this.tab) {
         case 0:
           this.addNave = true;
+          break;
+        case 1:
+          this.addSpace = true;
       }
     },
     closeAction() {
       this.addUser = false;
       this.addNave = false;
+      this.addSpace = false;
     },
     addUserAction() {
       if (
@@ -422,8 +459,11 @@ export default {
     },
     closePlusCard() {
       this.addNave = false;
+      this.addSpace = false;
+      this.addUser = false;
       this.data_user = false;
       this.getallnaves(this.parque.key_corp);
+      this.getallspacesAction(this.parque.id);
       let timerInterval;
       Swal.fire({
         title: "Recuperando datos",
@@ -534,6 +574,55 @@ export default {
     },
     back() {
       this.$ro;
+    },
+    getallspacesAction(id) {
+      let params = new URLSearchParams();
+      params.append("query", 3);
+      params.append("id", id);
+      axios
+        .post(`${this.$store.state.url}/espacio`, params)
+        .then((res) => (this.spacesAll = res.data))
+        .catch((e) => console.log(e));
+    },
+    inactiveSpace(id) {
+      const swalWithBootstrapButtons = Swal.mixin();
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "¿Esta seguro de esta accion?",
+          text: "Esta apunto de eliminar!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si!",
+          cancelButtonText: "Cancelar",
+          reverseButtons: true,
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            let params = new URLSearchParams();
+            params.append("type", "i");
+            params.append("table", "s");
+            params.append("id", id);
+            axios
+              .post(`${this.$store.state.url}/activeinactive`, params)
+              .then((res) => {
+                if (res.data.message == "Desactivado") {
+                  Swal.fire({ text: "Listo", icon: "success" });
+                  this.getallspacesAction(this.$store.state.parque);
+                } else {
+                  Swal.fire({ text: "Algo salio mal", icon: "error" });
+                }
+              })
+              .catch((e) => console.log(e));
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire("Cancelado", "...", "error");
+          }
+        });
     },
   },
   components: { plusCard },

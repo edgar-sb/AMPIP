@@ -636,7 +636,7 @@
     <!-- ultimo usuario -->
     <v-card v-if="dialogs == 6">
       <v-card-actions>
-        <v-card-title> Usuario </v-card-title>
+        <v-card-title></v-card-title>
         <v-spacer></v-spacer>
         <v-btn icon @click="closeAction">
           <v-icon>mdi-window-close</v-icon>
@@ -672,7 +672,7 @@
             <v-text-field
               outlined
               label="Correo *"
-              :rules="[rules.required]"
+              :rules="[rules.required, rules.email]"
               v-model="addUser.email"
             ></v-text-field>
           </v-col>

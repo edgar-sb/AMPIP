@@ -42,27 +42,7 @@ class apiController extends AbstractActionController
 
     public function getPermision($id)
     {
-        $permision = $this->entityManager->getRepository(userRole::class)->findBy(['user_id' => $id]);
-        $result = [];
-
-        foreach ($permision as $role) {
-            if ($role->getId() != "") {
-                $result["role_id"] = $role->getRoleId();
-            } else {
-                $result["error"] = 0;
-            }
-        }
-        $getType = $this->entityManager->getRepository(Role::class)->findById($result["role_id"]);
-        $result = [];
-
-        foreach ($getType as $role) {
-            if ($role->getId() != "") {
-                $result["name"] = $role->getName();
-            } else {
-                $result["error"] = 0;
-            }
-        }
-        return $result;
+        return true;
     }
 
     public function getcargo($id)
@@ -528,19 +508,6 @@ class apiController extends AbstractActionController
                 $idOfUser = $this->entityManager->getRepository(userEntity::class)->findBy(["email" => $email]);
                 $id = null;
 
-                foreach ($idOfUser as $user) {
-                    $id = $user->getId();
-                }
-                if ($id != null) {
-                    $role = new userRole();
-                    $role->setUserid($id);
-                    $role->setRoleid(4);
-                    // Add the entity to the entity manager.
-                    $this->entityManager->persist($role);
-
-                    // Apply changes to database.
-                    $this->entityManager->flush();
-                }
                 $this->logs("Se dio de alta al usuario $email", $email);
                 return new JsonModel(["message" => 1]);
             } else {
@@ -914,7 +881,6 @@ class apiController extends AbstractActionController
             $date = $this->params()->fromPost("date", date("Y-m-d"));
 
             $user = $this->entityManager->getRepository(parqueEntity::class)->findById($id);
-            $permiso = $this->getPermision($key_id);
             if (true) {
                 if ($user != null) {
                     $this->entityManager->getRepository(parqueEntity::class)->updatePark(".nombre_es", $nombre_es, $id);
@@ -2066,6 +2032,8 @@ class apiController extends AbstractActionController
                 $this->entityManager->getRepository(espacio_disponibleEntity::class)->updateData(".extras", $extras, $id);
                 return new JsonModel(["message" => "activado"]);
                 break;
+            default:
+                return new JsonModel(["message" => "sin datos"]);
         }
     }
 
