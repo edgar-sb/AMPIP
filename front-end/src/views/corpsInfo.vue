@@ -50,7 +50,7 @@
 
     <!-- Items -->
     <v-tabs-items v-model="tab">
-      <!-- Usuarios listo-->
+      <!-- Usuarios -->
       <v-tab-item>
         <v-container>
           <v-row>
@@ -63,7 +63,7 @@
             >
               <v-card>
                 <v-card-title v-text="i.fullname"></v-card-title>
-                {{i.email}}
+                {{ i.email }}
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn icon @click="infoUserAction(i.id)">
@@ -92,7 +92,7 @@
         </v-container>
       </v-tab-item>
 
-      <!--Parques listo-->
+      <!--Parques -->
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
@@ -140,9 +140,7 @@
                     />
                   </v-dialog>
                   <v-btn icon @click="inactive('i', 'p', i.id)">
-                    <v-icon
-                      >mdi-delete</v-icon
-                    >
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -218,6 +216,22 @@
       <v-tab-item>
         <v-container>
           <v-row>
+            <v-col cols="12" sm="12" md="12" v-if="true">
+              <v-cotainer>
+                <v-row align="center" justify="center">
+                  <v-col sm="12" md="6">
+                    <UploadImages
+                      @change="handleImages"
+                      :max="3"
+                      style="color:#fff"
+                    />
+                    <br />
+                    <v-text-field v-model="nameUpload" placeholder="Nombre de archivo"></v-text-field>
+                    <v-btn @click="uploadImage">Subir</v-btn>
+                  </v-col>
+                </v-row>
+              </v-cotainer>
+            </v-col>
             <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.corporativo"
@@ -358,16 +372,17 @@
             </v-col>
           </v-row>
           <v-card-actions>
-          <v-spacer></v-spacer>
-             <v-btn text color="red" v-if="id.habilitar == 0" @click="message"
-                >No Guardar</v-btn>
-             <v-btn
-                text
-                color="green"
-                v-if="id.habilitar == 0"
-                @click="saveInfoCorp"
-                >habilitar</v-btn
-              >
+            <v-spacer></v-spacer>
+            <v-btn text color="red" v-if="id.habilitar == 0" @click="message"
+              >No Guardar</v-btn
+            >
+            <v-btn
+              text
+              color="green"
+              v-if="id.habilitar == 0"
+              @click="saveInfoCorp"
+              >habilitar</v-btn
+            >
           </v-card-actions>
         </v-container>
       </v-tab-item>
@@ -379,6 +394,7 @@ import axios from "axios";
 import plusCard from "../components/plusCard";
 import InfoCard from "../components/infoCard";
 import Swal from "sweetalert2";
+import UploadImages from "vue-upload-drop-images";
 
 export default {
   data() {
@@ -416,13 +432,20 @@ export default {
       },
       places: {},
       spaces: false,
+      logoUpload:[],
+      nameUpload:null
     };
   },
   components: {
     plusCard,
     InfoCard,
+    UploadImages,
   },
   methods: {
+    handleImages(files) {
+      this.logoUpload = files[0];
+      console.log(this.corp.logo);
+    },
     saveInfoCorp() {
       let dat = JSON.parse(this.id.status);
       let params = new URLSearchParams();
@@ -442,12 +465,32 @@ export default {
       axios
         .post(`${this.$store.state.url}/updatecorp`, params)
         .then(() => {
-          axios.get(`${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=Se autorizo la actualizacion`)
+          axios.get(
+            `${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=Se autorizo la actualizacion`
+          );
           this.$router.push("/");
         })
         .catch((e) => console.log(e));
     },
-
+    uploadImage() {
+      let data = new FormData();
+      data.append("query", "logo");
+      data.append("uniqueName", this.nameUpload);
+      data.append("fichero_usuario", this.logoUpload);
+      var config = {
+        method: "post",
+        url: `${this.$store.state.baseUrl}/api/uploadfiles`,
+        headers: { "Content-Type": "image/jpeg" },
+        data: data,
+      };
+      axios(config)
+        .then(function() {
+          Swal.fire("Se agrego correctamente");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     close() {
       this.$router.push("/");
     },
@@ -661,39 +704,41 @@ export default {
         })
         .catch((e) => console.log(e));
     },
-    message(){
+    message() {
       let dat = JSON.parse(this.id.status);
       Swal.fire({
-        title: 'Envia tus comentarios',
-        input: 'textarea',
+        title: "Envia tus comentarios",
+        input: "textarea",
         inputAttributes: {
-          autocapitalize: 'off'
+          autocapitalize: "off",
         },
         showCancelButton: true,
-        confirmButtonText: 'Enviar',
-        cancelButtonText:'Cancelar',
-        cancelButtonColor:"red",
-        confirmButtonColor:"green",
+        confirmButtonText: "Enviar",
+        cancelButtonText: "Cancelar",
+        cancelButtonColor: "red",
+        confirmButtonColor: "green",
         showLoaderOnConfirm: true,
         preConfirm: (comments) => {
-          return fetch(`${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=${comments}`)
-            .then(response => {
+          return fetch(
+            `${this.$store.state.baseUrl}/mailler/comments.php?email=${dat.email}&name=a_quien_corresponda&comments=${comments}`
+          )
+            .then((response) => {
               if (!response.ok) {
-                throw new Error(response.statusText)
+                throw new Error(response.statusText);
               }
-              return response.json()
+              return response.json();
             })
             .catch(() => {
-              Swal.fire({text:"Comentarios enviados"})
-            })
+              Swal.fire({ text: "Comentarios enviados" });
+            });
         },
-        allowOutsideClick: () => !Swal.isLoading()
+        allowOutsideClick: () => !Swal.isLoading(),
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({text:"Listo se enviaron comentarios"})
+          Swal.fire({ text: "Listo se enviaron comentarios" });
         }
-      })
-    }
+      });
+    },
   },
   beforeMount() {
     this.getInfoCorpAction();
