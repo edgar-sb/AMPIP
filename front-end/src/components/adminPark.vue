@@ -44,6 +44,24 @@
                     <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <v-btn
+                      icon
+                      @click="addUserToNaveAction(i.id)"
+                      v-if="i.isAmpip == null"
+                    >
+                      <v-icon>mdi-plus</v-icon>
+                    </v-btn>
+                    <v-dialog
+                      width="700"
+                      v-model="addUserToNave"
+                      :retain-focus="false"
+                    >
+                      <plusCard
+                        :dialogs="6"
+                        :id="i"
+                        @close="closePlusCard"
+                      ></plusCard>
+                    </v-dialog>
                   </v-card-actions>
                 </v-card>
               </v-col>

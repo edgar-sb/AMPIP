@@ -1011,6 +1011,10 @@ class apiController extends AbstractActionController
                     $items['id'] = $nave->getid();
                     $items['name'] = $nave->getname();
                     $items['parque_id'] = $nave->getparque_id();
+                    $getInquilino = $this->entityManager->getRepository(inquilino_naveEntity::class)->findBy(["id_nave"=>$nave->getid()]);
+                    foreach($getInquilino as $i){
+                        $items['isAmpip'] = $i->getisAmpip();
+                    }
                     array_push($arr, $items);
                 }
             }

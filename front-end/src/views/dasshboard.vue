@@ -15,7 +15,6 @@
         </v-dialog>
       </v-btn>
     </v-app-bar>
-
     <v-container>
       <v-col sm="12">
         <v-tabs
@@ -223,6 +222,7 @@ import adminNave from "../components/adminNave";
 import profile from "../components/profile";
 import plusCard from "../components/plusCard";
 import adminCorp from "../components/adminCorp";
+
 var CryptoJS = require("crypto-js");
 
 export default {
@@ -232,7 +232,7 @@ export default {
     adminPark,
     adminNave,
     profile,
-    adminCorp,
+    adminCorp
   },
   data() {
     return {
