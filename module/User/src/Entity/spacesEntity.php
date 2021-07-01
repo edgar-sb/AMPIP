@@ -88,5 +88,5 @@ class spacesEntity
     public function getlng(){return $this->lng;}
     public function setlng($lng){$this->lng = $lng;}
     public function getfilters(){return $this->filters;}
-    public function setfilters($filter){$this->filters = $filters;}
+    public function setfilters($filter){$this->filters = $filter;}
 }

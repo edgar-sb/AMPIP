@@ -19,6 +19,7 @@ use User\Entity\userRole;
 use User\Entity\extrasEntity;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
+use Zend\View\Model\ViewModel;
 
 
 class apiController extends AbstractActionController
@@ -439,7 +440,7 @@ class apiController extends AbstractActionController
     }
 
     /*
-     * 
+     *
      * usuario CRUD
      *
      */
@@ -1568,7 +1569,7 @@ class apiController extends AbstractActionController
             $lng = $this->params()->fromPost("lng");
             $filters = $this->params()->fromPost("filters");
             $newMaps = new mapsEntity();
-            $newMaps->setname($name); 
+            $newMaps->setname($name);
             $newMaps->setlat($lat);
             $newMaps->setlng($lng);
             $newMaps->setfilters($filters);
@@ -2053,16 +2054,36 @@ class apiController extends AbstractActionController
     public function getfiltersAction()
     {
         if ($this->getRequest()->isPost()) {
-            $maker = $this->entityManager->getRepository(mapsEntity::class)->findAll();
-            $makersArray = array();
-            $arr = [];
+            $query = $this->params()->fromPost("query");
+            switch($query){
+                case 1:
+                    $maker = $this->entityManager->getRepository(mapsEntity::class)->findAll();
+                    $makersArray = array();
+                    $arr = [];
 
-            foreach ($maker as $make) {
-                $arr['filters'] = $make->getfilters();
-                array_push($makersArray, $arr);
+                    foreach ($maker as $make) {
+                        $arr['filters'] = $make->getfilters();
+                        array_push($makersArray, $arr);
+                    }
+                    $this->logs("Se obtubieron todos los parques", "WM");
+                    return new JsonModel($makersArray);
+                    break;
+                case 2:
+                    $precios = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findAll();
+                    $arr = array();
+                    foreach ($precios as $precio){
+                        array_push($arr,$precio->getprecioPromedio());
+                    }
+                    return new JsonModel($arr);
+                case 3:
+                    $extras = $this->entityManager->getRepository(espacio_disponibleEntity::class)->findAll();
+                    $arr= array();
+                    foreach ($extras as $precio){
+                        array_push($arr,$precio->getextras());
+                    }
+                    return new JsonModel($arr);
+
             }
-            $this->logs("Se obtubieron todos los parques", "WM");
-            return new JsonModel($makersArray);
         } else {
             return new JsonModel(["message" => 0]);
         }
