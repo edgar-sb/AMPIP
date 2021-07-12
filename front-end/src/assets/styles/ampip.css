@@ -97,6 +97,10 @@ h1 {
 ._h3_buscador {
     white-space: nowrap;
 }
+.v-application--wrap {
+    max-width: 1600px !important;
+    margin: 0 auto;
+}
 /* ////////////////////////////////////////////////////////////////// END MAIN */
 
 
