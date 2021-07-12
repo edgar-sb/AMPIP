@@ -311,6 +311,7 @@
                 v-model="id.inversionAnualSiguiente"
                 label="Inversión anual programada (pipeline año siguiente) MXN"
                 outlined
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -319,6 +320,7 @@
                 v-model="id.inversionRealizadaActual"
                 label="Inversión anual realizada (año en curso) MXN"
                 outlined
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -327,6 +329,7 @@
                 v-model="id.inversionRealizadaAnterior"
                 label="Inversión anual realizada (año anterior) MXN"
                 outlined
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>

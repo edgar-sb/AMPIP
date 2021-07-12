@@ -1,20 +1,39 @@
 <template>
   <content>
     <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
-    <v-app-bar>
+    <v-toolbar>
       <v-toolbar-title small>
         <label>{{ saludo }}</label>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
-
+      <v-text-field
+        hide-details
+        label="Buscador"
+        placeholder="Buscar"
+        filled
+        rounded
+        app-bar
+        dense
+        single-line
+        append-icon="mdi-magnify"
+        class="shrink mx-4"
+        v-model="keysearch"
+        @keyup="key_search"
+      >
+      </v-text-field>
       <v-btn text @click="setProfileActionModel" id="more">
-        oPcIoNeS
-        <v-dialog v-model="getProfileActionModel" width="700" persistent :retain-focus="false">
+        Perfil
+        <v-dialog
+          v-model="getProfileActionModel"
+          width="700"
+          persistent
+          :retain-focus="false"
+        >
           <profile />
         </v-dialog>
       </v-btn>
-    </v-app-bar>
+    </v-toolbar>
     <v-container>
       <v-col sm="12">
         <v-tabs
@@ -39,7 +58,11 @@
                     <v-btn @click="addNewCorp = true" icon
                       ><v-icon>mdi-plus</v-icon></v-btn
                     >
-                    <v-dialog v-model="addNewCorp" width="700" :retain-focus="false">
+                    <v-dialog
+                      v-model="addNewCorp"
+                      width="700"
+                      :retain-focus="false"
+                    >
                       <plusCard
                         :dialogs="4"
                         :type_society="'Desarrollador'"
@@ -91,7 +114,11 @@
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
-                          <v-dialog v-model="getCorpInfo" persistent :retain-focus="false">
+                          <v-dialog
+                            v-model="getCorpInfo"
+                            persistent
+                            :retain-focus="false"
+                          >
                             <getCorpInfo :id="infoToCorp" :users="users" />
                           </v-dialog>
                         </v-card>
@@ -110,7 +137,11 @@
                     <v-btn @click="addNewPat = true" icon>
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
-                    <v-dialog v-model="addNewPat" width="700" :retain-focus="false">
+                    <v-dialog
+                      v-model="addNewPat"
+                      width="700"
+                      :retain-focus="false"
+                    >
                       <plusCard
                         :dialogs="4"
                         :type_society="'Patrocinador'"
@@ -164,7 +195,11 @@
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
-                          <v-dialog v-model="getCorpInfo" persistent :retain-focus="false">
+                          <v-dialog
+                            v-model="getCorpInfo"
+                            persistent
+                            :retain-focus="false"
+                          >
                             <getCorpInfo
                               :id="infoToCorp"
                               :users="users"
@@ -207,6 +242,15 @@
         <adminNave
           v-if="userType == 'AdministradorDeNave' && corpOfUser != null"
         />
+
+        <iframe
+          id="inlineFrameExample"
+          title="Inline Frame Example"
+          width="100%"
+          height="1000px"
+          src="https://www.posicionamiento.mx/contact"
+        >
+        </iframe>
       </v-col>
     </v-container>
   </content>
@@ -232,7 +276,7 @@ export default {
     adminPark,
     adminNave,
     profile,
-    adminCorp
+    adminCorp,
   },
   data() {
     return {
@@ -289,6 +333,7 @@ export default {
       createParkActive: false,
       users: {},
       addNewPat: false,
+      keysearch: "",
     };
   },
   beforeCreate() {
@@ -495,6 +540,22 @@ export default {
     setProfileActionModel() {
       this.$store.commit("changeProfileDialog");
     },
+
+    key_search() {
+      var corps = this.allCorp;
+      this.allCorp = [];
+      if (this.keysearch.length > 0) {
+        corps.map((i) => {
+          let name = i.nombre_es;
+          if (name.search(this.keysearch) != -1) {
+            console.log(i.nombre_es + "<-------------------------");
+            this.allCorp.push(i);
+          }
+        });
+      } else {
+        this.getAllCorp();
+      }
+    },
   },
   computed: {
     retItem() {
@@ -593,5 +654,9 @@ export default {
   position: fixed;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+.search {
+  transform: scale(0.7);
 }
 </style>

@@ -36,7 +36,7 @@
             <v-col cols="6">
               <v-text-field
                 outlined
-                placeholder="Propietario"
+                placeholder="Nombre de Propietario"
                 label="Propietario *"
                 v-model="inquilino.prop"
                 :rules="[rules.required]"
