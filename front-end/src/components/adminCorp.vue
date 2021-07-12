@@ -63,10 +63,10 @@
           <v-row>
             <v-col cols="12" sm="12" class="my-4">
               <span style="color : red" v-if="id.habilitar == 0"
-                >Aun no se Autoriza la ultima actualizacion</span
+                >Aún no se autoriza la última actualización</span
               >
               <span style="color : green" v-if="id.habilitar != 0"
-                >Ultima actualizacion autorizada</span
+                >Última actualización autorizada</span
               >
               <UploadImages
                 @change="handleImages"

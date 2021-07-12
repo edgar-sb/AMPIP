@@ -96,7 +96,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Ultima actualizacion:<br />
+                              >Última actualización:<br />
                               {{ i.fechaDeValidacion }}</span
                             >
                             <v-spacer></v-spacer>
@@ -175,7 +175,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Ultima actualizacion:<br />
+                              >Última actualización:<br />
                               {{ i.fechaDeValidacion }}</span
                             >
 
