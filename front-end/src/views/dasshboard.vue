@@ -242,15 +242,6 @@
         <adminNave
           v-if="userType == 'AdministradorDeNave' && corpOfUser != null"
         />
-
-        <iframe
-          id="inlineFrameExample"
-          title="Inline Frame Example"
-          width="100%"
-          height="1000px"
-          src="https://www.posicionamiento.mx/contact"
-        >
-        </iframe>
       </v-col>
     </v-container>
   </content>
