@@ -1,5 +1,25 @@
 <template>
   <content>
+    <!-- Header -->
+    <v-container>
+        <v-row justify="flex-start" align="center" class="_logo_header">
+        <v-col cols="8">
+            <v-img
+                class=""
+                lazy-src="http://18.207.162.106/img/logo_ampip.svg"
+                max-height="150"
+                max-width="250"
+                src="http://18.207.162.106/img/logo_ampip.svg"
+            ></v-img>
+        </v-col>
+        <v-col cols="4">
+            <div>
+                <span>Panel socios AMPIP</span>
+            </div>
+        </v-col>
+        </v-row>
+    </v-container>
+    <!-- END Header -->
     <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
     <v-toolbar>
       <v-toolbar-title small>
