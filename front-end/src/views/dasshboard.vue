@@ -1,24 +1,8 @@
 <template>
   <content>
     <!-- Header -->
-    <v-container>
-        <v-row justify="flex-start" align="center" class="_logo_header">
-        <v-col cols="8">
-            <v-img
-                class=""
-                lazy-src="http://18.207.162.106/img/logo_ampip.svg"
-                max-height="150"
-                max-width="250"
-                src="http://18.207.162.106/img/logo_ampip.svg"
-            ></v-img>
-        </v-col>
-        <v-col cols="4">
-            <div>
-                <span>Panel socios AMPIP</span>
-            </div>
-        </v-col>
-        </v-row>
-    </v-container>
+        <headerAmpip>
+        </headerAmpip>
     <!-- END Header -->
     <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
     <v-toolbar>
@@ -108,7 +92,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Ultima actualizacion:<br />
+                              >Última actualización:<br />
                               {{ i.fechaDeValidacion }}</span
                             >
                             <v-spacer></v-spacer>
@@ -188,7 +172,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Ultima actualizacion:<br />
+                              >Última actualización:<br />
                               {{ i.fechaDeValidacion }}</span
                             >
 
@@ -283,6 +267,7 @@
 <script>
 import VueCookies from "vue-cookies";
 import axios from "axios";
+import headerAmpip from "../components/headerAmpip";
 
 import getCorpInfo from "../components/corpinfo";
 import adminPark from "../components/adminPark";
@@ -302,6 +287,7 @@ export default {
     adminNave,
     profile,
     adminCorp,
+    headerAmpip,
     GoogleCalendar
   },
   data() {

@@ -3,7 +3,6 @@
         <v-card-title>
             Calendario de eventos
         </v-card-title>
-        
       </v-card>
 </template>
 <script>
