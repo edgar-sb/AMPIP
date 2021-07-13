@@ -24,11 +24,11 @@
         <v-col cols="12" sm="12" md="6">
           <v-text-field outlined label="email" v-model="email"> </v-text-field>
         </v-col>
-        <v-col cols="12" sm="12">
-          <span>Direccion:</span> <br />
-          <span> {{ dataUser.direccionDeOfficina }}</span>
+        <v-col cols="12" sm="12" class="cont_direccion_space">
+          <span class="direc_space">Dirección:</span> <br />
+          <span class="datos_space"> {{ dataUser.direccionDeOfficina }}</span>
           <v-switch
-            label="¿Deseas modificar tu Direccion?"
+            label="¿Deseas modificar tu Dirección?"
             v-model="changeAddres"
             :value="changeAddres"
           ></v-switch>
@@ -79,8 +79,8 @@
           ></v-text-field>
         </v-col>
 
-        <v-col cols="12" sm="12">
-          <span>Contacto:</span>
+        <v-col cols="12" sm="12" class="cont_space_contacto">
+          <span class="contacto_space">Contacto:</span>
         </v-col>
         <v-col cols="12" sm="12" md="6">
           <v-text-field
@@ -130,10 +130,10 @@
             </v-date-picker>
           </v-dialog>
         </v-col>
-        <v-col cols="12" sm="12">
-          <span>Seguridad:</span>
+        <v-col cols="12" sm="12" class="cont_space_seguridad">
+          <span class="seguridad_space">Seguridad:</span>
         </v-col>
-        <v-col cols="12" sm="12">
+        <v-col cols="12" sm="12" class="cont_space_seguridad">
           <v-switch
             label="¿Deseas modificar tu contraseña?"
             v-model="changePass"
