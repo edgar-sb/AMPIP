@@ -174,3 +174,109 @@ h1 {
   local('../fonts/Oswald/Oswald-VariableFont_wght.ttf');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+/* tarjeta */
+.v-size--default {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    color:#00afb7 !important;
+}
+.v-btn__content i.mdi-plus {
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #00afb7;
+    color: #ffffff !important;
+}
+.v-btn__content i.mdi-plus:hover {
+    background-color: #f26e50;
+}
+.v-btn__content i.mdi-eye {
+    padding: 20px;
+    border-radius: 30px;
+    background-color: #333333;
+    color: #ffffff !important;
+    font-size: 1.4rem !important;
+}
+.v-btn__content i.mdi-eye:hover {
+    background-color: #f26e50;
+}
+.v-card__actions span {
+    color: #8e8b8b;
+}
+.v-toolbar__title label {
+ color: #00afb7;
+}
+button.green--text {
+    background-color: #00afb7;
+    border-radius: 20px;
+    padding: 10px 20px; 
+}
+button.green--text span  {
+    color: #ffffff !important;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+button.green--text:hover {
+    background-color: #333333;  
+}
+button.red--text {
+    background-color: #eeeeee;
+    border-radius: 20px;
+    padding: 10px 20px !important; 
+}
+button.red--text span {
+    color:#cb1616; 
+}
+button.red--text:hover {
+    background-color: #333333;  
+}
+button.red--text span:hover {
+    color:#ffffff; 
+}
+button.yellow--text {
+  background-color: none;
+}
+button.yellow--text:hover {
+    background-color: #ffffff;
+  }
+button.yellow--text span {
+    color: #4166ba;
+}
+button.yellow--text span:hover {
+    color: #4166ba;
+    text-decoration: underline;
+}
+.cont_direccion_space {
+    text-align: left;
+    background-color: #f1f2f3 !important;
+}
+.direc_space {
+  color: #333333;
+  font-weight: bold; 
+}
+
+.contacto_space {
+    color: #333333;
+    font-weight: bold;  
+}
+.cont_space_contacto {
+    text-align: left;
+    color: #333333;
+}
+.cont_space_seguridad {
+    text-align: left;
+    background-color: #f1f2f3 !important;
+}
+.cont_space_seguridad {
+    color: #333333;
+    font-weight: bold; 
+}
+.v-tab {
+    color:#00afb7;
+}
+.v-tab.v-tab--active {
+    color:#00afb7;
+}
+.v-tabs-slider {
+    background-color: #00afb7;
+}
+/* fin tarjeta */
