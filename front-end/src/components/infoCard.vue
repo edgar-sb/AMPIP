@@ -21,28 +21,28 @@
           <v-col cols="12" sm="12">
             <v-container>
               <v-row>
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6" class="card_space">
                   Cargo: <br />
-                  {{ id.cargo }}
+                  <span>{{ id.cargo }}</span>
                 </v-col>
-                <v-col cols="12" sm="12" md="6">
-                  Telefono de oficina: <br />
-                  {{ id.telefonoOfficina }}
-                </v-col>
-
-                <v-col cols="12" sm="12" md="6">
-                  Telefono personal: <br />
-                  {{ id.celular }}
+                <v-col cols="12" sm="12" md="6" class="card_space">
+                  Teléfono de oficina: <br />
+                  <span>{{ id.telefonoOfficina }}</span>
                 </v-col>
 
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6" class="card_space_sencillo">
+                  Teléfono personal: <br />
+                  <span>{{ id.celular }}</span>
+                </v-col>
+
+                <v-col cols="12" sm="12" md="6" class="card_space_sencillo">
                   Cumpleaños: <br />
-                  {{ id.cumpleanios }}
+                  <span>{{ id.cumpleanios }}</span>
                 </v-col>
 
-                <v-col cols="12" sm="12">
-                  Direccion de oficina: <br />
-                  {{ id.direccionDeOfficina }}
+                <v-col cols="12" sm="12" class="card_space">
+                  Dirección de oficina: <br />
+                  <span>{{ id.direccionDeOfficina }}</span>
                 </v-col>
               </v-row>
             </v-container>
@@ -50,13 +50,13 @@
         </v-row>
       </v-card-text>
 
-      <v-text v-if="!id.direccionDeOfficina">
+      <v-text v-if="!id.direccionDeOfficina" class="card_space_alerta">
         <span>Este usuario aun no llena sus datos</span>
       </v-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="reset(id.id_A)">Reenviar contraseña</v-btn>
-        <v-btn @click="emitsClose">Cerrar</v-btn>
+        <v-btn @click="reset(id.id_A)" class="card_space_reenviar">Reenviar contraseña</v-btn>
+        <v-btn @click="emitsClose" class="card_space_cerrar">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -179,8 +179,8 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="updatePark" v-if="id.data == 'null'">Aprobar</v-btn>
-        <v-btn @click="emitsClose">Cancelar</v-btn>
+        <v-btn @click="updatePark" class="card_space_aprobar" v-if="id.data == 'null'">Aprobar</v-btn>
+        <v-btn @click="emitsClose" class="card_space_cerrar">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -287,7 +287,7 @@
             {{ JSON.parse(id.extras).name }}
           </v-col>
           <v-col cols="12" md="6">
-            <label>Telefono: </label>
+            <label>Teléfono: </label>
             {{ JSON.parse(id.extras).phone }}
           </v-col>
           <v-col cols="12" md="6">
