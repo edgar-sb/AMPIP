@@ -175,15 +175,17 @@ h1 {
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* tarjeta */
+
 .v-size--default {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 30px;
     color:#00afb7 !important;
+    margin: 3px 5px;
 }
 .v-btn__content i.mdi-plus {
     padding: 20px;
     border-radius: 30px;
-    background-color: #00afb7;
+    background-color: #3ed808;
     color: #ffffff !important;
 }
 .v-btn__content i.mdi-plus:hover {
@@ -275,8 +277,89 @@ button.yellow--text span:hover {
 }
 .v-tab.v-tab--active {
     color:#00afb7;
+    font-weight:bold;
 }
 .v-tabs-slider {
     background-color: #00afb7;
 }
+.mdi-delete::before {
+    color: #f26e50;
+}
+.mdi-delete:hover {
+    background-color: #333333;
+}
+.mdi-window-close {
+    color: #f26e50 !important;
+}
 /* fin tarjeta */
+.btn_sec-space {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    margin: 20px 0;
+    font-weight: bold !important;
+}
+.btn_sec-space.v-tab--active {
+    font-weight: bold !important;
+}
+.link_sec-space  {
+    font-weight: bold !important;
+    border-right: solid 1px rgba(0, 0, 0, 0.1);
+    color: #333333;
+}
+.link_sec-space_info {
+    font-weight: bold !important;
+    color: #333333;
+}
+.card_space {
+    background-color: #f1f2f3;
+    font-weight: bold;
+}
+.card_space span { 
+    font-weight: normal;
+}
+.card_space_sencillo {
+    font-weight: bold;
+}
+.card_space_sencillo span { 
+    font-weight: normal;
+}
+.card_space_reenviar {
+    background-color: #00afb7 !important;
+    border-radius: 20px;
+    color: #ffffff;
+    padding: 10px 20px; 
+}
+.card_space_reenviar:hover {
+    background-color: #333333 !important;
+}
+.card_space_reenviar span {
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px 20px; 
+}
+.card_space_cerrar {
+    background-color: #eeeeee;
+    border-radius: 20px;
+    padding: 10px 20px !important; 
+}
+.card_space_cerrar:hover {
+    background-color: #333333 !important;
+}
+.card_space_cerrar span {
+    color:#cb1616; 
+}
+.card_space_cerrar span:hover {
+    color:#ffffff; 
+}
+.card_space_alerta {
+ display: block;
+ padding: 20px;
+ margin: 20px 0;
+ background-color: #f1f2f3;
+}
+.theme--light.v-text-field--outlined:not(.v-input--is-focused):not(.v-input--has-state) > .v-input__control > .v-input__slot fieldset {
+    background-color: #f9f9f9;
+    color:#00afb7;
+}
+span.green {
+    color:#ffffff !important;
+}

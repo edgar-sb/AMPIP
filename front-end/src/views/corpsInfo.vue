@@ -1,4 +1,9 @@
 <template>
+  <content>
+    <!-- Header -->
+        <headerAmpip>
+        </headerAmpip>
+    <!-- END Header -->
   <componen>
     <!-- Arreglado los dialogs -->
     <v-card-title>
@@ -30,21 +35,21 @@
       </v-dialog>
     </v-card-title>
 
-    <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
-      <v-tab v-if="id.tipoDeSocio">
+    <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
         Usuarios
       </v-tab>
-      <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
         Parques
       </v-tab>
-      <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
         Inquilinos
       </v-tab>
-      <v-tab v-if="id.tipoDeSocio != 'Patrocinador'">
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
         Oferta de espacios
       </v-tab>
-      <v-tab>
-        Informacion
+      <v-tab class="link_sec-space_info">
+        Información
       </v-tab>
     </v-tabs>
 
@@ -391,6 +396,7 @@
       </v-tab-item>
     </v-tabs-items>
   </componen>
+  </content>
 </template>
 <script>
 import axios from "axios";
@@ -398,6 +404,7 @@ import plusCard from "../components/plusCard";
 import InfoCard from "../components/infoCard";
 import Swal from "sweetalert2";
 import UploadImages from "vue-upload-drop-images";
+import headerAmpip from "../components/headerAmpip";
 
 export default {
   data() {
@@ -443,6 +450,7 @@ export default {
     plusCard,
     InfoCard,
     UploadImages,
+    headerAmpip,
   },
   methods: {
     handleImages(files) {
@@ -755,4 +763,5 @@ export default {
     },
   },
 };
+
 </script>

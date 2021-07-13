@@ -239,8 +239,8 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" @click="closeAction" text>Cancelar</v-btn>
-        <v-btn color="green darken-1" text @click="addparque">
+        <v-btn class="card_space_cerrar" color="red" @click="closeAction" text>Cancelar</v-btn>
+        <v-btn class="card_space_anadir" color="green darken-1" text @click="addparque">
           Añadir
         </v-btn> </v-card-actions
       >Seleciona la ubicacion
