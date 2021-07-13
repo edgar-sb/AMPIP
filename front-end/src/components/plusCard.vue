@@ -112,10 +112,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="addNave">
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addNave">
           Añadir
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
+        <v-btn color="red" class="card_space_cerrar" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Crear Parque -->
@@ -424,10 +424,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="addparque">
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addparque">
           Añadir
         </v-btn>
-        <v-btn color="red" @click="closeAction" text>Cancelar</v-btn>
+        <v-btn color="red" class="card_space_cerrar" @click="closeAction" text>Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- Corporativo -->
@@ -588,8 +588,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
-        <v-btn color="green darken-1" text @click="addCorp">
+        <v-btn color="red" class="card_space_cerrar" text @click="closeAction">Cancelar</v-btn>
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addCorp">
           Añadir
         </v-btn>
       </v-card-actions>
@@ -643,8 +643,8 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
-        <v-btn color="green darken-1" text @click="addUserAction">
+        <v-btn color="red" class="card_space_cerrar" text @click="closeAction">Cancelar</v-btn>
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addUserAction">
           Agregar
         </v-btn>
       </v-card-actions>
@@ -696,10 +696,10 @@
       </v-container>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="addUserActionUltimo">
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addUserActionUltimo">
           Agregar
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
+        <v-btn color="red" class="card_space_cerrar" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
     <!-- espacio * -->
@@ -842,10 +842,10 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="green darken-1" text @click="addSpaceAction">
+        <v-btn color="green darken-1" class="card_space_agregar" text @click="addSpaceAction">
           Agregar
         </v-btn>
-        <v-btn color="red" text @click="closeAction">Cancelar</v-btn>
+        <v-btn color="red" class="card_space_cerrar" text @click="closeAction">Cancelar</v-btn>
       </v-card-actions>
     </v-card>
   </div>
