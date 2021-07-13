@@ -22,7 +22,7 @@
         Parques
       </v-tab>
       <v-tab>
-        Informacion
+        Información
       </v-tab>
     </v-tabs>
 
@@ -35,11 +35,11 @@
             <v-col cols="12" sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
                 <v-card-title
-                  v-if="i.nombre_es != 'standalone'"
+                  v-if="i.nombre_es != 'Naves sin parques'"
                   v-text="i.nombre_es"
                 ></v-card-title>
-                <v-card-title v-if="i.nombre_es == 'standalone'"
-                  >Stand-a·lone</v-card-title
+                <v-card-title v-if="i.nombre_es == 'Naves sin parques'"
+                  >Naves Stand Alone</v-card-title
                 >
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -63,10 +63,9 @@
           <v-row>
             <v-col cols="12" sm="12" class="my-4">
               <span style="color : red" v-if="id.habilitar == 0"
-                >Aun no se Autoriza la ultima actualizacion</span
-              >
+                >Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite.</span>
               <span style="color : green" v-if="id.habilitar != 0"
-                >Ultima actualizacion autorizada</span
+                > Última actualización autorizada</span
               >
               <UploadImages
                 @change="handleImages"
@@ -194,6 +193,7 @@
                 label="Inversión anual programada (pipeline año siguiente) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -203,6 +203,7 @@
                 label="Inversión anual programada (pipeline año actual) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -212,6 +213,7 @@
                 label="Inversión anual programada (pipeline año anterior) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -258,7 +260,7 @@
               </v-text-field>
             </v-col>
             <v-card-actions>
-              <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
+              <v-btn @click="updatecorpAction">Guardar Información</v-btn>
             </v-card-actions>
           </v-row>
         </v-container>
@@ -490,7 +492,7 @@ export default {
           .then(() => {
             this.extrasAction();
             Swal.fire(
-              "La informacion se actualizo esta en espera de que se habilite"
+              "Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite."
             );
           })
           .catch((e) => console.log(e));
@@ -515,7 +517,7 @@ export default {
           });
       } else {
         Swal.fire({
-          text: "No se puede guardar la informacion sin (Nombre de corporativo Ingles y Espáñol y RFC) asegurate de haberlos llenado",
+          text: "No se puede guardar la información sin (Nombre de corporativo Ingles y Espáñol y RFC) asegurate de haberlos llenado",
         });
       }
     },

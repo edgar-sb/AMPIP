@@ -40,6 +40,7 @@
         class="shrink mx-4"
         v-model="keysearch"
         @keyup="key_search"
+        v-if="AdministradorGlobal"
       >
       </v-text-field>
       <v-btn text @click="setProfileActionModel" id="more">
@@ -51,6 +52,17 @@
           :retain-focus="false"
         >
           <profile />
+        </v-dialog>
+      </v-btn>
+      <v-btn text @click="getEventsButton" id="more">
+        Eventos
+        <v-dialog
+          v-model="getEvents"
+          width="80%"
+          :retain-focus="false"
+        >
+          <GoogleCalendar/>
+          <AddToCalendar/>
         </v-dialog>
       </v-btn>
     </v-toolbar>
@@ -133,6 +145,7 @@
                             height="200px"
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
+                            <v-card-title>ID Corporativo: {{i.id}}</v-card-title>
                           </v-img>
                           <v-dialog
                             v-model="getCorpInfo"
@@ -277,6 +290,7 @@ import adminNave from "../components/adminNave";
 import profile from "../components/profile";
 import plusCard from "../components/plusCard";
 import adminCorp from "../components/adminCorp";
+import GoogleCalendar from '../components/GoogleCalendar';
 
 var CryptoJS = require("crypto-js");
 
@@ -288,6 +302,7 @@ export default {
     adminNave,
     profile,
     adminCorp,
+    GoogleCalendar
   },
   data() {
     return {
@@ -345,6 +360,7 @@ export default {
       users: {},
       addNewPat: false,
       keysearch: "",
+      getEvents:false
     };
   },
   beforeCreate() {
@@ -430,6 +446,9 @@ export default {
     }, 1000);
   },
   methods: {
+    getEventsButton(){
+      this.getEvents=true;
+    },
     adddataUser() {
       var id = CryptoJS.AES.decrypt(VueCookies.get("id"), "ampip");
       var params = new URLSearchParams();

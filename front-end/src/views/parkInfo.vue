@@ -59,7 +59,7 @@
                     :items="permisos"
                     label="Seleccionar permisos *"
                     multiple
-                    hint="Permisos de informacion en el parque"
+                    hint="Permisos de información en el parque"
                     persistent-hint
                   ></v-select>
                 </v-col>
@@ -90,7 +90,7 @@
     </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
-        <v-tab v-if="parque.nombre_es != 'standalone'">
+        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
           Usuarios
         </v-tab>
         <v-tab>
@@ -99,13 +99,13 @@
         <v-tab>
           Espacio disponible
         </v-tab>
-        <v-tab v-if="parque.nombre_es != 'standalone'">
-          Informacion
+        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
+          Información
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
         <!-- Usuarios -->
-        <v-tab-item v-if="parque.nombre_es != 'standalone'">
+        <v-tab-item v-if="parque.nombre_es != 'Naves sin parques'">
           <v-container>
             <v-row>
               <v-col sm="12" md="3" v-for="(i, key) in users_parqs" :key="key">
@@ -349,7 +349,7 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark">Guardar Informacion</v-btn>
+              <v-btn @click="updatePark">Guardar Información</v-btn>
             </v-card-actions>
           </v-container>
         </v-tab-item>
@@ -646,7 +646,7 @@ export default {
         .post(`${this.$store.state.url}/updatepark`, params)
         .then(() => {
           Swal.fire(
-            "La informacion se actualizo esta en espera de que se habilite"
+            "Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite."
           );
         })
         .catch((e) => console.log(e));

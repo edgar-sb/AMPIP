@@ -585,7 +585,7 @@ export default {
         .post(`${this.$store.state.url}/updatepark`, params)
         .then(() => {
           Swal.fire(
-            "La informacion se actualizo esta en espera de que se habilite"
+            "Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite."
           );
         })
         .catch((e) => console.log(e));

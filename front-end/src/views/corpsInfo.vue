@@ -44,7 +44,12 @@
         Oferta de espacios
       </v-tab>
       <v-tab>
-        Informacion
+        Información
+        <v-btn icon @click="infoParkAction(i.id)" >
+          <v-badge content="1" value="1" color="green" overlap v-if="id.habilitar == 0">
+            <v-icon>mdi-eye</v-icon>
+          </v-badge>
+        </v-btn>
       </v-tab>
     </v-tabs>
 
@@ -105,7 +110,7 @@
             >
               <v-card>
                 <span v-if="i.edit != 'null'"
-                  >Ultima actualizacion : {{ i.edit }}</span
+                  >Última actualización : {{ i.edit }}</span
                 >
                 <v-card-title v-text="i.nombre_es"></v-card-title>
                 <v-card-actions>
@@ -127,7 +132,6 @@
                       <v-icon>mdi-eye</v-icon>
                     </v-badge>
                   </v-btn>
-
                   <v-dialog
                     v-model="cards.infoPark"
                     width="700"
@@ -226,7 +230,10 @@
                       style="color:#fff"
                     />
                     <br />
-                    <v-text-field v-model="nameUpload" placeholder="Nombre de archivo"></v-text-field>
+                    <v-text-field
+                      v-model="nameUpload"
+                      placeholder="Nombre de archivo"
+                    ></v-text-field>
                     <v-btn @click="uploadImage">Subir</v-btn>
                   </v-col>
                 </v-row>
@@ -369,7 +376,7 @@
               <v-text-field
                 disabled
                 v-model="id.fechaDeValidacion"
-                label="Ultima actualizacion"
+                label=" última actualización"
                 v-if="id.fechaDeValidacion"
               ></v-text-field>
             </v-col>
@@ -435,8 +442,8 @@ export default {
       },
       places: {},
       spaces: false,
-      logoUpload:[],
-      nameUpload:null
+      logoUpload: [],
+      nameUpload: null,
     };
   },
   components: {
@@ -585,7 +592,7 @@ export default {
               this.getAllNaves();
               let timerInterval;
               Swal.fire({
-                title: "Recuperando informacion",
+                title: "Recuperando información",
                 timer: 1000,
                 timerProgressBar: true,
                 didOpen: () => {

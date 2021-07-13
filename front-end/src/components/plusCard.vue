@@ -221,7 +221,7 @@
               ></v-text-field>
             </v-col>
             <v-col sm="12">
-              <span>Informacion de actividades:</span>
+              <span>Información de actividades:</span>
             </v-col>
             <v-col cols="6">
               <v-select
@@ -404,6 +404,21 @@
                 style="color:#000"
               />
             </v-col>
+            <v-col sm="12">
+              <GmapMap
+                :center="{ lat: 19.794509121420788, lng: -99.0424054958186 }"
+                :zoom="7"
+                map-type-id="terrain"
+                style="width: 100%; height: 300px"
+                @click="add"
+              >
+                <GmapMarker
+                  :position="markers"
+                  :clickable="true"
+                  :draggable="true"
+                />
+              </GmapMap>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -567,6 +582,7 @@
               :items="types_pats"
             ></v-select>
           </v-col>
+          <v-col> </v-col>
         </v-row>
       </v-card-text>
 
@@ -709,23 +725,26 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
+              v-model="spaces.nameSpace"
+              :items="['Terreno', 'nave']"
+              attach
               outlined
               label="Tipo de espacio *"
               placeholder="Tipo de espacio"
-              v-model="spaces.nameSpace"
               :rules="[rules.required]"
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
+              v-model="spaces.use"
+              :items="['Manufactura', 'Centro de distribución', 'Ambas']"
+              attach
               outlined
-              title="Uso"
               label="Uso del espacio *"
               placeholder="Uso del espacio"
-              v-model="spaces.use"
               :rules="[rules.required]"
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
@@ -1803,7 +1822,7 @@ export default {
               paramsMaps.append("name", ctx.spaces.type);
               paramsMaps.append("lat", ctx.markers.lat);
               paramsMaps.append("lng", ctx.markers.lng);
-              paramsMaps.append("filters",ctx.parquesData.infra);
+              paramsMaps.append("filters", ctx.parquesData.infra);
               axios
                 .post(`${this.$store.state.url}/mapsup`, paramsMaps)
                 .then((res) => {

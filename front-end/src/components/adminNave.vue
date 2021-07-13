@@ -94,7 +94,7 @@
       </v-col>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="save">Guardar informacion</v-btn>
+        <v-btn @click="save">Guardar información</v-btn>
       </v-card-actions>
     </v-row>
   </v-container>
