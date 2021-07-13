@@ -1840,7 +1840,7 @@ export default {
           .then((res) => {
             if (res.data.message == 1) {
               let lat, lng;
-              if(ctx.amMap == true){
+              if(ctx.amMap == false){
                 lat = ctx.ubicacionCru.lat;
                 lng = ctx.ubicacionCru.lng;
               } else{

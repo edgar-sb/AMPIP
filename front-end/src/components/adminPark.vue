@@ -68,6 +68,7 @@
             </v-row>
           </v-container>
         </v-tab-item>
+
         <v-tab-item>
           <v-container>
             <v-row>
@@ -350,10 +351,11 @@ export default {
         d: false,
         i: false,
       },
+      addUserToNave: false
     };
   },
   beforeMount() {
-    setTimeout(() => {
+    /* setTimeout(() => {
       let params = new URLSearchParams();
       params.append("query", 1);
       params.append("id", this.$store.state.data.id_A);
@@ -375,7 +377,8 @@ export default {
             .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
-    }, 1000);
+    }, 1000); */
+    this.gettsAll()
   },
   methods: {
     getTab() {
@@ -480,8 +483,6 @@ export default {
       this.addSpace = false;
       this.addUser = false;
       this.data_user = false;
-      this.getallnaves(this.parque.key_corp);
-      this.getallspacesAction(this.parque.id);
       let timerInterval;
       Swal.fire({
         title: "Recuperando datos",
@@ -520,12 +521,10 @@ export default {
 
           clearInterval(timerInterval);
         },
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
+      }).then((r) => {
+        console.log(r)
       });
+       this.$router.push("/");
     },
     openDialog(i) {
       this.data_user = true;
@@ -644,6 +643,31 @@ export default {
     },
     addUserToNaveAction() {
      this.addUserToNave = true;
+    },
+    gettsAll(){
+      setTimeout(() => {
+      let params = new URLSearchParams();
+      params.append("query", 1);
+      params.append("id", this.$store.state.data.id_A);
+      axios
+        .post(`${this.$store.state.url}/getparquesusuarios`, params)
+        .then((res) => {
+          this.roles = res.data[0].permiso;
+          console.log(res);
+          let paramsD = new URLSearchParams();
+          paramsD.append("id", res.data[0].persona);
+          axios
+            .post(`${this.$store.state.url}/getpark`, paramsD)
+            .then((res) => {
+              this.parque = res.data[0];
+              this.getUserFromPark(res.data[0].id);
+              this.getallnaves(res.data[0].id);
+              this.getallspacesAction(res.data[0].id);
+            })
+            .catch((e) => console.log(e));
+        })
+        .catch((e) => console.log(e));
+    }, 1000);
     }
   },
   components: { plusCard },
