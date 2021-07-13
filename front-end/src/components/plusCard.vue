@@ -795,7 +795,13 @@
               :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col sm="12">
+            <v-checkbox
+              v-model="amMap"
+              label="Ingresar mi ubicacion en el mapa"
+            ></v-checkbox>
+          </v-col>
+          <v-col cols="12" v-if="amMap">
             <span>Selecciona la ubicacion</span>
             <GmapMap
               :center="{ lat: 19.794509121420788, lng: -99.0424054958186 }"
@@ -810,6 +816,15 @@
                 :draggable="true"
               />
             </GmapMap>
+          </v-col>
+          <v-col cols="12" v-if="!amMap">
+            <p>Latitud y longitud</p>
+            <v-container>
+              <v-row>
+                <v-col md="6"><v-text-field placeholder="Lat" v-model="ubicacionCru.lat"></v-text-field></v-col>
+                <v-col md="6"><v-text-field placeholder="Lng" v-model="ubicacionCru.lng"></v-text-field></v-col>
+              </v-row>
+            </v-container>
           </v-col>
           <v-col cols="12">
             <v-select
@@ -1370,6 +1385,11 @@ export default {
       parks: ["Modelo"],
       spaces: {},
       Allspace: [],
+      amMap: false,
+      ubicacionCru:{
+        lat:"",
+        lng:"",
+      }
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
@@ -1414,9 +1434,9 @@ export default {
             data.append("id_nave", res.data.id);
             axios
               .post(`${this.$store.state.url}/setinquilino`, data)
-              .then((res) => {
+              .then(() => {
                 this.closeAction();
-                console.log(res.data);
+                Swal.fire({ text: "Creado" });
               })
               .catch((e) => console.log(e));
           })
@@ -1508,6 +1528,7 @@ export default {
                 };
                 axios(config)
                   .then(function() {
+                    Swal.fire({ text: "Creado" });
                     ctx.$router.push("/");
                   })
                   .catch(function(error) {
@@ -1818,10 +1839,18 @@ export default {
           .post(`${this.$store.state.url}/espacio`, params)
           .then((res) => {
             if (res.data.message == 1) {
+              let lat, lng;
+              if(ctx.amMap == true){
+                lat = ctx.ubicacionCru.lat;
+                lng = ctx.ubicacionCru.lng;
+              } else{
+                lat = ctx.markers.lat
+                lng = ctx.markers.lng
+              }
               let paramsMaps = new URLSearchParams();
               paramsMaps.append("name", ctx.spaces.type);
-              paramsMaps.append("lat", ctx.markers.lat);
-              paramsMaps.append("lng", ctx.markers.lng);
+              paramsMaps.append("lat", lat);
+              paramsMaps.append("lng", lng);
               paramsMaps.append("filters", ctx.parquesData.infra);
               axios
                 .post(`${this.$store.state.url}/mapsup`, paramsMaps)

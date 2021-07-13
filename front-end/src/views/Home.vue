@@ -49,7 +49,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import VueCookies from "vue-cookies";
-
 var CryptoJS = require("crypto-js");
 
 export default {
@@ -87,7 +86,7 @@ export default {
         phone: (value) => value.length <= 10 || "maximo 10 numeros",
         cp: (value) => value.length <= 5 || "maximo 5 numeros",
       },
-      steep:0
+      steep: 0,
     };
   },
   methods: {
@@ -102,7 +101,7 @@ export default {
           .post(`${this.$store.state.url}/login`, params)
           .then(function(res) {
             if (res.data[0].id == undefined) {
-              console.log(res.request)
+              console.log(res.request);
               Swal.fire({
                 icon: "error",
                 title: "Ooops ...",
@@ -254,8 +253,6 @@ export default {
         .catch((e) => console.log(e));
     },
     forgetPass() {
-     
-
       Swal.fire({
         title: "Ingresa tu correo electronico",
         input: "email",
@@ -287,6 +284,8 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    },
+    parser() {
     },
   },
   beforeMount() {

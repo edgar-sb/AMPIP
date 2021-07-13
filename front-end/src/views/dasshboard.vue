@@ -35,7 +35,7 @@
           persistent
           :retain-focus="false"
         >
-          <profile />
+          <profile :type="userType"/>
         </v-dialog>
       </v-btn>
       <v-btn text @click="getEventsButton" id="more">
