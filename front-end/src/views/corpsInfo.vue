@@ -5,7 +5,7 @@
       <v-btn icon @click="close">
         <v-icon color="red"> mdi-arrow-left-bold</v-icon>
       </v-btn>
-      <v-btn icon @click="getTabId" v-if="tab == 0">
+      <v-btn icon @click="getTabId" v-if="tab == 1000">
         <v-icon>
           mdi-plus
         </v-icon>
@@ -59,6 +59,19 @@
       <v-tab-item>
         <v-container>
           <v-row>
+            <!-- Add -->
+               <v-col cols="12"
+              sm="12"
+              md="4">
+                <v-card>
+                  <v-card-title>Agregar nuevo</v-card-title>
+                  <v-card-text>
+                    <v-btn @click="()=>{addUser=true}">Nuevo usuario</v-btn>
+                  </v-card-text>
+                  <v-card-actions></v-card-actions>
+                </v-card>
+              </v-col>
+            <!-- END -->
             <v-col
               cols="12"
               sm="12"
@@ -101,6 +114,21 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
+          <!-- <v-col cols="12"
+              sm="12"
+              md="4">
+                <v-card>
+                  <v-card-title>Agregar nuevo</v-card-title>
+                  <v-card-text>
+                    <v-btn @click="()=>{addPark=true}">Nuevo usuario</v-btn>
+                  </v-card-text>
+                  <v-card-actions></v-card-actions>
+                </v-card>
+                
+              </v-col> -->
+            <p i v-if="parksIn==false">
+              Sin Parques registrados
+            </p>
             <v-col
               sm="12"
               md="4"
@@ -155,8 +183,12 @@
 
       <!--Inquilinos-->
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+
         <v-container>
           <v-row>
+             <p v-if="navsIn == false">
+              Sin Inquilinos registrados{{navsIn}}
+            </p>
             <v-col sm="12" md="4" v-for="i in navs" :key="i.id">
               <v-card>
                 <v-card-title v-text="i.name"></v-card-title>
@@ -192,6 +224,9 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
+             <p i v-if="placesIn == false">
+              Sin Espacios Disponibles
+            </p>
             <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">
               <v-card>
                 <v-card-title>
@@ -760,6 +795,28 @@ export default {
     imgRoute() {
       return `${this.$store.state.img}/`;
     },
+
+    parksIn(){
+      if(this.parks.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    },
+    navsIn(){
+      if(this.navs.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    },
+    placesIn(){
+      if(this.places.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    }
   },
 };
 </script>

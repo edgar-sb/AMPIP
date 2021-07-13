@@ -150,6 +150,7 @@ class apiController extends AbstractActionController
                         $result["fechaDeBaja"] = $role->getfechaDeBaja();
                         $result["status"] = $role->getstatus();
                         $result["habilitar"] = $role->gethabilitar();
+                        /* */
                     } else {
                         $result["error"] = "2541";
                     }
@@ -204,6 +205,7 @@ class apiController extends AbstractActionController
                             $result["status"] = $role->getstatus();
                             $result["habilitar"] = $role->gethabilitar();
                             $result["type"] = $role->getType();
+                            $result["tipoDeSocio2"] = $role->getType();
                             array_push($arrCorps, $result);
                         } else {
                             $result["error"] = "2541";
@@ -239,7 +241,9 @@ class apiController extends AbstractActionController
                             $result["fechaDeBaja"] = $role->getfechaDeBaja();
                             $result["status"] = $role->getstatus();
                             $result["habilitar"] = $role->gethabilitar();
+                            $result["tipoDeSocio2"] = $role->getType();
                             array_push($arrCorps, $result);
+                            
                         } else {
                             $result["error"] = "2541";
                         }

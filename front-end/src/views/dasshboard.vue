@@ -1,8 +1,7 @@
 <template>
   <content>
     <!-- Header -->
-        <headerAmpip>
-        </headerAmpip>
+    <headerAmpip> </headerAmpip>
     <!-- END Header -->
     <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
     <v-toolbar>
@@ -35,18 +34,14 @@
           persistent
           :retain-focus="false"
         >
-          <profile :type="userType"/>
+          <profile :type="userType" />
         </v-dialog>
       </v-btn>
       <v-btn text @click="getEventsButton" id="more">
         Eventos
-        <v-dialog
-          v-model="getEvents"
-          width="80%"
-          :retain-focus="false"
-        >
-          <GoogleCalendar/>
-          <AddToCalendar/>
+        <v-dialog v-model="getEvents" width="80%" :retain-focus="false">
+          <GoogleCalendar />
+          <AddToCalendar />
         </v-dialog>
       </v-btn>
     </v-toolbar>
@@ -89,39 +84,8 @@
                   <v-container>
                     <v-row class="content">
                       <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
-                        <v-card>
-                          <v-card-actions>
-                            <span
-                              >Última actualización:<br />
-                              {{ i.fechaDeValidacion }}</span
-                            >
-                            <v-spacer></v-spacer>
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar == 0"
-                            >
-                              <v-badge
-                                content="1"
-                                value="1"
-                                color="green"
-                                overlap
-                              >
-                                <v-icon large>
-                                  mdi-eye
-                                </v-icon>
-                              </v-badge>
-                            </v-btn>
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar != 0"
-                            >
-                              <v-icon large>
-                                mdi-eye
-                              </v-icon>
-                            </v-btn>
-                          </v-card-actions>
+                        <v-card @click="getInfoCorpAction(i.id)">
+                          {{i.tipoDeSocio}} / {{i.tipoDeSocio2}}
                           <v-img
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end"
@@ -129,14 +93,57 @@
                             height="200px"
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
-                            <v-card-title>ID Corporativo: {{i.id}}</v-card-title>
                           </v-img>
+                          <v-card-actions>
+                            <v-list style="text-align: left;">
+                              <v-list-item-group
+                                v-model="selectedItem"
+                                color="primary"
+                              >
+                                <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title>
+                                      ID-{{ i.id }}</v-list-item-title
+                                    >
+                                  </v-list-item-content>
+                                </v-list-item>
+                                 <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title>
+                                      {{ i.estado }}</v-list-item-title
+                                    >
+                                  </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title>{{
+                                      i.fechaDeValidacion
+                                    }}</v-list-item-title>
+                                  </v-list-item-content>
+                                </v-list-item>
+                              </v-list-item-group>
+                            </v-list>
+
+                          <v-spacer></v-spacer>
+                            <v-badge
+                              content="1"
+                              value="1"
+                              color="green"
+                              overlap
+                              v-if="i.habilitar == 0"
+                            >
+                              <v-icon small>
+                                mdi-bell
+                              </v-icon>
+                            </v-badge>
+                          </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
                             persistent
                             :retain-focus="false"
                           >
                             <getCorpInfo :id="infoToCorp" :users="users" />
+                            
                           </v-dialog>
                         </v-card>
                       </v-col>
@@ -146,6 +153,7 @@
               </v-row>
             </v-container>
           </v-tab-item>
+          <!-- patrocinador -->
           <v-tab-item>
             <v-container>
               <v-row>
@@ -169,41 +177,21 @@
                   <v-container>
                     <v-row>
                       <v-col sm="12" md="4" v-for="i in allPat" :key="i">
-                        <v-card>
+                        <v-card @click="getInfoCorpAction(i.id)">
                           <v-card-actions>
-                            <span
-                              >Última actualización:<br />
-                              {{ i.fechaDeValidacion }}</span
-                            >
-
-                            <v-spacer></v-spacer>
-
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar == 0"
-                            >
-                              <v-badge
+                               <v-badge
                                 content="1"
                                 value="1"
                                 color="green"
                                 overlap
+                                 v-if="i.habilitar == 0"
                               >
                                 <v-icon large>
-                                  mdi-eye
+                                  mdi-bell
                                 </v-icon>
                               </v-badge>
-                            </v-btn>
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar != 0"
-                            >
-                              <v-icon large>
-                                mdi-eye
-                              </v-icon>
-                            </v-btn>
                           </v-card-actions>
+                          {{i.tipoDeSocio}} / {{i.tipoDeSocio2}}
                           <v-img
                             :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end"
@@ -212,6 +200,15 @@
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
+                          <v-card-actions>
+                            <span
+                              >Última actualización:<br />
+                              {{ i.fechaDeValidacion }}</span
+                            >
+
+                            <v-spacer></v-spacer>
+
+                          </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
                             persistent
@@ -275,7 +272,7 @@ import adminNave from "../components/adminNave";
 import profile from "../components/profile";
 import plusCard from "../components/plusCard";
 import adminCorp from "../components/adminCorp";
-import GoogleCalendar from '../components/GoogleCalendar';
+import GoogleCalendar from "../components/GoogleCalendar";
 
 var CryptoJS = require("crypto-js");
 
@@ -288,7 +285,7 @@ export default {
     profile,
     adminCorp,
     headerAmpip,
-    GoogleCalendar
+    GoogleCalendar,
   },
   data() {
     return {
@@ -346,7 +343,7 @@ export default {
       users: {},
       addNewPat: false,
       keysearch: "",
-      getEvents:false
+      getEvents: false,
     };
   },
   beforeCreate() {
@@ -432,8 +429,8 @@ export default {
     }, 1000);
   },
   methods: {
-    getEventsButton(){
-      this.getEvents=true;
+    getEventsButton() {
+      this.getEvents = true;
     },
     adddataUser() {
       var id = CryptoJS.AES.decrypt(VueCookies.get("id"), "ampip");

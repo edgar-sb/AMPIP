@@ -642,6 +642,9 @@ export default {
           }
         });
     },
+    addUserToNaveAction() {
+     this.addUserToNave = true;
+    }
   },
   components: { plusCard },
   props: ["parque_id"],

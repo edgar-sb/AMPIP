@@ -19,7 +19,7 @@
               solo
               label="Apellido paterno"
               :rules="[rules.required]"
-              v-model="addUser.lastName"
+              v-model="addUser.lastname"
             ></v-text-field
           ></v-col>
           <v-col sm="6"
@@ -117,7 +117,7 @@ export default {
           })
           .catch((e) => console.log(e));
       } else {
-        Swal.fire({text:"Por favor llena los datos requeridos"})
+        Swal.fire({text:`${this.addUser.name} ${this.addUser.email} ${this.addUser.lastname}`, icon: "error"})
       }
     },
     createdataUser(id) {
