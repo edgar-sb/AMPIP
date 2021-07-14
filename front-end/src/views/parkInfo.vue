@@ -511,7 +511,12 @@ export default {
       this.getallspacesAction(this.parque.id);
     },
     addUserAction() {
-      console.log(JSON.parse(this.permiso))
+      let jsons = [];
+      this.permiso.map((i)=>{
+        let perm = {i:i};
+        jsons.push(perm);
+      })
+      console.log(jsons)
       if (
         this.dataUser.name != "" &&
         this.dataUser.lastName != "" &&

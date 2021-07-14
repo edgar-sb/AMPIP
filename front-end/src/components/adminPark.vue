@@ -40,7 +40,7 @@
               <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
                 <v-card>
                   <v-card-title>
-                    {{ i.name }}
+                    {{ i.name}}
                   </v-card-title>
                   <v-card-actions>
                       <v-btn icon @click="viewNave(i.id)">
@@ -58,8 +58,7 @@
                     <c v-if="options.d = true">
                     <v-btn
                       icon
-                      @click="addUserToNaveAction(i.id)"
-                      v-if="i.isAmpip == null"
+                      @click="inactiveUser(i.id)"
                     >
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
@@ -71,7 +70,7 @@
                     >
                       <plusCard
                         :dialogs="6"
-                        :id="i"
+                        :id="i.id"
                         @close="closePlusCard"
                       ></plusCard>
                     </v-dialog>
@@ -88,7 +87,7 @@
               <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
                 <v-card>
                   <v-card-title>
-                    Espacio disponible
+                    {{ JSON.parse(i.extras).name }}
                     <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
                   </v-card-title>
                   <v-card-actions>
@@ -104,6 +103,7 @@
             </v-row>
           </v-container>
         </v-tab-item>
+
         <v-tab-item>
           <v-container>
             <v-row>
@@ -690,6 +690,46 @@ export default {
         })
         .catch((e) => console.log(e));
     }, 1000);
+    },
+    inactiveUser(id){
+       const swalWithBootstrapButtons = Swal.mixin();
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "¿Esta seguro de esta accion?",
+          text: "Esta apunto de eliminar!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si!",
+          cancelButtonText: "Cancelar",
+          reverseButtons: true,
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            let params = new URLSearchParams();
+            params.append("type", "i");
+            params.append("table", "n");
+            params.append("id", id);
+            axios
+              .post(`${this.$store.state.url}/activeinactive`, params)
+              .then((res) => {
+                if (res.data.message == "Desactivado") {
+                  Swal.fire({ text: "Listo", icon: "success" });
+                  this.getallspacesAction(this.$store.state.parque);
+                } else {
+                  Swal.fire({ text: "Algo salio mal", icon: "error" });
+                }
+              })
+              .catch((e) => console.log(e));
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire("Cancelado", "...", "error");
+          }
+        });
     }
   },
   components: { plusCard },

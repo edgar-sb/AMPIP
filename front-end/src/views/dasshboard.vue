@@ -627,11 +627,11 @@ export default {
       );
       if (user != "") {
         if (hora > 13) {
-          return "  Buenas tardes, " + user;
+          return "  Hola, " + user;
         } else if (hora > 19) {
-          return "  Buenas noches, " + user;
+          return "  Hola, " + user;
         } else {
-          return "  Buenos dias, " + user;
+          return "  Hola, " + user;
         }
       } else {
         return "Por favor pincha la imagen y completa tus datos";

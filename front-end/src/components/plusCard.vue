@@ -1727,7 +1727,7 @@ export default {
           this.addUser.last
       );
       params.append("status", 1);
-      var ctx = this;
+      const ctx = this;
       if (
         this.addUser.email != "" &&
         this.addUser.name != "" &&
@@ -1748,6 +1748,8 @@ export default {
                 .post(`${this.$store.state.url}/getuseridlogin`, par)
                 .then((res) => {
                   ctx.linkinquilino(ctx.id.id, res.data);
+                  ctx.linkinquilino(ctx.id, res.data);
+                  ctx.linkinquilino(this.$store.state.parqueOfuser, res.data);
                   ctx.createdataLast(res.data);
                 })
                 .catch((e) => console.log(e));
@@ -1761,7 +1763,7 @@ export default {
     linkinquilino(id_nave, id_user) {
       let params = new URLSearchParams();
       params.append("query", 1);
-      params.append("id", this.$store.state.parqueOfuser);
+      params.append("id", id_nave);
       params.append("id_user", id_user[0].id);
       axios
         .post(`${this.$store.state.url}/naveadmin`, params)
