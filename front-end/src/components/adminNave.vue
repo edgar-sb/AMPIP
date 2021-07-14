@@ -37,8 +37,8 @@
         <v-text-field
           outlined
           v-model="nave.numero_empleados"
-          label="Número de empleados"
-          :rules="[rules.required]"
+          label="Numero de empleados"
+          :rules="[rules.required, rules.phone]"
         ></v-text-field>
       </v-col>
 
@@ -73,7 +73,7 @@
           outlined
           v-model="nave.antiguedad"
           label="Antiguedad en años"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.phone]"
         ></v-text-field>
       </v-col>
       <v-col sm="12" md="6">
@@ -81,7 +81,7 @@
           outlined
           v-model="nave.id_denue"
           label="ID DENUE"
-          :rules="[rules.required]"
+          :rules="[rules.required,  rules.phone]"
         ></v-text-field>
       </v-col>
       <v-col sm="12">
@@ -89,7 +89,15 @@
           outlined
           v-model="nave.id_scian"
           label="ID SCIAN"
-          :rules="[rules.required]"
+          :rules="[rules.required, rules.phone]"
+        ></v-text-field>
+      </v-col>
+      <v-col sm="12" v-if="false">
+        <v-text-field
+          outlined
+          v-model="nave.medidaX"
+          label="Medidas"
+          :rules="[rules.required, rules.phone]"
         ></v-text-field>
       </v-col>
       <v-card-actions>
@@ -414,6 +422,9 @@ export default {
         "Zambia",
         "Zimbabwe",
       ],
+      medidaX:0,
+      medidaY:0,
+      medidaZ:0,
     };
   },
   beforeMount() {
@@ -433,6 +444,8 @@ export default {
     save() {
       let params = new URLSearchParams();
       params.append("id", this.nave.id);
+      params.append("nombre_es", this.nave.nombre_es);
+      params.append("nombre_en", this.nave.nombre_en);
       params.append("propietario", this.nave.propietario);
       params.append("nombreEmpresa", this.nave.nombre_empresa);
       params.append("numEmpleados", this.nave.numero_empleados);
@@ -442,9 +455,6 @@ export default {
       params.append("id_SCIAN", this.nave.id_scian);
       params.append("id_DENUE", this.nave.id_denue);
       params.append("antiguedad", this.nave.antiguedad);
-      params.append("medidaX", 0);
-      params.append("medidaY", 0);
-      params.append("medidaZ", 0);
       axios
         .post(`${this.$store.state.url}/updateinquilino`, params)
         .then(() => {

@@ -22,7 +22,7 @@
         Parques
       </v-tab>
       <v-tab>
-        Informacion
+        Información
       </v-tab>
     </v-tabs>
 
@@ -35,11 +35,11 @@
             <v-col cols="12" sm="12" md="4" v-for="i in parks" :key="i.id">
               <v-card>
                 <v-card-title
-                  v-if="i.nombre_es != 'standalone'"
+                  v-if="i.nombre_es != 'Naves sin parques'"
                   v-text="i.nombre_es"
                 ></v-card-title>
-                <v-card-title v-if="i.nombre_es == 'standalone'"
-                  >Stand-a·lone</v-card-title
+                <v-card-title v-if="i.nombre_es == 'Naves sin parques'"
+                  >Naves Stand Alone</v-card-title
                 >
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -63,10 +63,9 @@
           <v-row>
             <v-col cols="12" sm="12" class="my-4">
               <span style="color : red" v-if="id.habilitar == 0"
-                >Aún no se autoriza la última actualización</span
-              >
+                >Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados.</span>
               <span style="color : green" v-if="id.habilitar != 0"
-                >Última actualización autorizada</span
+                > Última actualización autorizada</span
               >
               <UploadImages
                 @change="handleImages"
@@ -138,7 +137,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>{{ id.colonia }}</span>
+              <span> Datos previamente registrados : {{ id.colonia }}</span>
               <v-select
                 :items="cp"
                 label="Colonia"
@@ -152,7 +151,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>{{ id.estado }}</span>
+              <span>Datos previamente registrados : {{ id.estado }}</span>
               <v-text-field
                 v-model="edo"
                 label="Estado"
@@ -164,7 +163,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <spam>{{ id.municipio }}</spam>
+              <spam>Datos previamente registrados : {{ id.municipio }}</spam>
               <v-text-field
                 v-model="mun"
                 label="municipio/alcaldía"
@@ -176,7 +175,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>Numero celular: </span>
+              <span>Datos previamente registrados : {{id.celular}}</span>
               <v-text-field
                 v-model="id.celular"
                 label="Celular"
@@ -194,6 +193,7 @@
                 label="Inversión anual programada (pipeline año siguiente) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -203,6 +203,7 @@
                 label="Inversión anual programada (pipeline año actual) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -212,6 +213,7 @@
                 label="Inversión anual programada (pipeline año anterior) MXN"
                 outlined
                 :rules="[rules.required, rules.number]"
+                prepend-inner-icon="$"
               >
               </v-text-field>
             </v-col>
@@ -489,7 +491,7 @@ export default {
           .then(() => {
             this.extrasAction();
             Swal.fire(
-              "La informacion se actualizo esta en espera de que se habilite"
+              "Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados."
             );
           })
           .catch((e) => console.log(e));
@@ -514,7 +516,7 @@ export default {
           });
       } else {
         Swal.fire({
-          text: "No se puede guardar la informacion sin (Nombre de corporativo Ingles y Espáñol y RFC) asegurate de haberlos llenado",
+          text: "No se puede guardar la información sin (Nombre de corporativo Ingles y Espáñol y RFC) asegurate de haberlos llenado",
         });
       }
     },

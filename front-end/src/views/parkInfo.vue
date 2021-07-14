@@ -59,7 +59,7 @@
                     :items="permisos"
                     label="Seleccionar permisos *"
                     multiple
-                    hint="Permisos de informacion en el parque"
+                    hint="Permisos de información en el parque"
                     persistent-hint
                   ></v-select>
                 </v-col>
@@ -90,7 +90,7 @@
     </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
-        <v-tab v-if="parque.nombre_es != 'standalone'">
+        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
           Usuarios
         </v-tab>
         <v-tab>
@@ -99,13 +99,13 @@
         <v-tab>
           Espacio disponible
         </v-tab>
-        <v-tab v-if="parque.nombre_es != 'standalone'">
-          Informacion
+        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
+          Información
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tab">
         <!-- Usuarios -->
-        <v-tab-item v-if="parque.nombre_es != 'standalone'">
+        <v-tab-item v-if="parque.nombre_es != 'Naves sin parques'">
           <v-container>
             <v-row>
               <v-col sm="12" md="3" v-for="(i, key) in users_parqs" :key="key">
@@ -119,6 +119,9 @@
                       <v-icon>
                         mdi-eye
                       </v-icon>
+                    </v-btn>
+                    <v-btn icon @click="activeinactiveAction('u', i.id)">
+                      <v-icon> mdi-delete</v-icon>
                     </v-btn>
                     <v-dialog
                       width="300"
@@ -151,8 +154,15 @@
                     <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <v-btn icon @click="activeinactiveAction('n', i.id)">
+                      <v-icon> mdi-delete</v-icon>
+                    </v-btn>
                     <!-- isAmpip -->
-                    <v-btn icon @click="addUserToNaveAction(i.id)" v-if="i.isAmpip == null" >
+                    <v-btn
+                      icon
+                      @click="addUserToNaveAction(i.id)"
+                      v-if="i.isAmpip == null"
+                    >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                     <v-dialog
@@ -179,7 +189,7 @@
               <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
                 <v-card>
                   <v-card-title>
-                    Espacio disponible
+                    {{ JSON.parse(i.extras).name }}
                     <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
                   </v-card-title>
                   <v-card-actions>
@@ -501,6 +511,12 @@ export default {
       this.getallspacesAction(this.parque.id);
     },
     addUserAction() {
+      let jsons = [];
+      this.permiso.map((i)=>{
+        let perm = {i:i};
+        jsons.push(perm);
+      })
+      console.log(jsons)
       if (
         this.dataUser.name != "" &&
         this.dataUser.lastName != "" &&
@@ -557,6 +573,8 @@ export default {
       axios.get(
         `${this.$store.state.baseUrl}/mailler?email=${this.dataUser.email}&name=${this.dataUser.name}&link=${id[0].id}`
       );
+
+
       var paramsDos = new URLSearchParams();
       paramsDos.append("idUser", id[0].id);
       paramsDos.append("idParque", this.$store.state.parque);
@@ -646,7 +664,7 @@ export default {
         .post(`${this.$store.state.url}/updatepark`, params)
         .then(() => {
           Swal.fire(
-            "La informacion se actualizo esta en espera de que se habilite"
+            "Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados."
           );
         })
         .catch((e) => console.log(e));
@@ -705,6 +723,18 @@ export default {
             swalWithBootstrapButtons.fire("Cancelado", "...", "error");
           }
         });
+    },
+    activeinactiveAction(table , id) {
+      let params = new URLSearchParams();
+      params.append("type", "i");
+      params.append("table", table);
+      params.append("id", id);
+      axios
+        .post(`${this.$store.state.url}/activeinactive`, params)
+        .then(() => console.log(
+          Swal.fire({text: "Listo", icon: "success"})
+        ))
+        .catch((e) => console.log(e));
     },
   },
   components: { plusCard, infoCard },

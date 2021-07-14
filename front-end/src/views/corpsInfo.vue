@@ -10,7 +10,7 @@
       <v-btn icon @click="close">
         <v-icon color="red"> mdi-arrow-left-bold</v-icon>
       </v-btn>
-      <v-btn icon @click="getTabId" v-if="tab == 0">
+      <v-btn icon @click="getTabId" v-if="tab == 1000">
         <v-icon>
           mdi-plus
         </v-icon>
@@ -34,7 +34,7 @@
         ></plusCard>
       </v-dialog>
     </v-card-title>
-
+     {{id.nombre_es}}
     <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
       <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
         Usuarios
@@ -48,8 +48,13 @@
       <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
         Oferta de espacios
       </v-tab>
-      <v-tab class="link_sec-space_info">
+      <v-tab>
         Información
+        <v-btn icon @click="infoParkAction(i.id)" >
+          <v-badge content="1" value="1" color="green" overlap v-if="id.habilitar == 0">
+            <v-icon>mdi-eye</v-icon>
+          </v-badge>
+        </v-btn>
       </v-tab>
     </v-tabs>
 
@@ -59,6 +64,19 @@
       <v-tab-item>
         <v-container>
           <v-row>
+            <!-- Add -->
+               <v-col cols="12"
+              sm="12"
+              md="4">
+                <v-card>
+                  <v-card-title>Agregar nuevo</v-card-title>
+                  <v-card-text>
+                    <v-btn @click="()=>{addUser=true}">Nuevo usuario</v-btn>
+                  </v-card-text>
+                  <v-card-actions></v-card-actions>
+                </v-card>
+              </v-col>
+            <!-- END -->
             <v-col
               cols="12"
               sm="12"
@@ -101,6 +119,20 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
+          <!-- <v-col cols="12"
+              sm="12"
+              md="4">
+                <v-card>
+                  <v-card-title>Agregar nuevo</v-card-title>
+                  <v-card-text>
+                    <v-btn @click="()=>{addPark=true}">Nuevo usuario</v-btn>
+                  </v-card-text>
+                  <v-card-actions></v-card-actions>
+                </v-card>
+              </v-col> -->
+            <p i v-if="parksIn==false">
+              Sin Parques registrados
+            </p>
             <v-col
               sm="12"
               md="4"
@@ -122,7 +154,6 @@
                   >
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-
                   <v-btn
                     icon
                     @click="infoParkAction(i.id)"
@@ -132,7 +163,6 @@
                       <v-icon>mdi-eye</v-icon>
                     </v-badge>
                   </v-btn>
-
                   <v-dialog
                     v-model="cards.infoPark"
                     width="700"
@@ -156,8 +186,12 @@
 
       <!--Inquilinos-->
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+
         <v-container>
           <v-row>
+             <p v-if="navsIn == false">
+              Sin Inquilinos registrados{{navsIn}}
+            </p>
             <v-col sm="12" md="4" v-for="i in navs" :key="i.id">
               <v-card>
                 <v-card-title v-text="i.name"></v-card-title>
@@ -193,6 +227,9 @@
       <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
         <v-container>
           <v-row>
+             <p i v-if="placesIn == false">
+              Sin Espacios Disponibles
+            </p>
             <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">
               <v-card>
                 <v-card-title>
@@ -231,8 +268,11 @@
                       style="color:#fff"
                     />
                     <br />
-                    <v-text-field v-model="nameUpload" placeholder="Nombre de archivo"></v-text-field>
-                    <v-btn class="card_space_general" @click="uploadImage">Subir</v-btn>
+                    <v-text-field
+                      v-model="nameUpload"
+                      placeholder="Nombre de archivo"
+                    ></v-text-field>
+                    <v-btn @click="uploadImage">Subir</v-btn>
                   </v-col>
                 </v-row>
               </v-cotainer>
@@ -374,7 +414,7 @@
               <v-text-field
                 disabled
                 v-model="id.fechaDeValidacion"
-                label="Ultima actualizacion"
+                label="Última actualización"
                 v-if="id.fechaDeValidacion"
               ></v-text-field>
             </v-col>
@@ -442,8 +482,8 @@ export default {
       },
       places: {},
       spaces: false,
-      logoUpload:[],
-      nameUpload:null
+      logoUpload: [],
+      nameUpload: null,
     };
   },
   components: {
@@ -592,7 +632,7 @@ export default {
               this.getAllNaves();
               let timerInterval;
               Swal.fire({
-                title: "Recuperando informacion",
+                title: "Recuperando información",
                 timer: 1000,
                 timerProgressBar: true,
                 didOpen: () => {
@@ -760,6 +800,28 @@ export default {
     imgRoute() {
       return `${this.$store.state.img}/`;
     },
+
+    parksIn(){
+      if(this.parks.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    },
+    navsIn(){
+      if(this.navs.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    },
+    placesIn(){
+      if(this.places.length > 0){
+        return true;
+      } else{
+        return false;
+      }
+    }
   },
 };
 

@@ -150,6 +150,7 @@ class apiController extends AbstractActionController
                         $result["fechaDeBaja"] = $role->getfechaDeBaja();
                         $result["status"] = $role->getstatus();
                         $result["habilitar"] = $role->gethabilitar();
+                        /* */
                     } else {
                         $result["error"] = "2541";
                     }
@@ -204,6 +205,7 @@ class apiController extends AbstractActionController
                             $result["status"] = $role->getstatus();
                             $result["habilitar"] = $role->gethabilitar();
                             $result["type"] = $role->getType();
+                            $result["tipoDeSocio2"] = $role->getType();
                             array_push($arrCorps, $result);
                         } else {
                             $result["error"] = "2541";
@@ -239,7 +241,9 @@ class apiController extends AbstractActionController
                             $result["fechaDeBaja"] = $role->getfechaDeBaja();
                             $result["status"] = $role->getstatus();
                             $result["habilitar"] = $role->gethabilitar();
+                            $result["tipoDeSocio2"] = $role->getType();
                             array_push($arrCorps, $result);
+                            
                         } else {
                             $result["error"] = "2541";
                         }
@@ -1294,33 +1298,30 @@ class apiController extends AbstractActionController
     public function updateinquilinoAction()
     {
         if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost("id", "");
-            $propietario = $this->params()->fromPost("propietario", "");
-            $nombreEmpresa = $this->params()->fromPost("nombreEmpresa", "");
-            $numEmpleados = $this->params()->fromPost("numEmpleados", "");
-            $paisOrigen = $this->params()->fromPost("paisOrigen", "");
-            $productoInsignia = $this->params()->fromPost("productoInsignia", "");
-            $sectorEmpresarial = $this->params()->fromPost("sectorEmpresarial", "");
-            $id_SCIAN = $this->params()->fromPost("id_SCIAN", "");
-            $id_DENUE = $this->params()->fromPost("id_DENUE", "");
-            $antiguedad = $this->params()->fromPost("antiguedad", "");
-            $medidaX = $this->params()->fromPost("medidaX");
-            if (true) {
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".propietario", $propietario, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".nombreEmpresa", $nombreEmpresa, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".numEmpleados", $numEmpleados, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".paisOrigen", $paisOrigen, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".productoInsignia", $productoInsignia, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".sectorEmpresarial", $sectorEmpresarial, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".id_SCIAN", $id_SCIAN, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".id_DENUE", $id_DENUE, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".antiguedad", $antiguedad, $id);
-                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaX", $medidaX, $id);
-
-                return new JsonModel(["message" => "listo"]);
-            } else {
-                return new JsonModel(["message" => "permiso Insuficiente"]);
-            }
+            $id = $this->params()->fromPost("id");
+            $propietario = $this->params()->fromPost("propietario");
+            $nombreEmpresa = $this->params()->fromPost("nombreEmpresa");
+            $numEmpleados = $this->params()->fromPost("numEmpleados");
+            $paisOrigen = $this->params()->fromPost("paisOrigen");
+            $productoInsignia = $this->params()->fromPost("productoInsignia");
+            $sectorEmpresarial = $this->params()->fromPost("sectorEmpresarial");
+            $id_SCIAN = $this->params()->fromPost("id_SCIAN");
+            $id_DENUE = $this->params()->fromPost("id_DENUE");
+            $antiguedad = $this->params()->fromPost("antiguedad");
+            $nombre_es=$this->params()->fromPost("nombre_es");
+            $nombre_en=$this->params()->fromPost("nombre_en");
+              $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".propietario", $propietario, $id);
+              $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".nombre_en", $nombre_en, $id);
+              $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".nombre_es", $nombre_es, $id);
+              $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".nombreEmpresa", $nombreEmpresa, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".numEmpleados", $numEmpleados, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".paisOrigen", $paisOrigen, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".productoInsignia", $productoInsignia, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".sectorEmpresarial", $sectorEmpresarial, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".id_SCIAN", $id_SCIAN, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".id_DENUE", $id_DENUE, $id);
+                $this->entityManager->getRepository(inquilino_naveEntity::class)->updateDataX(".antiguedad", $antiguedad, $id);
+                return new JsonModel(["message" => [$id, $propietario]]);
         } else {
             return $this->redirect()->toUrl(
                 $this->url
@@ -1514,7 +1515,21 @@ class apiController extends AbstractActionController
                 case "i":
                     switch ($table) {
                         case "c":
-                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".status", null, $id);
+
+                           /*  $this->entityManager->getRepository(datosDeUsuarioEntity::class)->deleteCorpUser(".idAmpip", 0, $id);
+                            $response = $this->entityManager->getRepository(userEntity::class)->findBy(['email' => $email, 'password' => $decryptPass, 'status' => 1]); */
+
+
+
+                            $responseKeyCorp = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->findBy(['key_corp'=>$id]);
+
+                            foreach ($responseKeyCorp as $key) {
+                                $this->entityManager->getRepository(userEntity::class)->updateUser(".status", 0, $key->getidAmpip());
+                            }
+
+
+                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".tipoDeSocio", null, $id);
+                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".status", 0, $id);
                             return new JsonModel(["message" => "listo"]);
 
                         case "u":

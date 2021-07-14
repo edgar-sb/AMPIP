@@ -221,7 +221,7 @@
               ></v-text-field>
             </v-col>
             <v-col sm="12">
-              <span>Informacion de actividades:</span>
+              <span>Información de actividades:</span>
             </v-col>
             <v-col cols="6">
               <v-select
@@ -404,6 +404,21 @@
                 style="color:#000"
               />
             </v-col>
+            <v-col sm="12">
+              <GmapMap
+                :center="{ lat: 19.794509121420788, lng: -99.0424054958186 }"
+                :zoom="7"
+                map-type-id="terrain"
+                style="width: 100%; height: 300px"
+                @click="add"
+              >
+                <GmapMarker
+                  :position="markers"
+                  :clickable="true"
+                  :draggable="true"
+                />
+              </GmapMap>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -567,6 +582,7 @@
               :items="types_pats"
             ></v-select>
           </v-col>
+          <v-col> </v-col>
         </v-row>
       </v-card-text>
 
@@ -709,29 +725,33 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
+              v-model="spaces.nameSpace"
+              :items="['Terreno', 'nave']"
+              attach
               outlined
               label="Tipo de espacio *"
               placeholder="Tipo de espacio"
-              v-model="spaces.nameSpace"
               :rules="[rules.required]"
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
+            <v-select
+              v-model="spaces.use"
+              :items="['Manufactura', 'Centro de distribución', 'Ambas']"
+              attach
               outlined
-              title="Uso"
               label="Uso del espacio *"
               placeholder="Uso del espacio"
-              v-model="spaces.use"
               :rules="[rules.required]"
-            ></v-text-field>
+            ></v-select>
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
               outlined
               title="Precio"
               label="Precio promedio * MXN"
+              prepend-icon="$"
               placeholder="Ej. 89"
               v-model="spaces.price"
               :rules="[rules.required, rules.phone]"
@@ -776,7 +796,13 @@
               :rules="[rules.required, rules.phone]"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col sm="12">
+            <v-checkbox
+              v-model="amMap"
+              label="Ingresar mi ubicacion en el mapa"
+            ></v-checkbox>
+          </v-col>
+          <v-col cols="12" v-if="amMap">
             <span>Selecciona la ubicacion</span>
             <GmapMap
               :center="{ lat: 19.794509121420788, lng: -99.0424054958186 }"
@@ -791,6 +817,15 @@
                 :draggable="true"
               />
             </GmapMap>
+          </v-col>
+          <v-col cols="12" v-if="!amMap">
+            <p>Latitud y longitud</p>
+            <v-container>
+              <v-row>
+                <v-col md="6"><v-text-field placeholder="Lat" v-model="ubicacionCru.lat"></v-text-field></v-col>
+                <v-col md="6"><v-text-field placeholder="Lng" v-model="ubicacionCru.lng"></v-text-field></v-col>
+              </v-row>
+            </v-container>
           </v-col>
           <v-col cols="12">
             <v-select
@@ -1351,6 +1386,11 @@ export default {
       parks: ["Modelo"],
       spaces: {},
       Allspace: [],
+      amMap: false,
+      ubicacionCru:{
+        lat:"",
+        lng:"",
+      }
     };
   },
   props: ["dialogs", "nuevo", "id", "type_society"],
@@ -1395,9 +1435,8 @@ export default {
             data.append("id_nave", res.data.id);
             axios
               .post(`${this.$store.state.url}/setinquilino`, data)
-              .then((res) => {
+              .then(() => {
                 this.closeAction();
-                console.log(res.data);
               })
               .catch((e) => console.log(e));
           })
@@ -1489,6 +1528,7 @@ export default {
                 };
                 axios(config)
                   .then(function() {
+                    Swal.fire({ text: "Creado" });
                     ctx.$router.push("/");
                   })
                   .catch(function(error) {
@@ -1687,7 +1727,7 @@ export default {
           this.addUser.last
       );
       params.append("status", 1);
-      var ctx = this;
+      const ctx = this;
       if (
         this.addUser.email != "" &&
         this.addUser.name != "" &&
@@ -1708,6 +1748,8 @@ export default {
                 .post(`${this.$store.state.url}/getuseridlogin`, par)
                 .then((res) => {
                   ctx.linkinquilino(ctx.id.id, res.data);
+                  ctx.linkinquilino(ctx.id, res.data);
+                  ctx.linkinquilino(this.$store.state.parqueOfuser, res.data);
                   ctx.createdataLast(res.data);
                 })
                 .catch((e) => console.log(e));
@@ -1721,7 +1763,7 @@ export default {
     linkinquilino(id_nave, id_user) {
       let params = new URLSearchParams();
       params.append("query", 1);
-      params.append("id", this.$store.state.parqueOfuser);
+      params.append("id", id_nave);
       params.append("id_user", id_user[0].id);
       axios
         .post(`${this.$store.state.url}/naveadmin`, params)
@@ -1799,11 +1841,19 @@ export default {
           .post(`${this.$store.state.url}/espacio`, params)
           .then((res) => {
             if (res.data.message == 1) {
+              let lat, lng;
+              if(ctx.amMap == false){
+                lat = ctx.ubicacionCru.lat;
+                lng = ctx.ubicacionCru.lng;
+              } else{
+                lat = ctx.markers.lat
+                lng = ctx.markers.lng
+              }
               let paramsMaps = new URLSearchParams();
               paramsMaps.append("name", ctx.spaces.type);
-              paramsMaps.append("lat", ctx.markers.lat);
-              paramsMaps.append("lng", ctx.markers.lng);
-              paramsMaps.append("filters",ctx.parquesData.infra);
+              paramsMaps.append("lat", lat);
+              paramsMaps.append("lng", lng);
+              paramsMaps.append("filters", ctx.parquesData.infra);
               axios
                 .post(`${this.$store.state.url}/mapsup`, paramsMaps)
                 .then((res) => {

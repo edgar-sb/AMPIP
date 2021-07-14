@@ -17,7 +17,7 @@
         Naves
       </v-tab>
       <v-tab>
-        Informacion
+        Información
       </v-tab>
     </v-tabs>
 

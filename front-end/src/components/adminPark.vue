@@ -1,6 +1,7 @@
 <template>
   <content>
     <v-card-actions>
+      <c v-if="options.i == true">
       <v-btn icon @click="getTab" v-if="tab != 2">
         <v-icon v-if="options.i">mdi-plus</v-icon>
         <v-dialog width="700" persistent v-model="addNave">
@@ -18,6 +19,7 @@
           ></plusCard>
         </v-dialog>
       </v-btn>
+      </c>
     </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
@@ -31,6 +33,8 @@
           Informacion
         </v-tab>
       </v-tabs>
+
+      {{permisosL}}
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-container>
@@ -38,12 +42,13 @@
               <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
                 <v-card>
                   <v-card-title>
-                    {{ i.name }}
+                    {{ i.name}}
                   </v-card-title>
                   <v-card-actions>
-                    <v-btn icon @click="viewNave(i.id)">
+                      <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <c v-if="options.i = true">
                     <v-btn
                       icon
                       @click="addUserToNaveAction(i.id)"
@@ -51,6 +56,15 @@
                     >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
+                    </c>
+                    <c v-if="options.d = true">
+                    <v-btn
+                      icon
+                      @click="inactiveUser(i.id)"
+                    >
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                    </c>
                     <v-dialog
                       width="700"
                       v-model="addUserToNave"
@@ -58,7 +72,7 @@
                     >
                       <plusCard
                         :dialogs="6"
-                        :id="i"
+                        :id="i.id"
                         @close="closePlusCard"
                       ></plusCard>
                     </v-dialog>
@@ -68,26 +82,30 @@
             </v-row>
           </v-container>
         </v-tab-item>
+
         <v-tab-item>
           <v-container>
             <v-row>
               <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
                 <v-card>
                   <v-card-title>
-                    Espacio disponible
+                    {{ JSON.parse(i.extras).name }}
                     <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="inactiveSpace(i.id)">
-                      <v-icon>mdi-delete</v-icon>
+                    
+                    <v-btn icon @click="inactiveSpace(i.id)" >
+                      <v-icon v-if="options.d">mdi-delete</v-icon>
                     </v-btn>
+  
                   </v-card-actions>
                 </v-card>
               </v-col>
             </v-row>
           </v-container>
         </v-tab-item>
+
         <v-tab-item>
           <v-container>
             <v-row>
@@ -245,8 +263,8 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark" v-if="options.u" class="card_space_general"
-                >Guardar Información</v-btn
+              <v-btn @click="updatePark" v-if="options.u == 'Editar'"
+                 class="card_space_general">Guardar Informacion</v-btn
               >
             </v-card-actions>
           </v-container>
@@ -349,11 +367,19 @@ export default {
         u: false,
         d: false,
         i: false,
+        a: false,
       },
+
+      optionsX:{
+        u: false,
+        d: false,
+        i: false,
+      },
+      addUserToNave: false
     };
   },
   beforeMount() {
-    setTimeout(() => {
+    /* setTimeout(() => {
       let params = new URLSearchParams();
       params.append("query", 1);
       params.append("id", this.$store.state.data.id_A);
@@ -375,7 +401,8 @@ export default {
             .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
-    }, 1000);
+    }, 1000); */
+    this.gettsAll()
   },
   methods: {
     getTab() {
@@ -480,8 +507,6 @@ export default {
       this.addSpace = false;
       this.addUser = false;
       this.data_user = false;
-      this.getallnaves(this.parque.key_corp);
-      this.getallspacesAction(this.parque.id);
       let timerInterval;
       Swal.fire({
         title: "Recuperando datos",
@@ -520,12 +545,10 @@ export default {
 
           clearInterval(timerInterval);
         },
-      }).then((result) => {
-        /* Read more about handling dismissals below */
-        if (result.dismiss === Swal.DismissReason.timer) {
-          console.log("I was closed by the timer");
-        }
+      }).then((r) => {
+        console.log(r)
       });
+       this.$router.push("/");
     },
     openDialog(i) {
       this.data_user = true;
@@ -585,14 +608,14 @@ export default {
         .post(`${this.$store.state.url}/updatepark`, params)
         .then(() => {
           Swal.fire(
-            "La informacion se actualizo esta en espera de que se habilite"
+            "Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados."
           );
         })
         .catch((e) => console.log(e));
     },
     back() {
       this.$ro;
-    },
+    }, 
     getallspacesAction(id) {
       let params = new URLSearchParams();
       params.append("query", 3);
@@ -641,22 +664,96 @@ export default {
           }
         });
     },
+    addUserToNaveAction() {
+     this.addUserToNave = true;
+    },
+    gettsAll(){
+      setTimeout(() => {
+      let params = new URLSearchParams();
+      params.append("query", 1);
+      params.append("id", this.$store.state.data.id_A);
+      axios
+        .post(`${this.$store.state.url}/getparquesusuarios`, params)
+        .then((res) => {
+          this.roles = res.data[0].permiso;
+          console.log(res);
+          let paramsD = new URLSearchParams();
+          paramsD.append("id", res.data[0].persona);
+          axios
+            .post(`${this.$store.state.url}/getpark`, paramsD)
+            .then((res) => {
+              this.parque = res.data[0];
+              this.getUserFromPark(res.data[0].id);
+              this.getallnaves(res.data[0].id);
+              this.getallspacesAction(res.data[0].id);
+            })
+            .catch((e) => console.log(e));
+        })
+        .catch((e) => console.log(e));
+    }, 1000);
+    },
+    inactiveUser(id){
+       const swalWithBootstrapButtons = Swal.mixin();
+
+      swalWithBootstrapButtons
+        .fire({
+          title: "¿Esta seguro de esta accion?",
+          text: "Esta apunto de eliminar!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Si!",
+          cancelButtonText: "Cancelar",
+          reverseButtons: true,
+          confirmButton: "btn btn-success",
+          cancelButton: "btn btn-danger",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            let params = new URLSearchParams();
+            params.append("type", "i");
+            params.append("table", "n");
+            params.append("id", id);
+            axios
+              .post(`${this.$store.state.url}/activeinactive`, params)
+              .then((res) => {
+                if (res.data.message == "Desactivado") {
+                  Swal.fire({ text: "Listo", icon: "success" });
+                  this.getallspacesAction(this.$store.state.parque);
+                } else {
+                  Swal.fire({ text: "Algo salio mal", icon: "error" });
+                }
+              })
+              .catch((e) => console.log(e));
+          } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+          ) {
+            swalWithBootstrapButtons.fire("Cancelado", "...", "error");
+          }
+        });
+    }
   },
   components: { plusCard },
   props: ["parque_id"],
   watch: {
     roles() {
       var roles = this.roles.split(",");
+      console.log(roles);
       var findValueEdit = roles.find((i) => i == "Editar");
-      var findValueAdd = roles.find((i) => i == "Agregar");
-      if (findValueEdit != undefined) {
-        this.options.u = true;
-      }
+      var findValueAdd = roles.find((x) => x == "Agregar");
+      var findValueDelete = roles.find((y) => y == "Eliminar");
 
-      if (findValueAdd != undefined) {
-        this.options.i = true;
-      }
+      this.options.u = findValueEdit;
+      this.options.i = findValueAdd;
+      this.options.d = findValueDelete;
+
     },
   },
+
+  computed: {
+    permisosL(){
+      return `${this.options.u} + ${this.options.i} + ${this.options.d} `;
+    }
+  }
 };
 </script>

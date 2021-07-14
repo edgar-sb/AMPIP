@@ -24,7 +24,7 @@
                         rules.secure,
                       ]"
                       helper-text="Hola"
-                      hint="Recomendamos como mínimo 8 caracteres, máximo 15. Usar al menos una letra mayúscula, una letra minúscula, un número, un caracter especial (!, #, $, %, &, ?, /) y sin espacios en blanco."
+                      hint=""
                     ></v-text-field>
                   </v-col>
 
@@ -36,6 +36,17 @@
                       v-model="confirmPass"
                       :rules="[rules.pass]"
                     ></v-text-field>
+                  </v-col>
+                   <v-col cols="12">
+                    <v-checkbox label="¿Autorizo que mis datos sean compartidos con NAIOP?" v-model="naiop"></v-checkbox>
+                  </v-col>
+                  <v-col cols="12">
+                    <p>
+                      Recomendamos como mínimo 8 caracteres, máximo 15. Usar al
+                      menos una letra mayúscula, una letra minúscula, un número,
+                      un caracter especial (!, #, $, %, &, ?, /) y sin espacios
+                      en blanco.
+                    </p>
                   </v-col>
                 </v-row>
               </v-container>
@@ -69,6 +80,7 @@ export default {
         passLengtminor: (i) => i.length <= 19 || "Maximo 19 caracteres",
         secure: (i) => this.secureTest.test(i) || "Contraseña Insegura",
       },
+      naiop: false,
     };
   },
   beforeMount() {
@@ -83,7 +95,7 @@ export default {
   methods: {
     updatePass() {
       let params = new URLSearchParams();
-      if (this.pass != null && this.confirmPass != null) {
+      if (this.pass != null && this.confirmPass != null, this.naiop == true) {
         if (this.pass.length > 7) {
           if (this.pass === this.confirmPass) {
             params.append("id", this.user);
@@ -92,7 +104,7 @@ export default {
             axios
               .post(`${this.$store.state.url}/reset`, params)
               .then((res) => {
-                Swal.fire({text:res.data.message})
+                Swal.fire({ text: res.data.message });
                 VueCookies.remove("id");
                 VueCookies.remove("email");
                 VueCookies.remove("name");
@@ -104,14 +116,14 @@ export default {
               text: "Asegurate de que las contraseñas coinsidan",
             });
           }
-        } else{
+        } else {
           Swal.fire({
-          text: "Como minimo 8 caracteres",
-        });
+            text: "Como minimo 8 caracteres",
+          });
         }
       } else {
         Swal.fire({
-          text: "Asegurate de haber llenado correctamente los campos",
+          text: "Asegurate de haber llenado correctamente los campos y aurorizar NAIOP",
         });
       }
     },

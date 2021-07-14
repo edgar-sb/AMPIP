@@ -6,6 +6,12 @@
       <v-btn @click="setProfileActionModel" icon color="red">
         <v-icon>mdi-window-close</v-icon>
       </v-btn>
+      <v-btn @click="newUserAddAdmin" icon color="red" v-if="type=='AdministradorGlobal' || type=='Administrador'">
+        <v-icon> mdi-account-circle</v-icon>
+      </v-btn>
+      <v-dialog width="700" v-model="this.$store.state.superAdmin" persistent>
+        <SuperAdmin :type="type"/>
+      </v-dialog>
     </v-card-actions>
     <v-card-text>
       <v-row>
@@ -192,9 +198,11 @@ import UploadImages from "vue-upload-drop-images";
 import Swal from "sweetalert2";
 import VueCookies from "vue-cookies";
 import axios from "axios";
+import SuperAdmin from "../components/SuperAdmin.vue"
+
 var CryptoJS = require("crypto-js");
 export default {
-  props: ["id"],
+  props: ["id", "type"],
   data() {
     return {
       dataUser: null,
@@ -230,6 +238,7 @@ export default {
       col: "",
       address_street: "",
       newPassConfirm: "",
+      addSuperAdmin:false
     };
   },
 
@@ -258,6 +267,7 @@ export default {
         params.append("email", this.email);
         params.append("full_name", this.name);
         params.append("status", 1);
+        const ctx = this;
         axios
           .post(`${this.$store.state.url}/updateuser`, params)
           .then((res) => {
@@ -304,7 +314,7 @@ export default {
                         .catch(function(error) {
                           console.log(error);
                         });
-
+                      ctx.$store.commit("changeProfileDialog",false)
                       clearInterval(timerInterval);
                     },
                   }).then((result) => {
@@ -366,6 +376,9 @@ export default {
           });
       }
     },
+    newUserAddAdmin(){
+      this.$store.commit("newUserAdmin", true);
+    },
   },
 
   beforeMount() {
@@ -395,6 +408,7 @@ export default {
 
   components: {
     UploadImages,
+    SuperAdmin
   },
 
   computed: {

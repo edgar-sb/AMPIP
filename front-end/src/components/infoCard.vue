@@ -51,7 +51,7 @@
       </v-card-text>
 
       <v-text v-if="!id.direccionDeOfficina" class="card_space_alerta">
-        <span>Este usuario aún no llena sus datos</span>
+        <span>El usuario aún no completa sus datos</span>
       </v-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -75,6 +75,7 @@
               outlined
               v-model="id.nombre_es"
               label="Nombre de parque (Español)"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -82,6 +83,7 @@
               outlined
               v-model="id.nombre_en"
               label="Nombre de parque (Inglés)"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -89,6 +91,7 @@
               outlined
               v-model="id.parqProp"
               label="Propietario"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -103,6 +106,7 @@
               outlined
               v-model="id.mercado"
               label="Mercado"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -110,6 +114,7 @@
               outlined
               v-model="id.tipoDeIndustria"
               label="Tipo de industria"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -117,6 +122,7 @@
               outlined
               v-model="id.superficieOcup"
               label="Superficie ocupada"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -124,6 +130,7 @@
               outlined
               v-model="id.superficieUrban"
               label="Superficie urbanizada"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -131,6 +138,7 @@
               outlined
               v-model="id.superficieDisp"
               label="Superficie disponible"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -138,13 +146,15 @@
               outlined
               v-model="id.tipoDePropiedad"
               label="Tipo de propiedad"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
             <v-text-field
               outlined
               v-model="id.numEmpleados"
-              label="Número de empleados"
+              label="Numero de empleados"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -152,6 +162,7 @@
               outlined
               v-model="id.reconocimientoPracticas"
               label="Reconocimiento a mejores practicas"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -159,6 +170,7 @@
               outlined
               v-model="id.ifraestructura"
               label="Infraestructura"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -166,6 +178,7 @@
               outlined
               v-model="id.contactName"
               label="Nombre de contacto"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12">
@@ -173,6 +186,7 @@
               outlined
               v-model="id.contactEmail"
               label="Email"
+              disabled
             ></v-text-field>
           </v-col>
         </v-row>
@@ -206,6 +220,7 @@
               outlined
               label="Nombre de inquilino en (Inglés)"
               v-model="id.nombre_en"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -213,6 +228,7 @@
               outlined
               label="Propietario"
               v-model="id.propietario"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -220,6 +236,7 @@
               outlined
               label="Empresa"
               v-model="id.nombreEmpresa"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -227,6 +244,7 @@
               outlined
               label="Número de empleados"
               v-model="id.numEmpleados"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -234,6 +252,7 @@
               outlined
               label="País de origen"
               v-model="id.paisOrigen"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -241,12 +260,14 @@
               outlined
               label="Producto insignia"
               v-model="id.productoInsignia"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
             <v-text-field
               outlined
               label="Sector empresarial"
+              disabled
               v-model="id.sectorEmpresarial"
             ></v-text-field>
           </v-col>
@@ -255,6 +276,7 @@
               outlined
               label="Años de antigüedad"
               v-model="id.antiguedad"
+              disabled
             ></v-text-field>
           </v-col>
         </v-row>

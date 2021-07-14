@@ -8,18 +8,20 @@ http://localhost:8000/api,
 */
 export default new Vuex.Store({
   state: {
-        url: "http://18.207.162.106/api",
-        img: "http://18.207.162.106/uploads",
-        baseUrl: "http://18.207.162.106",
+    url: "http://localhost:8000/api",
+    img: "http://localhost:8000/uploads",
+    baseUrl: "http://localhost:8000",
     data: null,
     permisos: null,
     token: "a270c78c-a633-4e22-bb98-172615781bb8",
-    id_corp:null,
-    type_society:null,
-    profileDialog:false,
-    parque:null,
-    nave:null,
-    parqueOfuser:null
+    id_corp: null,
+    type_society: null,
+    profileDialog: false,
+    parque: null,
+    nave: null,
+    parqueOfuser: null,
+    superAdmin:false,
+    profile: false
   },
   mutations: {
     adddata(state, value) {
@@ -28,23 +30,29 @@ export default new Vuex.Store({
     addpermiso(state, value) {
       state.permisos = value;
     },
-    setIdCorp(state, value){
+    setIdCorp(state, value) {
       state.id_corp = value;
     },
-    setTypeSociety(state, value){
-      state.type_society = value
+    setTypeSociety(state, value) {
+      state.type_society = value;
     },
-    changeProfileDialog(state){
+    changeProfileDialog(state) {
       state.profileDialog = !state.profileDialog;
     },
-    setParque(state, value){
-      state.parque = value
+    setParque(state, value) {
+      state.parque = value;
     },
-    setNave(state, value){
+    setNave(state, value) {
       state.nave = value;
     },
-    setParqueOfUser(state, value){
-      state.parqueOfuser = value
+    setParqueOfUser(state, value) {
+      state.parqueOfuser = value;
+    },
+    newUserAdmin(state, value){
+      state.superAdmin = value;
+    },
+    closeProfile(state, value){
+      state.profile = value;
     }
   },
   actions: {},

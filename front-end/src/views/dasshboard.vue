@@ -1,8 +1,7 @@
 <template>
   <content>
     <!-- Header -->
-        <headerAmpip>
-        </headerAmpip>
+    <headerAmpip> </headerAmpip>
     <!-- END Header -->
     <!-- La app-bar se mostrara en todos los usuarios sin importar su acceso -->
     <v-toolbar>
@@ -24,6 +23,7 @@
         class="shrink mx-4"
         v-model="keysearch"
         @keyup="key_search"
+        v-if="userType == 'AdministradorGlobal'"
       >
       </v-text-field>
       <v-btn text @click="setProfileActionModel" class="perfil_space" id="more">
@@ -34,7 +34,14 @@
           persistent
           :retain-focus="false"
         >
-          <profile />
+          <profile :type="userType" />
+        </v-dialog>
+      </v-btn>
+      <v-btn text @click="getEventsButton" id="more">
+        Eventos
+        <v-dialog v-model="getEvents" width="80%" :retain-focus="false">
+          <GoogleCalendar />
+          <AddToCalendar />
         </v-dialog>
       </v-btn>
     </v-toolbar>
@@ -110,13 +117,46 @@
                               </v-icon>
                             </v-btn>
                           </v-card-actions>
-                          <v-img 
+                          <v-img
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end img_space"
                             height="200px"
+                            @click="getInfoCorpAction(i.id)"
                           >
                             <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
+                          <v-card-actions>
+                            <v-list style="text-align: left;">
+                              <v-list-item-group
+                                v-model="selectedItem"
+                                color="primary"
+                              >
+                                <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title>
+                                      ID-{{ i.id }}</v-list-item-title
+                                    >
+                                  </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title>
+                                      {{ i.estado }}</v-list-item-title
+                                    >
+                                  </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item>
+                                  <v-list-item-content>
+                                    <v-list-item-title v-if="i.fechaDeValidacion != null">Última actualización: {{
+                                      i.fechaDeValidacion
+                                    }}</v-list-item-title>
+                                  </v-list-item-content>
+                                </v-list-item>
+                              </v-list-item-group>
+                            </v-list>
+
+                            <v-spacer></v-spacer>
+                          </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
                             persistent
@@ -124,6 +164,10 @@
                           >
                             <getCorpInfo :id="infoToCorp" :users="users" />
                           </v-dialog>
+
+                          <v-btn @click="deleteSocio(i.id)"
+                            ><v-icon>mdi-delete</v-icon></v-btn
+                          >
                         </v-card>
                       </v-col>
                     </v-row>
@@ -132,6 +176,7 @@
               </v-row>
             </v-container>
           </v-tab-item>
+          <!-- patrocinador -->
           <v-tab-item>
             <v-container>
               <v-row>
@@ -163,40 +208,24 @@
                             >
 
                             <v-spacer></v-spacer>
-
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar == 0"
-                            >
-                              <v-badge
-                                content="1"
-                                value="1"
-                                color="green"
-                                overlap
-                              >
-                                <v-icon large>
-                                  mdi-eye
-                                </v-icon>
-                              </v-badge>
-                            </v-btn>
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar != 0"
-                            >
-                              <v-icon large>
-                                mdi-eye
-                              </v-icon>
-                            </v-btn>
                           </v-card-actions>
+                          {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
                             :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end img_space"
                             height="200px"
+                            @click="getInfoCorpAction(i.id)"
                           >
                             <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
+                          <v-card-actions>
+                            <span
+                              >Última actualización:<br />
+                              {{ i.fechaDeValidacion }}</span
+                            >
+
+                            <v-spacer></v-spacer>
+                          </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
                             persistent
@@ -208,6 +237,9 @@
                               :type="''"
                             />
                           </v-dialog>
+                          <v-btn @click="deleteSocio(i.id)"
+                            ><v-icon>mdi-delete</v-icon></v-btn
+                          >
                         </v-card>
                       </v-col>
                     </v-row>
@@ -253,13 +285,14 @@
 import VueCookies from "vue-cookies";
 import axios from "axios";
 import headerAmpip from "../components/headerAmpip";
-
+import Swal from "sweetalert2";
 import getCorpInfo from "../components/corpinfo";
 import adminPark from "../components/adminPark";
 import adminNave from "../components/adminNave";
 import profile from "../components/profile";
 import plusCard from "../components/plusCard";
 import adminCorp from "../components/adminCorp";
+import GoogleCalendar from "../components/GoogleCalendar";
 
 var CryptoJS = require("crypto-js");
 
@@ -272,6 +305,7 @@ export default {
     profile,
     adminCorp,
     headerAmpip,
+    GoogleCalendar,
   },
   data() {
     return {
@@ -329,6 +363,7 @@ export default {
       users: {},
       addNewPat: false,
       keysearch: "",
+      getEvents: false,
     };
   },
   beforeCreate() {
@@ -414,6 +449,9 @@ export default {
     }, 1000);
   },
   methods: {
+    getEventsButton() {
+      this.getEvents = true;
+    },
     adddataUser() {
       var id = CryptoJS.AES.decrypt(VueCookies.get("id"), "ampip");
       var params = new URLSearchParams();
@@ -551,6 +589,32 @@ export default {
         this.getAllCorp();
       }
     },
+    deleteSocio(id) {
+      Swal.fire({
+        title: "¿Estas seguro de esta accion?",
+        showDenyButton: true,
+        confirmButtonText: `Si`,
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          var params = new URLSearchParams();
+          params.append("id", id);
+          params.append("type", "i");
+          params.append("table", "c");
+          axios
+            .post(`${this.$store.state.url}/activeinactive`, params)
+            .then((res) => {
+              console.log(res);
+              Swal.fire("Listo!", "", "success");
+              this.$router.push("/");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      });
+    },
   },
   computed: {
     retItem() {
@@ -576,11 +640,11 @@ export default {
       );
       if (user != "") {
         if (hora > 13) {
-          return "  Buenas tardes, " + user;
+          return "  Hola, " + user;
         } else if (hora > 19) {
-          return "  Buenas noches, " + user;
+          return "  Hola, " + user;
         } else {
-          return "  Buenos días, " + user;
+          return "  Hola, " + user;
         }
       } else {
         return "Por favor da clic a la imagen y completa tus datos";

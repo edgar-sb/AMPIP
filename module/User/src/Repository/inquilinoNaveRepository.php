@@ -33,8 +33,21 @@ class inquilinoNaveRepository extends EntityRepository
             ->where('u.id_nave = ?2')
             ->setParameter(2, $id)
             ->getQuery()
-
             ->getSingleScalarResult();
-        return true;
+        return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    public function updateDataX($campo,$valor, $id){
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->update(inquilino_naveEntity::class,'u')
+            ->set('u'.$campo, '?1')
+            ->setParameter(1,$valor)
+            ->where('u.id = ?2')
+            ->setParameter(2, $id)
+            ->getQuery()
+            ->getSingleScalarResult();
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 }
