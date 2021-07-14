@@ -349,7 +349,7 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark">Guardar Informacion</v-btn>
+              <v-btn @click="updatePark" class="card_space_general">Guardar Información</v-btn>
             </v-card-actions>
           </v-container>
         </v-tab-item>

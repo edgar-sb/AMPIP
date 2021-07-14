@@ -58,9 +58,9 @@
             <v-container>
               <v-row>
                 <v-col sm="12">
-                  <v-card-actions>
-                    <v-btn @click="addNewCorp = true" icon
-                      ><v-icon>mdi-plus</v-icon></v-btn
+                  <v-card-actions class="conte_masgen_space">
+                    <v-btn class="conte_mas_space" @click="addNewCorp = true" icon
+                      ><v-icon class="ico_mas_space">mdi-plus</v-icon> Agregar</v-btn
                     >
                     <v-dialog
                       v-model="addNewCorp"

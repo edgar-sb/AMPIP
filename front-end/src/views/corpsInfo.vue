@@ -268,7 +268,7 @@
               <v-text-field v-model="id.rfc" label="RFC" outlined>
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
+            <v-col cols="12" sm="12" class="titulo_form_space">
               <span>Dirección / Contacto</span>
             </v-col>
             <v-col cols="12" sm="12" md="6">
@@ -308,7 +308,7 @@
               <v-text-field v-model="id.celular" label="Celular" outlined>
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
+            <v-col cols="12" sm="12" class="titulo_form_space">
               <span>Inversiones</span>
             </v-col>
             <v-col cols="12" sm="12" md="6">
@@ -338,7 +338,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
+            <v-col cols="12" sm="12" class="titulo_form_space">
               <span>Redes Sociales:</span>
             </v-col>
             <v-col cols="12" sm="12">
