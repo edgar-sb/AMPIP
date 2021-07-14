@@ -4,7 +4,7 @@
 namespace User\Repository;
 use Doctrine\ORM\EntityRepository;
 use User\Entity\mapsEntity;
-use Doctrine\ORM\Query;
+use Doctrine\ORM\Query;   
 
 class mapsRepository extends EntityRepository{
     /**

@@ -1298,7 +1298,7 @@ class apiController extends AbstractActionController
     public function updateinquilinoAction()
     {
         if ($this->getRequest()->isPost()) {
-            $id = $this->params()->fromPost("id", "");
+            $id = $this->params()->fromPost("id");
             $propietario = $this->params()->fromPost("propietario", "");
             $nombreEmpresa = $this->params()->fromPost("nombreEmpresa", "");
             $numEmpleados = $this->params()->fromPost("numEmpleados", "");
@@ -1320,7 +1320,7 @@ class apiController extends AbstractActionController
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".antiguedad", $antiguedad, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaX", $medidaX, $id);
 
-                return new JsonModel(["message" => $propietario]);
+                return new JsonModel(["message" => $id]);
         } else {
             return $this->redirect()->toUrl(
                 $this->url
