@@ -2,7 +2,7 @@
   <v-container>
     <v-row justify="center" align="center" class="all">
       <v-col cols="10" md="5">
-        <v-card>
+        <v-card class="conte_login_space">
           <v-img
             class="_img_ampip _login"
             lazy-src="http://18.207.162.106/img/logo_ampip.svg"
@@ -33,14 +33,19 @@
                 ></v-text-field>
               </v-col>
             </v-row>
+            <v-col cols="12" class="contrasena_space">
+              <a class="olvidaste_space" href="mailto=prueba@ampip.com">Si olvidaste tu contraseña contáctanos aquí</a>
+            </v-col>
             <v-col cols="12">
-              <v-btn color="success" @click="login">Iniciar sesion</v-btn>
+              <v-btn class="btn_iniciar-space" @click="login">Iniciar Sesión</v-btn>
               <br />
               <!-- <a @click="forgetPass">Olvide mi contraseña</a> <small>°</small> -->
             </v-col>
           </v-container>
         </v-card>
+        <v-col cols="12" class="derechos_space">Todos los derechos reservados Asociación Mexicana <br> de Parques Industriales Privados, A.C</v-col>
       </v-col>
+      
     </v-row>
   </v-container>
 </template>

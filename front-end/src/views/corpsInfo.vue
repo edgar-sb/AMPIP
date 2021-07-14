@@ -129,7 +129,6 @@
                   </v-card-text>
                   <v-card-actions></v-card-actions>
                 </v-card>
-                
               </v-col> -->
             <p i v-if="parksIn==false">
               Sin Parques registrados
@@ -142,7 +141,7 @@
               v-show="i.nombre_es != 'standalone'"
             >
               <v-card>
-                <span v-if="i.edit != 'null'"
+                <span class="ultima_actualizacion_space" v-if="i.edit != 'null'"
                   >Última actualización : {{ i.edit }}</span
                 >
                 <v-card-title v-text="i.nombre_es"></v-card-title>

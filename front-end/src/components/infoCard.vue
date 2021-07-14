@@ -14,7 +14,7 @@
             <v-img
               :src="imgRoute + '/perfil/' + id.id + '.jpg'"
               class="white--text align-end"
-              gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+              gradient="to bottom, rgba(0,0,0,.0), rgba(0,0,0,.0)"
               height="200px"
             ></v-img>
           </v-col>
@@ -284,7 +284,7 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="emitsClose">Cerrar</v-btn>
+        <v-btn @click="emitsClose" class="card_space_cerrar">Cerrar</v-btn>
       </v-card-actions>
     </v-card>
 

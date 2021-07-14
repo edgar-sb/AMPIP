@@ -26,7 +26,7 @@
         v-if="AdministradorGlobal"
       >
       </v-text-field>
-      <v-btn text @click="setProfileActionModel" id="more">
+      <v-btn text @click="setProfileActionModel" class="perfil_space" id="more">
         Perfil
         <v-dialog
           v-model="getProfileActionModel"
@@ -85,15 +85,50 @@
                     <v-row class="content">
                       <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
                         <v-card>
+<<<<<<< HEAD
                           {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
+=======
+                          <v-card-actions>
+                            <span
+                              ><b>Última actualización:</b><br />
+                              {{ i.fechaDeValidacion }}</span
+                            >
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              icon
+                              @click="getInfoCorpAction(i.id)"
+                              v-if="i.habilitar == 0"
+                            >
+                              <v-badge
+                                content="1"
+                                value="1"
+                                color="green"
+                                overlap
+                              >
+                                <v-icon large>
+                                  mdi-eye
+                                </v-icon>
+                              </v-badge>
+                            </v-btn>
+                            <v-btn
+                              icon
+                              @click="getInfoCorpAction(i.id)"
+                              v-if="i.habilitar != 0"
+                            >
+                              <v-icon large>
+                                mdi-eye
+                              </v-icon>
+                            </v-btn>
+                          </v-card-actions>
+                          <v-img 
+>>>>>>> 6260e17af707e5a702f983eb62187cefd0c93248
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                            class="white--text align-end img_space"
                             height="200px"
                             @click="getInfoCorpAction(i.id)"
                           >
-                            <v-card-title>{{ i.corporativo }}</v-card-title>
+                            <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
                           <v-card-actions>
                             <v-list style="text-align: left;">
@@ -183,11 +218,16 @@
                       <v-col sm="12" md="4" v-for="i in allPat" :key="i">
                         <v-card>
                           <v-card-actions>
-                            <v-badge
-                              content="1"
-                              value="1"
-                              color="green"
-                              overlap
+                            <span
+                              ><b>Última actualización:</b><br />
+                              {{ i.fechaDeValidacion }}</span
+                            >
+
+                            <v-spacer></v-spacer>
+
+                            <v-btn
+                              icon
+                              @click="getInfoCorpAction(i.id)"
                               v-if="i.habilitar == 0"
                             >
                               <v-icon large>
@@ -198,12 +238,11 @@
                           {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
                             :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                            class="white--text align-end img_space"
                             height="200px"
                             @click="getInfoCorpAction(i.id)"
                           >
-                            <v-card-title>{{ i.corporativo }}</v-card-title>
+                            <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
                           <v-card-actions>
                             <span

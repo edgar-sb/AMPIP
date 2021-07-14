@@ -12,7 +12,7 @@
                 ></v-img>
             </v-col>
             <v-col cols="4">
-                <div>
+                <div class="titulo_space_panel">
                     <span>Panel Socios AMPIP</span>
                 </div>
             </v-col>
