@@ -26,7 +26,7 @@
         @keyup="key_search"
       >
       </v-text-field>
-      <v-btn text @click="setProfileActionModel" id="more">
+      <v-btn text @click="setProfileActionModel" class="perfil_space" id="more">
         Perfil
         <v-dialog
           v-model="getProfileActionModel"
@@ -80,7 +80,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Última actualización:<br />
+                              ><b>Última actualización:</b><br />
                               {{ i.fechaDeValidacion }}</span
                             >
                             <v-spacer></v-spacer>
@@ -110,13 +110,12 @@
                               </v-icon>
                             </v-btn>
                           </v-card-actions>
-                          <v-img
+                          <v-img 
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                            class="white--text align-end img_space"
                             height="200px"
                           >
-                            <v-card-title>{{ i.corporativo }}</v-card-title>
+                            <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
                           <v-dialog
                             v-model="getCorpInfo"
@@ -159,7 +158,7 @@
                         <v-card>
                           <v-card-actions>
                             <span
-                              >Última actualización:<br />
+                              ><b>Última actualización:</b><br />
                               {{ i.fechaDeValidacion }}</span
                             >
 
@@ -193,11 +192,10 @@
                           </v-card-actions>
                           <v-img
                             :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
-                            class="white--text align-end"
-                            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+                            class="white--text align-end img_space"
                             height="200px"
                           >
-                            <v-card-title>{{ i.corporativo }}</v-card-title>
+                            <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
                           <v-dialog
                             v-model="getCorpInfo"

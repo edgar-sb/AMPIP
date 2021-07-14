@@ -5,7 +5,7 @@
         <v-text-field
           outlined
           v-model="nave.nombre_es"
-          label="Nombre en español"
+          label="Nombre en Español"
           :rules="[rules.required]"
         ></v-text-field>
       </v-col>
@@ -13,7 +13,7 @@
         <v-text-field
           outlined
           v-model="nave.nombre_en"
-          label="Nombre en ingles"
+          label="Nombre en Ingles"
           :rules="[rules.required]"
         ></v-text-field>
       </v-col>

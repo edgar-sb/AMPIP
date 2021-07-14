@@ -1765,10 +1765,10 @@ class apiController extends AbstractActionController
                         $this->entityManager->getRepository(userEntity::class)->updateUser(".password", $this->encript("enc", $pass, "4MP1P"), $id);
                         return new JsonModel(["message" => "Contraseña modificada"]);
                     } else{
-                        return new JsonModel(["message"=>"No se ah podido cambiar la contraseña"]);
+                        return new JsonModel(["message"=>"No hemos podido cambiar la contraseña, por favor inténtalo de nuevo"]);
                     }
                 }
-                return new JsonModel(["message"=>"No se ah podido cambiar la contraseña"]);
+                return new JsonModel(["message"=>"No hemos podido cambiar la contraseña, por favor inténtalo de nuevo"]);
                 break;
             case 2:
                 $this->entityManager->getRepository(userEntity::class)->updateUser(".password", "", $id);
