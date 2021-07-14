@@ -458,3 +458,19 @@ button.swal2-cancel {
 button.swal2-cancel:hover {
     background-color: #333333 !important;
 }
+.conte_mas_space {
+    background-color: transparent;
+    color:#00afb7;
+}
+
+.conte_mas_space span {
+    background-color: transparent;
+    color:#3ed808;
+    font-weight: bold;
+    margin-left: 30px;
+    font-size: 1.0rem;
+}
+.conte_mas_space span:hover {
+    background-color: transparent !important;
+    color:#333333;
+}
