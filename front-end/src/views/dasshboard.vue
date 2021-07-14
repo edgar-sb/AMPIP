@@ -126,28 +126,28 @@
                             <v-card-title class="titu-imagen-space">{{ i.corporativo }}</v-card-title>
                           </v-img>
                           <v-card-actions>
-                            <v-list style="text-align: left;">
+                            <v-list class="lista-space-card" style="text-align: left;">
                               <v-list-item-group
                                 v-model="selectedItem"
                                 color="primary"
                               >
-                                <v-list-item>
+                                <v-list-item class="item_space">
                                   <v-list-item-content>
-                                    <v-list-item-title>
+                                    <v-list-item-title class="lista-space-nombre">
                                       ID-{{ i.id }}</v-list-item-title
                                     >
                                   </v-list-item-content>
                                 </v-list-item>
-                                <v-list-item>
+                                <v-list-item class="item_space">
                                   <v-list-item-content>
-                                    <v-list-item-title>
+                                    <v-list-item-title class="lista-space-ciudad">
                                       {{ i.estado }}</v-list-item-title
                                     >
                                   </v-list-item-content>
                                 </v-list-item>
-                                <v-list-item>
+                                <v-list-item class="item_space">
                                   <v-list-item-content>
-                                    <v-list-item-title v-if="i.fechaDeValidacion != null">Última actualización: {{
+                                    <v-list-item-title v-if="i.fechaDeValidacion != null" class="lista-space-ultima"><b>Última actualización:</b> {{
                                       i.fechaDeValidacion
                                     }}</v-list-item-title>
                                   </v-list-item-content>
