@@ -108,9 +108,7 @@ export default {
             if (res.data[0].id == undefined) {
               console.log(res.request);
               Swal.fire({
-                icon: "error",
-                title: "Ooops ...",
-                text: "No pudimos iniciar secion revisa tus credenciales",
+                text: "No se pudo iniciar sesión, revisa tus credenciales",
               });
             } else {
               console.log(res.data[0]);

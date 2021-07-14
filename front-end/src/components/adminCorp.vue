@@ -233,7 +233,7 @@
             <v-col cols="12" sm="12" md="12">
               <v-text-field
                 v-model="social.twiter"
-                label="Twiter"
+                label="Twitter"
                 outlined
                 :rules="[rules.required, rules.link]"
               >
@@ -253,14 +253,14 @@
             <v-col cols="12" sm="12" md="12">
               <v-text-field
                 v-model="social.linkdin"
-                label="LinkedIn"
+                label="Linkedin"
                 outlined
                 :rules="[rules.required, rules.link]"
               >
               </v-text-field>
             </v-col>
             <v-card-actions>
-              <v-btn @click="updatecorpAction">Guardar Información</v-btn>
+              <v-btn @click="updatecorpAction" class="card_space_general">Guardar Información</v-btn>
             </v-card-actions>
           </v-row>
         </v-container>
@@ -315,10 +315,10 @@ export default {
         rfc: (i) => i.length > 11 || "RFC no valido",
         rfcMin: (i) => i.length <= 13 || "RFC no valido",
         required: (value) => !!value || "Requerido.",
-        phone: (i) => i.length == 10 || "Numero de telefono no valido",
+        phone: (i) => i.length == 10 || "Número de teléfono no valido",
         number: (i) => {
           const pattern = /^([0-9])*$/;
-          return pattern.test(i) || "Numero no valido";
+          return pattern.test(i) || "Número no valido";
         },
         link: (i) => {
           let pattern = /^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/;
@@ -395,9 +395,8 @@ export default {
 
     inactive(type, table, id) {
       Swal.fire({
-        title: "¿Esta seguro de esta accion?",
+        title: "¿Esta seguro de esta acción?",
         text: "Esta apunto de elimiar",
-        icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",

@@ -22,26 +22,26 @@
             <v-container>
               <v-row>
                 <v-col cols="12" sm="12" md="6" class="card_space">
-                  Cargo: <br />
+                  Cargo: <br>
                   <span>{{ id.cargo }}</span>
                 </v-col>
                 <v-col cols="12" sm="12" md="6" class="card_space">
-                  Teléfono de oficina: <br />
+                  Teléfono de oficina: <br>
                   <span>{{ id.telefonoOfficina }}</span>
                 </v-col>
 
                 <v-col cols="12" sm="12" md="6" class="card_space_sencillo">
-                  Teléfono personal: <br />
+                  Teléfono personal: <br>
                   <span>{{ id.celular }}</span>
                 </v-col>
 
                 <v-col cols="12" sm="12" md="6" class="card_space_sencillo">
-                  Cumpleaños: <br />
+                  Cumpleaños: <br>
                   <span>{{ id.cumpleanios }}</span>
                 </v-col>
 
                 <v-col cols="12" sm="12" class="card_space">
-                  Dirección de oficina: <br />
+                  Dirección de oficina: <br>
                   <span>{{ id.direccionDeOfficina }}</span>
                 </v-col>
               </v-row>
@@ -98,8 +98,7 @@
             <v-text-field
               outlined
               v-model="id.region"
-              label="Region"
-              disabled
+              label="Región"
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -243,7 +242,7 @@
           <v-col cols="12" sm="12" md="6">
             <v-text-field
               outlined
-              label="Numero de empleados"
+              label="Número de empleados"
               v-model="id.numEmpleados"
               disabled
             ></v-text-field>
@@ -251,7 +250,7 @@
           <v-col cols="12" sm="12" md="6">
             <v-text-field
               outlined
-              label="Pais de origen"
+              label="País de origen"
               v-model="id.paisOrigen"
               disabled
             ></v-text-field>
@@ -275,7 +274,7 @@
           <v-col cols="12" sm="12" md="6">
             <v-text-field
               outlined
-              label="Años de antiguedad"
+              label="Años de antigüedad"
               v-model="id.antiguedad"
               disabled
             ></v-text-field>
@@ -305,35 +304,35 @@
       <v-card-title>Espacio diponible contacto y detalles</v-card-title>
       <v-card-text>
         <v-row>
-          <v-col cols="12" md="6">
-            <label>Nombre: </label>
-            {{ JSON.parse(id.extras).name }}
+          <v-col cols="12" md="6" class="card_space">
+            <label>Nombre: </label><br>
+            <span>{{ JSON.parse(id.extras).name }}</span>
           </v-col>
-          <v-col cols="12" md="6">
-            <label>Teléfono: </label>
-            {{ JSON.parse(id.extras).phone }}
+          <v-col cols="12" md="6" class="card_space">
+            <label>Teléfono: </label><br>
+            <span>{{ JSON.parse(id.extras).phone }}</span>
           </v-col>
-          <v-col cols="12" md="6">
-            <label>Medidas: </label>
-            {{ JSON.parse(id.extras).medidas[0] }} x
-            {{ JSON.parse(id.extras).medidas[1] }}
-          </v-col>
-
-          <v-col cols="12" md="6">
-            <label>Tipo: </label>
-            {{ id.tipo }}
+          <v-col cols="12" md="6" class="card_space_sencillo">
+            <label>Medidas: </label><br>
+           <span> {{ JSON.parse(id.extras).medidas[0] }} x
+            {{ JSON.parse(id.extras).medidas[1] }}</span>
           </v-col>
 
-          <v-col cols="12">
-            <label>Uso: </label>
-            {{ id.uso }}
+          <v-col cols="12" md="6" class="card_space_sencillo">
+            <label>Tipo: </label><br>
+            <span>{{ id.tipo }}</span>
+          </v-col>
+
+          <v-col cols="12" class="card_space">
+            <label>Uso: </label><br>
+            <span>{{ id.uso }}</span>
           </v-col>
         </v-row>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="closeInfo">Cerrar</v-btn>
-        <v-btn
+        <v-btn @click="closeInfo" class="card_space_cerrar">Cerrar</v-btn>
+        <v-btn class="card_space_reenviar"
           @click="updateSpace"
           v-if="JSON.parse(id.extras).date == undefined"
           >Aprobar</v-btn
@@ -398,7 +397,6 @@ export default {
       Swal.fire({
         title: "¿Esta seguro de esta acción?",
         text: "Se reenviara la contraseña",
-        icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",

@@ -259,7 +259,7 @@
               <v-col sm="12" md="6">
                 <v-select
                   :items="regiones"
-                  label="Region"
+                  label="Región"
                   outlined
                   v-model="parque.region"
                 ></v-select>
@@ -300,7 +300,7 @@
               </v-col>
               <v-col sm="12">
                 <v-text-field
-                  label="Numero de empleados"
+                  label="Número de empleados"
                   outlined
                   v-model="parque.numEmpleados"
                 ></v-text-field>
@@ -359,7 +359,7 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark">Guardar Información</v-btn>
+              <v-btn @click="updatePark" class="card_space_general">Guardar Información</v-btn>
             </v-card-actions>
           </v-container>
         </v-tab-item>
@@ -690,9 +690,8 @@ export default {
 
       swalWithBootstrapButtons
         .fire({
-          title: "¿Esta seguro de esta accion?",
+          title: "¿Esta seguro de esta acción?",
           text: "Esta apunto de eliminar!",
-          icon: "warning",
           showCancelButton: true,
           confirmButtonText: "Si!",
           cancelButtonText: "Cancelar",

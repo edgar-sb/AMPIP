@@ -102,7 +102,7 @@
       </v-col>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn @click="save">Guardar información</v-btn>
+        <v-btn @click="save" class="card_space_general">Guardar información</v-btn>
       </v-card-actions>
     </v-row>
   </v-container>
