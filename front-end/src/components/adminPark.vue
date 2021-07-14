@@ -135,7 +135,7 @@
               <v-col sm="12" md="6">
                 <v-select
                   :items="regiones"
-                  label="Region"
+                  label="Región"
                   outlined
                   v-model="parque.region"
                   :disabled="!options.u"
@@ -181,7 +181,7 @@
               </v-col>
               <v-col sm="12">
                 <v-text-field
-                  label="Numero de empleados"
+                  label="Número de empleados"
                   outlined
                   v-model="parque.numEmpleados"
                   :disabled="!options.u"
@@ -607,9 +607,8 @@ export default {
 
       swalWithBootstrapButtons
         .fire({
-          title: "¿Esta seguro de esta accion?",
+          title: "¿Esta seguro de esta acción?",
           text: "Esta apunto de eliminar!",
-          icon: "warning",
           showCancelButton: true,
           confirmButtonText: "Si!",
           cancelButtonText: "Cancelar",

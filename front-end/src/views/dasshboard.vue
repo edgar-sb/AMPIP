@@ -580,10 +580,10 @@ export default {
         } else if (hora > 19) {
           return "  Buenas noches, " + user;
         } else {
-          return "  Buenos dias, " + user;
+          return "  Buenos días, " + user;
         }
       } else {
-        return "Por favor pincha la imagen y completa tus datos";
+        return "Por favor da clic a la imagen y completa tus datos";
       }
     },
 

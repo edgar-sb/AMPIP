@@ -274,7 +274,7 @@
             <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.direccion"
-                label="Calle y numero"
+                label="Calle y número"
                 outlined
               >
               </v-text-field>
@@ -350,14 +350,14 @@
             </v-col>
             <v-col cols="12" sm="12">
               <v-text-field
-                label="Twiter"
+                label="Twitter"
                 v-model="social.twiter"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="12">
               <v-text-field
-                label="LinkdIn"
+                label="Linkedin"
                 v-model="social.linkdin"
                 outlined
               ></v-text-field>
@@ -496,7 +496,7 @@ export default {
       };
       axios(config)
         .then(function() {
-          Swal.fire("Se agrego correctamente");
+          Swal.fire("La información se agregó correctamente");
         })
         .catch(function(error) {
           console.log(error);
@@ -571,9 +571,8 @@ export default {
 
     inactive(type, table, id) {
       Swal.fire({
-        title: "¿Esta seguro de esta accion?",
+        title: "¿Esta seguro de esta acción?",
         text: "Esta apunto de Eliminar",
-        icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",

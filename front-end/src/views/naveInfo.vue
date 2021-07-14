@@ -19,7 +19,7 @@
           </v-col>
           
           <v-col sm="12" md="6">
-            <v-text-field v-model="inquilino[0].numEmpleados" label="Numero de empleados" outlined></v-text-field>
+            <v-text-field v-model="inquilino[0].numEmpleados" label="Número de empleados" outlined></v-text-field>
           </v-col>
           <v-col sm="12" md="6">
             <v-text-field v-model="inquilino[0].paisOrigen" label="País de origen" outlined></v-text-field>
