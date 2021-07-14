@@ -84,13 +84,14 @@
                   <v-container>
                     <v-row class="content">
                       <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
-                        <v-card @click="getInfoCorpAction(i.id)">
-                          {{i.tipoDeSocio}} / {{i.tipoDeSocio2}}
+                        <v-card>
+                          {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end"
                             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                             height="200px"
+                            @click="getInfoCorpAction(i.id)"
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
@@ -107,7 +108,7 @@
                                     >
                                   </v-list-item-content>
                                 </v-list-item>
-                                 <v-list-item>
+                                <v-list-item>
                                   <v-list-item-content>
                                     <v-list-item-title>
                                       {{ i.estado }}</v-list-item-title
@@ -124,7 +125,7 @@
                               </v-list-item-group>
                             </v-list>
 
-                          <v-spacer></v-spacer>
+                            <v-spacer></v-spacer>
                             <v-badge
                               content="1"
                               value="1"
@@ -143,8 +144,11 @@
                             :retain-focus="false"
                           >
                             <getCorpInfo :id="infoToCorp" :users="users" />
-                            
                           </v-dialog>
+
+                          <v-btn @click="deleteSocio(i.id)"
+                            ><v-icon>mdi-delete</v-icon></v-btn
+                          >
                         </v-card>
                       </v-col>
                     </v-row>
@@ -177,26 +181,27 @@
                   <v-container>
                     <v-row>
                       <v-col sm="12" md="4" v-for="i in allPat" :key="i">
-                        <v-card @click="getInfoCorpAction(i.id)">
+                        <v-card>
                           <v-card-actions>
-                               <v-badge
-                                content="1"
-                                value="1"
-                                color="green"
-                                overlap
-                                 v-if="i.habilitar == 0"
-                              >
-                                <v-icon large>
-                                  mdi-bell
-                                </v-icon>
-                              </v-badge>
+                            <v-badge
+                              content="1"
+                              value="1"
+                              color="green"
+                              overlap
+                              v-if="i.habilitar == 0"
+                            >
+                              <v-icon large>
+                                mdi-bell
+                              </v-icon>
+                            </v-badge>
                           </v-card-actions>
-                          {{i.tipoDeSocio}} / {{i.tipoDeSocio2}}
+                          {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
                             :src="imgRoute + '/logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end"
                             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                             height="200px"
+                            @click="getInfoCorpAction(i.id)"
                           >
                             <v-card-title>{{ i.corporativo }}</v-card-title>
                           </v-img>
@@ -207,7 +212,6 @@
                             >
 
                             <v-spacer></v-spacer>
-
                           </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
@@ -220,6 +224,9 @@
                               :type="''"
                             />
                           </v-dialog>
+                          <v-btn @click="deleteSocio(i.id)"
+                            ><v-icon>mdi-delete</v-icon></v-btn
+                          >
                         </v-card>
                       </v-col>
                     </v-row>
@@ -265,7 +272,7 @@
 import VueCookies from "vue-cookies";
 import axios from "axios";
 import headerAmpip from "../components/headerAmpip";
-
+import Swal from "sweetalert2";
 import getCorpInfo from "../components/corpinfo";
 import adminPark from "../components/adminPark";
 import adminNave from "../components/adminNave";
@@ -568,6 +575,32 @@ export default {
       } else {
         this.getAllCorp();
       }
+    },
+    deleteSocio(id) {
+      Swal.fire({
+        title: "¿Estas seguro de esta accion?",
+        showDenyButton: true,
+        confirmButtonText: `Si`,
+        denyButtonText: `No`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          var params = new URLSearchParams();
+          params.append("id", id);
+          params.append("type", "i");
+          params.append("table", "c");
+          axios
+            .post(`${this.$store.state.url}/activeinactive`, params)
+            .then((res) => {
+              console.log(res);
+              Swal.fire("Saved!", "", "success");
+              this.$router.push("/");
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        }
+      });
     },
   },
   computed: {

@@ -751,6 +751,7 @@
               outlined
               title="Precio"
               label="Precio promedio * MXN"
+              prepend-icon="$"
               placeholder="Ej. 89"
               v-model="spaces.price"
               :rules="[rules.required, rules.phone]"
@@ -1436,7 +1437,6 @@ export default {
               .post(`${this.$store.state.url}/setinquilino`, data)
               .then(() => {
                 this.closeAction();
-                Swal.fire({ text: "Creado" });
               })
               .catch((e) => console.log(e));
           })

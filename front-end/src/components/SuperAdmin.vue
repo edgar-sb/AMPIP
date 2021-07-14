@@ -117,7 +117,7 @@ export default {
           })
           .catch((e) => console.log(e));
       } else {
-        Swal.fire({text:`${this.addUser.name} ${this.addUser.email} ${this.addUser.lastname}`, icon: "error"})
+        Swal.fire({text:`Porfavor llena todos los campos`, icon: "error"})
       }
     },
     createdataUser(id) {

@@ -1,6 +1,7 @@
 <template>
   <content>
     <v-card-actions>
+      <c v-if="options.i == true">
       <v-btn icon @click="getTab" v-if="tab != 2">
         <v-icon v-if="options.i">mdi-plus</v-icon>
         <v-dialog width="700" persistent v-model="addNave">
@@ -18,6 +19,7 @@
           ></plusCard>
         </v-dialog>
       </v-btn>
+      </c>
     </v-card-actions>
     <v-card-text>
       <v-tabs v-model="tab">
@@ -41,9 +43,10 @@
                     {{ i.name }}
                   </v-card-title>
                   <v-card-actions>
-                    <v-btn icon @click="viewNave(i.id)">
+                      <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <c v-if="options.i = true">
                     <v-btn
                       icon
                       @click="addUserToNaveAction(i.id)"
@@ -51,6 +54,16 @@
                     >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
+                    </c>
+                    <c v-if="options.d = true">
+                    <v-btn
+                      icon
+                      @click="addUserToNaveAction(i.id)"
+                      v-if="i.isAmpip == null"
+                    >
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                    </c>
                     <v-dialog
                       width="700"
                       v-model="addUserToNave"
@@ -80,9 +93,11 @@
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn icon @click="inactiveSpace(i.id)">
-                      <v-icon>mdi-delete</v-icon>
+                    
+                    <v-btn icon @click="inactiveSpace(i.id)" >
+                      <v-icon v-if="options.d">mdi-delete</v-icon>
                     </v-btn>
+  
                   </v-card-actions>
                 </v-card>
               </v-col>
@@ -260,7 +275,7 @@
 import axios from "axios";
 import plusCard from "../components/plusCard";
 import Swal from "sweetalert2";
-export default {
+export default { 
   name: "parque",
   data() {
     return {
@@ -347,6 +362,13 @@ export default {
       roles: [],
 
       options: {
+        u: false,
+        d: false,
+        i: false,
+        a: false,
+      },
+
+      optionsX:{
         u: false,
         d: false,
         i: false,
@@ -591,7 +613,7 @@ export default {
     },
     back() {
       this.$ro;
-    },
+    }, 
     getallspacesAction(id) {
       let params = new URLSearchParams();
       params.append("query", 3);
@@ -676,15 +698,32 @@ export default {
     roles() {
       var roles = this.roles.split(",");
       var findValueEdit = roles.find((i) => i == "Editar");
-      var findValueAdd = roles.find((i) => i == "Agregar");
+      var findValueAdd = roles.find((x) => x == "Agregar");
+      var findValueDelete = roles.find((y) => y == "Eliminar");
+
       if (findValueEdit != undefined) {
-        this.options.u = true;
+        this.options.u = findValueEdit;
+        console.log(roles)
       }
 
       if (findValueAdd != undefined) {
-        this.options.i = true;
+        this.options.i = findValueAdd;
+        console.log(roles)
       }
+
+      if (findValueDelete != undefined) {
+        this.options.d = findValueDelete;
+        console.log(roles)
+      }
+
+
     },
   },
+
+  computed: {
+    permisosL(){
+      return `${this.options.u} + ${this.options.i} + ${this.options.d} `;
+    }
+  }
 };
 </script>

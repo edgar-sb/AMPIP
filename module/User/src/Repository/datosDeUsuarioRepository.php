@@ -59,4 +59,19 @@ class datosDeUsuarioRepository extends EntityRepository
             ->getSingleScalarResult();
         return true;
     }
+
+    public function deleteCorpUser($campo,$valor,$id){
+        $entityManager = $this->getEntityManager();
+        $queryBuilder = $entityManager->createQueryBuilder();
+
+        $queryBuilder->update(datosDeUsuarioEntity::class,'u')
+            ->set('u'.$campo, '?1')
+            ->setParameter(1,$valor)
+            ->where('u.key_corp = ?2')
+            ->setParameter(2, $id)
+            ->getQuery()
+
+            ->getSingleScalarResult();
+        return true;
+    }
 }

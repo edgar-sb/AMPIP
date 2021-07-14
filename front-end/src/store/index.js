@@ -20,7 +20,8 @@ export default new Vuex.Store({
     parque: null,
     nave: null,
     parqueOfuser: null,
-    superAdmin:false
+    superAdmin:false,
+    profile: false
   },
   mutations: {
     adddata(state, value) {
@@ -49,6 +50,9 @@ export default new Vuex.Store({
     },
     newUserAdmin(state, value){
       state.superAdmin = value;
+    },
+    closeProfile(state, value){
+      state.profile = value;
     }
   },
   actions: {},

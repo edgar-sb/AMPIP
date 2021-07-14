@@ -267,6 +267,7 @@ export default {
         params.append("email", this.email);
         params.append("full_name", this.name);
         params.append("status", 1);
+        const ctx = this;
         axios
           .post(`${this.$store.state.url}/updateuser`, params)
           .then((res) => {
@@ -313,7 +314,7 @@ export default {
                         .catch(function(error) {
                           console.log(error);
                         });
-
+                      ctx.$store.commit("changeProfileDialog",false)
                       clearInterval(timerInterval);
                     },
                   }).then((result) => {

@@ -34,7 +34,7 @@
         ></plusCard>
       </v-dialog>
     </v-card-title>
-
+     {{id.nombre_es}}
     <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
       <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
         Usuarios
@@ -155,7 +155,6 @@
                   >
                     <v-icon>mdi-eye</v-icon>
                   </v-btn>
-
                   <v-btn
                     icon
                     @click="infoParkAction(i.id)"

@@ -120,6 +120,9 @@
                         mdi-eye
                       </v-icon>
                     </v-btn>
+                    <v-btn icon @click="activeinactiveAction('u', i.id)">
+                      <v-icon> mdi-delete</v-icon>
+                    </v-btn>
                     <v-dialog
                       width="300"
                       persistent
@@ -151,8 +154,15 @@
                     <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
+                    <v-btn icon @click="activeinactiveAction('n', i.id)">
+                      <v-icon> mdi-delete</v-icon>
+                    </v-btn>
                     <!-- isAmpip -->
-                    <v-btn icon @click="addUserToNaveAction(i.id)" v-if="i.isAmpip == null" >
+                    <v-btn
+                      icon
+                      @click="addUserToNaveAction(i.id)"
+                      v-if="i.isAmpip == null"
+                    >
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                     <v-dialog
@@ -179,7 +189,7 @@
               <v-col cols="12" md="4" v-for="(i, key) in spacesAll" :key="key">
                 <v-card>
                   <v-card-title>
-                    Espacio disponible
+                    {{ JSON.parse(i.extras).name }}
                     <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
                   </v-card-title>
                   <v-card-actions>
@@ -706,6 +716,18 @@ export default {
             swalWithBootstrapButtons.fire("Cancelado", "...", "error");
           }
         });
+    },
+    activeinactiveAction(table , id) {
+      let params = new URLSearchParams();
+      params.append("type", "i");
+      params.append("table", table);
+      params.append("id", id);
+      axios
+        .post(`${this.$store.state.url}/activeinactive`, params)
+        .then(() => console.log(
+          Swal.fire({text: "Listo", icon: "success"})
+        ))
+        .catch((e) => console.log(e));
     },
   },
   components: { plusCard, infoCard },

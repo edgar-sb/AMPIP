@@ -1518,7 +1518,21 @@ class apiController extends AbstractActionController
                 case "i":
                     switch ($table) {
                         case "c":
-                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".status", null, $id);
+
+                           /*  $this->entityManager->getRepository(datosDeUsuarioEntity::class)->deleteCorpUser(".idAmpip", 0, $id);
+                            $response = $this->entityManager->getRepository(userEntity::class)->findBy(['email' => $email, 'password' => $decryptPass, 'status' => 1]); */
+
+
+
+                            $responseKeyCorp = $this->entityManager->getRepository(datosDeUsuarioEntity::class)->findBy(['key_corp'=>$id]);
+
+                            foreach ($responseKeyCorp as $key) {
+                                $this->entityManager->getRepository(userEntity::class)->updateUser(".status", 0, $key->getidAmpip());
+                            }
+
+
+                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".tipoDeSocio", null, $id);
+                            $this->entityManager->getRepository(corpEntity::class)->updateUser(".status", 0, $id);
                             return new JsonModel(["message" => "listo"]);
 
                         case "u":
