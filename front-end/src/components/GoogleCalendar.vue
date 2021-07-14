@@ -7,7 +7,7 @@
       title="Inline Frame Example"
       width="100%"
       height="5000"
-      src="http://seccion-socios56789654.bilda.bar/"
+      src="http://seccion-socios56789654.bilda.bar/eventos"
     >
     </iframe>
   </v-card>

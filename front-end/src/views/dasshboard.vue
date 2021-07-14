@@ -86,6 +86,8 @@
                       <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
                         <v-card>
                           <v-card-actions>
+                          <v-icon>mdi-account-star</v-icon>
+                          <v-spacer></v-spacer>
                             <span
                               ><b>Última actualización:</b><br />
                               {{ i.fechaDeValidacion }}</span
@@ -202,6 +204,8 @@
                       <v-col sm="12" md="4" v-for="i in allPat" :key="i">
                         <v-card>
                           <v-card-actions>
+                          <v-icon>mdi-account-star</v-icon>
+                          <v-spacer></v-spacer>
                             <span
                               ><b>Última actualización:</b><br />
                               {{ i.fechaDeValidacion }}</span

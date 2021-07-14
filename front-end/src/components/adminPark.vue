@@ -1,24 +1,24 @@
 <template>
   <content>
     <v-card-actions>
-      <c v-if="options.i == true">
-      <v-btn icon @click="getTab" v-if="tab != 2">
-        <v-icon v-if="options.i">mdi-plus</v-icon>
-        <v-dialog width="700" persistent v-model="addNave">
-          <plusCard
-            dialogs="1"
-            @close="closePlusCard"
-            :id="parque.id"
-          ></plusCard>
-        </v-dialog>
-        <v-dialog width="700" persistent v-model="addSpace">
-          <plusCard
-            dialogs="7"
-            @close="closePlusCard"
-            :id="[parque.id, parque.key_corp]"
-          ></plusCard>
-        </v-dialog>
-      </v-btn>
+      <c v-if="agregar">
+        <v-btn icon @click="getTab" v-if="tab != 2">
+          <v-icon v-if="agregar">mdi-plus</v-icon>
+          <v-dialog width="700" persistent v-model="addNave">
+            <plusCard
+              dialogs="1"
+              @close="closePlusCard"
+              :id="parque.id"
+            ></plusCard>
+          </v-dialog>
+          <v-dialog width="700" persistent v-model="addSpace">
+            <plusCard
+              dialogs="7"
+              @close="closePlusCard"
+              :id="[parque.id, parque.key_corp]"
+            ></plusCard>
+          </v-dialog>
+        </v-btn>
       </c>
     </v-card-actions>
     <v-card-text>
@@ -33,8 +33,6 @@
           Informacion
         </v-tab>
       </v-tabs>
-
-      {{permisosL}}
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-container>
@@ -42,28 +40,25 @@
               <v-col sm="12" md="3" v-for="(i, k) in naves" :key="k">
                 <v-card>
                   <v-card-title>
-                    {{ i.name}}
+                    {{ i.name }}
                   </v-card-title>
                   <v-card-actions>
-                      <v-btn icon @click="viewNave(i.id)">
+                    <v-btn icon @click="viewNave(i.id)">
                       <v-icon>mdi-eye</v-icon>
                     </v-btn>
-                    <c v-if="options.i = true">
-                    <v-btn
-                      icon
-                      @click="addUserToNaveAction(i.id)"
-                      v-if="i.isAmpip == null"
-                    >
-                      <v-icon>mdi-plus</v-icon>
-                    </v-btn>
+                    <c v-if="(options.i = true)">
+                      <v-btn
+                        icon
+                        @click="addUserToNaveAction(i.id)"
+                        v-if="i.isAmpip == null"
+                      >
+                        <v-icon>mdi-plus</v-icon>
+                      </v-btn>
                     </c>
-                    <c v-if="options.d = true">
-                    <v-btn
-                      icon
-                      @click="inactiveUser(i.id)"
-                    >
-                      <v-icon>mdi-delete</v-icon>
-                    </v-btn>
+                    <c v-if="eliminar">
+                      <v-btn icon @click="inactiveUser(i.id)">
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
                     </c>
                     <v-dialog
                       width="700"
@@ -94,11 +89,10 @@
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    
-                    <v-btn icon @click="inactiveSpace(i.id)" >
-                      <v-icon v-if="options.d">mdi-delete</v-icon>
+
+                    <v-btn icon @click="inactiveSpace(i.id)">
+                      <v-icon v-if="eliminar">mdi-delete</v-icon>
                     </v-btn>
-  
                   </v-card-actions>
                 </v-card>
               </v-col>
@@ -263,8 +257,11 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark" v-if="options.u == 'Editar'"
-                 class="card_space_general">Guardar Informacion</v-btn
+              <v-btn
+                @click="updatePark"
+                v-if="editar"
+                class="card_space_general"
+                >Guardar Informacion</v-btn
               >
             </v-card-actions>
           </v-container>
@@ -370,12 +367,15 @@ export default {
         a: false,
       },
 
-      optionsX:{
+      optionsX: {
         u: false,
         d: false,
         i: false,
       },
-      addUserToNave: false
+      addUserToNave: false,
+      eliminar: false,
+      editar:false,
+      agregar:false
     };
   },
   beforeMount() {
@@ -402,7 +402,7 @@ export default {
         })
         .catch((e) => console.log(e));
     }, 1000); */
-    this.gettsAll()
+    this.gettsAll();
   },
   methods: {
     getTab() {
@@ -546,9 +546,9 @@ export default {
           clearInterval(timerInterval);
         },
       }).then((r) => {
-        console.log(r)
+        console.log(r);
       });
-       this.$router.push("/");
+      this.$router.push("/");
     },
     openDialog(i) {
       this.data_user = true;
@@ -615,7 +615,7 @@ export default {
     },
     back() {
       this.$ro;
-    }, 
+    },
     getallspacesAction(id) {
       let params = new URLSearchParams();
       params.append("query", 3);
@@ -665,35 +665,35 @@ export default {
         });
     },
     addUserToNaveAction() {
-     this.addUserToNave = true;
+      this.addUserToNave = true;
     },
-    gettsAll(){
+    gettsAll() {
       setTimeout(() => {
-      let params = new URLSearchParams();
-      params.append("query", 1);
-      params.append("id", this.$store.state.data.id_A);
-      axios
-        .post(`${this.$store.state.url}/getparquesusuarios`, params)
-        .then((res) => {
-          this.roles = res.data[0].permiso;
-          console.log(res);
-          let paramsD = new URLSearchParams();
-          paramsD.append("id", res.data[0].persona);
-          axios
-            .post(`${this.$store.state.url}/getpark`, paramsD)
-            .then((res) => {
-              this.parque = res.data[0];
-              this.getUserFromPark(res.data[0].id);
-              this.getallnaves(res.data[0].id);
-              this.getallspacesAction(res.data[0].id);
-            })
-            .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
-    }, 1000);
+        let params = new URLSearchParams();
+        params.append("query", 1);
+        params.append("id", this.$store.state.data.id_A);
+        axios
+          .post(`${this.$store.state.url}/getparquesusuarios`, params)
+          .then((res) => {
+            this.roles = res.data[0].permiso;
+            console.log(res);
+            let paramsD = new URLSearchParams();
+            paramsD.append("id", res.data[0].persona);
+            axios
+              .post(`${this.$store.state.url}/getpark`, paramsD)
+              .then((res) => {
+                this.parque = res.data[0];
+                this.getUserFromPark(res.data[0].id);
+                this.getallnaves(res.data[0].id);
+                this.getallspacesAction(res.data[0].id);
+              })
+              .catch((e) => console.log(e));
+          })
+          .catch((e) => console.log(e));
+      }, 1000);
     },
-    inactiveUser(id){
-       const swalWithBootstrapButtons = Swal.mixin();
+    inactiveUser(id) {
+      const swalWithBootstrapButtons = Swal.mixin();
 
       swalWithBootstrapButtons
         .fire({
@@ -731,13 +731,28 @@ export default {
             swalWithBootstrapButtons.fire("Cancelado", "...", "error");
           }
         });
-    }
+    },
+    async search(map) {
+      /* Eliminar,Editar,Agregar */
+      await map.map((i) => {
+        if (i == "Eliminar") {
+          this.eliminar = true;
+        }
+        if (i == "Editar") {
+          this.editar = true;
+        }
+        if (i == "Agregar") {
+          this.agregar = true;
+        }
+      });
+    },
   },
   components: { plusCard },
   props: ["parque_id"],
   watch: {
     roles() {
       var roles = this.roles.split(",");
+     /*  var roles = this.roles.split(",");
       console.log(roles);
       var findValueEdit = roles.find((i) => i == "Editar");
       var findValueAdd = roles.find((x) => x == "Agregar");
@@ -745,15 +760,16 @@ export default {
 
       this.options.u = findValueEdit;
       this.options.i = findValueAdd;
-      this.options.d = findValueDelete;
+      this.options.d = findValueDelete; */
 
+      this.search(roles);
     },
   },
 
   computed: {
-    permisosL(){
+    permisosL() {
       return `${this.options.u} + ${this.options.i} + ${this.options.d} `;
-    }
-  }
+    },
+  },
 };
 </script>

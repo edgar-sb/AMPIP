@@ -77,7 +77,7 @@
             <v-col cols="12" sm="12" md="6">
               <v-text-field
                 v-model="id.corporativo"
-                label="jkghjghjghgh"
+                label="Corporativo"
                 outlined
                 :rules="[rules.required]"
               >

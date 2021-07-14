@@ -1,125 +1,144 @@
 <template>
   <content>
     <!-- Header -->
-        <headerAmpip>
-        </headerAmpip>
+    <headerAmpip> </headerAmpip>
     <!-- END Header -->
-  <componen>
-    <!-- Arreglado los dialogs -->
-    <v-card-title>
-      <v-btn icon @click="close">
-        <v-icon color="red"> mdi-arrow-left-bold</v-icon>
-      </v-btn>
-      <v-btn icon @click="getTabId" v-if="tab == 1000">
-        <v-icon>
-          mdi-plus
-        </v-icon>
-      </v-btn>
-      <!-- Usuario nuevo -->
-      <v-dialog v-model="addUser" width="700" persistent>
-        <plusCard :dialogs="5" @close="closePlusCard"></plusCard>
-      </v-dialog>
-
-      <!-- Parque nuevo-->
-      <v-dialog v-model="addPark" width="700">
-        <plusCard :dialogs="2" @close="closePlusCard"></plusCard>
-      </v-dialog>
-
-      <!-- Nave nueva-->
-      <v-dialog v-model="addNav" width="700">
-        <plusCard
-          :dialogs="1"
-          :id="this.$store.state.id_corp"
-          @close="closePlusCard"
-        ></plusCard>
-      </v-dialog>
-    </v-card-title>
-     {{id.nombre_es}}
-    <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
-      <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
-        Usuarios
-      </v-tab>
-      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
-        Parques
-      </v-tab>
-      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
-        Inquilinos
-      </v-tab>
-      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
-        Oferta de espacios
-      </v-tab>
-      <v-tab>
-        Información
-        <v-btn icon @click="infoParkAction(i.id)" >
-          <v-badge content="1" value="1" color="green" overlap v-if="id.habilitar == 0">
-            <v-icon>mdi-eye</v-icon>
-          </v-badge>
+    <componen>
+      <!-- Arreglado los dialogs -->
+      <v-card-title>
+        <v-btn icon @click="close">
+          <v-icon color="red"> mdi-arrow-left-bold</v-icon>
         </v-btn>
-      </v-tab>
-    </v-tabs>
+        <v-btn icon @click="getTabId" v-if="tab == 1000">
+          <v-icon>
+            mdi-plus
+          </v-icon>
+        </v-btn>
+        <!-- Usuario nuevo -->
+        <v-dialog v-model="addUser" width="700" persistent>
+          <plusCard :dialogs="5" @close="closePlusCard"></plusCard>
+        </v-dialog>
 
-    <!-- Items -->
-    <v-tabs-items v-model="tab">
-      <!-- Usuarios -->
-      <v-tab-item>
-        <v-container>
-          <v-row>
-            <!-- Add -->
-               <v-col cols="12"
-              sm="12"
-              md="4">
+        <!-- Parque nuevo-->
+        <v-dialog v-model="addPark" width="700">
+          <plusCard :dialogs="2" @close="closePlusCard"></plusCard>
+        </v-dialog>
+
+        <!-- Nave nueva-->
+        <v-dialog v-model="addNav" width="700">
+          <plusCard
+            :dialogs="1"
+            :id="this.$store.state.id_corp"
+            @close="closePlusCard"
+          ></plusCard>
+        </v-dialog>
+      </v-card-title>
+      {{ id.nombre_es }}
+      <v-tabs
+        v-model="tab"
+        class="btn_sec-space"
+        background-color="transparent"
+        color="basil"
+        grow
+      >
+        <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
+          Usuarios
+        </v-tab>
+        <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+          Parques
+        </v-tab>
+        <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+          Inquilinos
+        </v-tab>
+        <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+          Oferta de espacios
+        </v-tab>
+        <v-tab>
+          Información
+          <v-btn icon @click="infoParkAction(i.id)">
+            <v-badge
+              content="1"
+              value="1"
+              color="green"
+              overlap
+              v-if="id.habilitar == 0"
+            >
+              <v-icon>mdi-eye</v-icon>
+            </v-badge>
+          </v-btn>
+        </v-tab>
+      </v-tabs>
+
+      <!-- Items -->
+      <v-tabs-items v-model="tab">
+        <!-- Usuarios -->
+        <v-tab-item>
+          <v-container>
+            <v-row>
+              <!-- Add -->
+              <v-col cols="12" sm="12" md="4">
                 <v-card>
                   <v-card-title>Agregar nuevo</v-card-title>
                   <v-card-text>
-                    <v-btn @click="()=>{addUser=true}">Nuevo usuario</v-btn>
+                    <v-btn
+                      @click="
+                        () => {
+                          addUser = true;
+                        }
+                      "
+                      >Nuevo usuario</v-btn
+                    >
                   </v-card-text>
                   <v-card-actions></v-card-actions>
                 </v-card>
               </v-col>
-            <!-- END -->
-            <v-col
-              cols="12"
-              sm="12"
-              md="4"
-              v-for="(i, key) in users"
-              :key="key"
-            >
-              <v-card>
-                <v-card-title v-text="i.fullname"></v-card-title>
-                {{ i.email }}
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn icon @click="infoUserAction(i.id)">
-                    <v-icon> mdi-eye </v-icon>
-                  </v-btn>
-                  <v-dialog
-                    width="700"
-                    v-model="cards.infoUser"
-                    :retain-focus="false"
-                    :overlay-color="'#fff'"
-                    :overlay-opacity="'0'"
-                  >
-                    <InfoCard
-                      :id="propsToComponents.user"
-                      :type="'user'"
-                      @closeInfo="closeInfo"
-                    />
-                  </v-dialog>
-                  <v-btn icon @click="inactive('i', 'u', i.id)">
-                    <v-icon> mdi-delete</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
+              <!-- END -->
+              <v-col
+                cols="12"
+                sm="12"
+                md="4"
+                v-for="(i, key) in users"
+                :key="key"
+              >
+                <v-card>
+                  <v-card-actions
+                    ><v-icon>mdi-account-check</v-icon> <v-spacer></v-spacer
+                  ></v-card-actions>
+                  <v-card-title v-text="i.fullname"></v-card-title>
+                  {{ i.email }}
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="infoUserAction(i.id)">
+                      <v-icon> mdi-eye </v-icon>
+                    </v-btn>
+                    <v-dialog
+                      width="700"
+                      v-model="cards.infoUser"
+                      :retain-focus="false"
+                      :overlay-color="'#fff'"
+                      :overlay-opacity="'0'"
+                    >
+                      <InfoCard
+                        :id="propsToComponents.user"
+                        :type="'user'"
+                        @closeInfo="closeInfo"
+                      />
+                    </v-dialog>
+                    <v-btn icon @click="inactive('i', 'u', i.id)">
+                      <v-icon> mdi-delete</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
 
-      <!--Parques -->
-      <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
-        <v-container>
-          <v-row>
-          <!-- <v-col cols="12"
+        <!--Parques -->
+        <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+          <v-container>
+            <v-row>
+              <!-- <v-col cols="12"
               sm="12"
               md="4">
                 <v-card>
@@ -130,312 +149,326 @@
                   <v-card-actions></v-card-actions>
                 </v-card>
               </v-col> -->
-            <p i v-if="parksIn==false">
-              Sin Parques registrados
-            </p>
-            <v-col
-              sm="12"
-              md="4"
-              v-for="i in parks"
-              :key="i.id"
-              v-show="i.nombre_es != 'standalone'"
-            >
-              <v-card>
-                <span class="ultima_actualizacion_space" v-if="i.edit != 'null'"
-                  >Última actualización : {{ i.edit }}</span
-                >
-                <v-card-title v-text="i.nombre_es"></v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    icon
-                    @click="infoParkAction(i.id)"
+              <p i v-if="parksIn == false">
+                Sin Parques registrados
+              </p>
+              <v-col
+                sm="12"
+                md="4"
+                v-for="i in parks"
+                :key="i.id"
+                v-show="i.nombre_es != 'standalone'"
+              >
+                <v-card>
+                <v-card-actions
+                    ><v-icon>mdi-city</v-icon> <v-spacer></v-spacer
+                  ></v-card-actions>
+                  <span
+                    class="ultima_actualizacion_space"
                     v-if="i.edit != 'null'"
+                    >Última actualización : {{ i.edit }}</span
                   >
-                    <v-icon>mdi-eye</v-icon>
-                  </v-btn>
-                  <v-btn
-                    icon
-                    @click="infoParkAction(i.id)"
-                    v-if="i.edit == 'null'"
-                  >
-                    <v-badge content="1" value="1" color="green" overlap>
+                  <v-card-title v-text="i.nombre_es"></v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      icon
+                      @click="infoParkAction(i.id)"
+                      v-if="i.edit != 'null'"
+                    >
                       <v-icon>mdi-eye</v-icon>
-                    </v-badge>
-                  </v-btn>
-                  <v-dialog
-                    v-model="cards.infoPark"
-                    width="700"
-                    :retain-focus="false"
-                  >
-                    <InfoCard
-                      :id="propsToComponents.park[0]"
-                      :type="'park'"
-                      @closeInfo="closeInfo"
-                    />
-                  </v-dialog>
-                  <v-btn icon @click="inactive('i', 'p', i.id)">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
+                    </v-btn>
+                    <v-btn
+                      icon
+                      @click="infoParkAction(i.id)"
+                      v-if="i.edit == 'null'"
+                    >
+                      <v-badge content="1" value="1" color="green" overlap>
+                        <v-icon>mdi-eye</v-icon>
+                      </v-badge>
+                    </v-btn>
+                    <v-dialog
+                      v-model="cards.infoPark"
+                      width="700"
+                      :retain-focus="false"
+                    >
+                      <InfoCard
+                        :id="propsToComponents.park[0]"
+                        :type="'park'"
+                        @closeInfo="closeInfo"
+                      />
+                    </v-dialog>
+                    <v-btn icon @click="inactive('i', 'p', i.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
 
-      <!--Inquilinos-->
-      <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+        <!--Inquilinos-->
+        <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+          <v-container>
+            <v-row>
+              <p v-if="navsIn == false">
+                Sin Inquilinos registrados{{ navsIn }}
+              </p>
+              <v-col sm="12" md="4" v-for="i in navs" :key="i.id">
+                <v-card>
+                <v-card-actions
+                    ><v-icon>mdi-account-multiple</v-icon> <v-spacer></v-spacer
+                  ></v-card-actions>
+                  <v-card-title v-text="i.name"></v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="infoNaveAction(i.id)">
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                    <v-dialog
+                      v-model="cards.infoNave"
+                      persistent
+                      width="700"
+                      :retain-focus="false"
+                      :elevation="0"
+                    >
+                      <InfoCard
+                        :id="propsToComponents.nave"
+                        :type="'nave'"
+                        @closeInfo="closeInfo"
+                      />
+                    </v-dialog>
+                    <v-btn icon @click="inactive('i', 'n', i.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
 
-        <v-container>
-          <v-row>
-             <p v-if="navsIn == false">
-              Sin Inquilinos registrados{{navsIn}}
-            </p>
-            <v-col sm="12" md="4" v-for="i in navs" :key="i.id">
-              <v-card>
-                <v-card-title v-text="i.name"></v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn icon @click="infoNaveAction(i.id)">
-                    <v-icon>mdi-eye</v-icon>
-                  </v-btn>
-                  <v-dialog
-                    v-model="cards.infoNave"
-                    persistent
-                    width="700"
-                    :retain-focus="false"
-                    :elevation="0"
-                  >
-                    <InfoCard
-                      :id="propsToComponents.nave"
-                      :type="'nave'"
-                      @closeInfo="closeInfo"
-                    />
-                  </v-dialog>
-                  <v-btn icon @click="inactive('i', 'n', i.id)">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
+        <!-- Espacios disponibles -->
+        <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
+          <v-container>
+            <v-row>
+              <p i v-if="placesIn == false">
+                Sin Espacios Disponibles
+              </p>
+              <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">
+                <v-card>
+                <v-card-actions
+                    ><v-icon>mdi-navigation</v-icon> <v-spacer></v-spacer
+                  ></v-card-actions>
+                  <v-card-title>
+                    Espacio disponible
+                    <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn icon @click="spaces = true">
+                      <v-icon>mdi-eye</v-icon>
+                    </v-btn>
+                    <v-btn icon @click="inactive('i', 's', i.id)">
+                      <v-icon>mdi-delete</v-icon>
+                    </v-btn>
+                    <v-dialog
+                      v-model="spaces"
+                      width="700"
+                      :retain-focus="false"
+                    >
+                      <InfoCard :id="i" :type="'space'" @close="closeInfo" />
+                    </v-dialog>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-tab-item>
 
-      <!-- Espacios disponibles -->
-      <v-tab-item v-if="id.tipoDeSocio != 'Patrocinador'">
-        <v-container>
-          <v-row>
-             <p i v-if="placesIn == false">
-              Sin Espacios Disponibles
-            </p>
-            <v-col cols="12" md="4" v-for="(i, key) in places" :key="key">
-              <v-card>
-                <v-card-title>
-                  Espacio disponible
-                  <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
-                </v-card-title>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn icon @click="spaces = true">
-                    <v-icon>mdi-eye</v-icon>
-                  </v-btn>
-                  <v-btn icon @click="inactive('i', 's', i.id)">
-                    <v-icon>mdi-delete</v-icon>
-                  </v-btn>
-                  <v-dialog v-model="spaces" width="700" :retain-focus="false">
-                    <InfoCard :id="i" :type="'space'" @close="closeInfo" />
-                  </v-dialog>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-tab-item>
+        <!--Info-->
+        <v-tab-item>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="12" md="12" v-if="true">
+                <v-cotainer>
+                  <v-row align="center" justify="center">
+                    <v-col sm="12" md="6">
+                      <UploadImages
+                        @change="handleImages"
+                        :max="3"
+                        style="color:#fff"
+                      />
+                      <br />
+                      <v-text-field
+                        v-model="nameUpload"
+                        placeholder="Nombre de archivo"
+                      ></v-text-field>
+                      <v-btn @click="uploadImage">Subir</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-cotainer>
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.corporativo"
+                  label="Corporativo"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
 
-      <!--Info-->
-      <v-tab-item>
-        <v-container>
-          <v-row>
-            <v-col cols="12" sm="12" md="12" v-if="true">
-              <v-cotainer>
-                <v-row align="center" justify="center">
-                  <v-col sm="12" md="6">
-                    <UploadImages
-                      @change="handleImages"
-                      :max="3"
-                      style="color:#fff"
-                    />
-                    <br />
-                    <v-text-field
-                      v-model="nameUpload"
-                      placeholder="Nombre de archivo"
-                    ></v-text-field>
-                    <v-btn @click="uploadImage">Subir</v-btn>
-                  </v-col>
-                </v-row>
-              </v-cotainer>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.corporativo"
-                label="Corporativo"
-                outlined
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.nombre_es"
+                  label="Nombre en Español"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.nombre_en"
+                  label="Nombre en Inglés"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field v-model="id.rfc" label="RFC" outlined>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" class="titulo_form_space">
+                <span>Dirección / Contacto</span>
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.direccion"
+                  label="Calle y número"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field v-model="id.cp" label="C.P" outlined>
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field v-model="id.colonia" label="Colonia" outlined>
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field v-model="id.estado" label="Estado" outlined>
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.municipio"
+                  label="Municipio/ Alcaldía"
+                  outlined
+                >
+                </v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field v-model="id.celular" label="Celular" outlined>
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" class="titulo_form_space">
+                <span>Inversiones</span>
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.inversionAnualSiguiente"
+                  label="Inversión anual programada (pipeline año siguiente) MXN"
+                  outlined
+                  prepend-inner-icon="$"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="6">
+                <v-text-field
+                  v-model="id.inversionRealizadaActual"
+                  label="Inversión anual realizada (año en curso) MXN"
+                  outlined
+                  prepend-inner-icon="$"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  v-model="id.inversionRealizadaAnterior"
+                  label="Inversión anual realizada (año anterior) MXN"
+                  outlined
+                  prepend-inner-icon="$"
+                >
+                </v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" class="titulo_form_space">
+                <span>Redes Sociales:</span>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  label="Facebook"
+                  v-model="social.facebook"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  label="Twitter"
+                  v-model="social.twiter"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  label="Linkedin"
+                  v-model="social.linkdin"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  label="Instagram"
+                  v-model="social.instagram"
+                  outlined
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" sm="12">
+                <v-text-field
+                  disabled
+                  v-model="id.fechaDeValidacion"
+                  label="Última actualización"
+                  v-if="id.fechaDeValidacion"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn text color="red" v-if="id.habilitar == 0" @click="message"
+                >No Guardar</v-btn
               >
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.nombre_es"
-                label="Nombre en Español"
-                outlined
+              <v-btn
+                text
+                color="green"
+                v-if="id.habilitar == 0"
+                @click="saveInfoCorp"
+                >habilitar</v-btn
               >
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.nombre_en"
-                label="Nombre en Inglés"
-                outlined
-              >
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.rfc" label="RFC" outlined>
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" class="titulo_form_space">
-              <span>Dirección / Contacto</span>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.direccion"
-                label="Calle y número"
-                outlined
-              >
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.cp" label="C.P" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.colonia" label="Colonia" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.estado" label="Estado" outlined>
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.municipio"
-                label="Municipio/ Alcaldía"
-                outlined
-              >
-              </v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field v-model="id.celular" label="Celular" outlined>
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" class="titulo_form_space">
-              <span>Inversiones</span>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.inversionAnualSiguiente"
-                label="Inversión anual programada (pipeline año siguiente) MXN"
-                outlined
-                prepend-inner-icon="$"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" md="6">
-              <v-text-field
-                v-model="id.inversionRealizadaActual"
-                label="Inversión anual realizada (año en curso) MXN"
-                outlined
-                prepend-inner-icon="$"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                v-model="id.inversionRealizadaAnterior"
-                label="Inversión anual realizada (año anterior) MXN"
-                outlined
-                prepend-inner-icon="$"
-              >
-              </v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12" class="titulo_form_space">
-              <span>Redes Sociales:</span>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                label="Facebook"
-                v-model="social.facebook"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                label="Twitter"
-                v-model="social.twiter"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                label="Linkedin"
-                v-model="social.linkdin"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="12">
-              <v-text-field
-                label="Instagram"
-                v-model="social.instagram"
-                outlined
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" sm="12">
-              <v-text-field
-                disabled
-                v-model="id.fechaDeValidacion"
-                label="Última actualización"
-                v-if="id.fechaDeValidacion"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text color="red" v-if="id.habilitar == 0" @click="message"
-              >No Guardar</v-btn
-            >
-            <v-btn
-              text
-              color="green"
-              v-if="id.habilitar == 0"
-              @click="saveInfoCorp"
-              >habilitar</v-btn
-            >
-          </v-card-actions>
-        </v-container>
-      </v-tab-item>
-    </v-tabs-items>
-  </componen>
+            </v-card-actions>
+          </v-container>
+        </v-tab-item>
+      </v-tabs-items>
+    </componen>
   </content>
 </template>
 <script>
@@ -801,28 +834,27 @@ export default {
       return `${this.$store.state.img}/`;
     },
 
-    parksIn(){
-      if(this.parks.length > 0){
+    parksIn() {
+      if (this.parks.length > 0) {
         return true;
-      } else{
+      } else {
         return false;
       }
     },
-    navsIn(){
-      if(this.navs.length > 0){
+    navsIn() {
+      if (this.navs.length > 0) {
         return true;
-      } else{
+      } else {
         return false;
       }
     },
-    placesIn(){
-      if(this.places.length > 0){
+    placesIn() {
+      if (this.places.length > 0) {
         return true;
-      } else{
+      } else {
         return false;
       }
-    }
+    },
   },
 };
-
 </script>
