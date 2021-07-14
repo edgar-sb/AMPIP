@@ -1309,7 +1309,6 @@ class apiController extends AbstractActionController
             $id_DENUE = $this->params()->fromPost("id_DENUE", "");
             $antiguedad = $this->params()->fromPost("antiguedad", "");
             $medidaX = $this->params()->fromPost("medidaX");
-            if (true) {
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".propietario", $propietario, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".nombreEmpresa", $nombreEmpresa, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".numEmpleados", $numEmpleados, $id);
@@ -1321,10 +1320,7 @@ class apiController extends AbstractActionController
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".antiguedad", $antiguedad, $id);
                 $this->entityManager->getRepository(inquilino_naveEntity::class)->updateData(".medidaX", $medidaX, $id);
 
-                return new JsonModel(["message" => "listo"]);
-            } else {
-                return new JsonModel(["message" => "permiso Insuficiente"]);
-            }
+                return new JsonModel(["message" => $propietario]);
         } else {
             return $this->redirect()->toUrl(
                 $this->url
