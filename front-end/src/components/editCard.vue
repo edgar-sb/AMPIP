@@ -82,7 +82,7 @@
           <v-col cols="6">
             <v-select
               :items="regiones"
-              label="Region"
+              label="Región"
               outlined
               v-model="parquesData.region"
             ></v-select>
@@ -202,9 +202,9 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Telefono"
+              label="Teléfono"
               outlined
-              placeholder="Telefono"
+              placeholder="Teléfono"
               type="phone"
               v-model="parquesData.telefono"
             ></v-text-field>

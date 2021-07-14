@@ -402,7 +402,7 @@ a.olvidaste_space:hover {
 /* fin buscador */
 /*lightbox*/
 .v-card__title {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: #00afb7;
 }
 .titulo_form_space {
@@ -447,4 +447,14 @@ button.swal2-confirm.swal2-styled:hover {
 }
 .swal2-html-container {
     color: #00afb7;
+}
+.swal2-title {
+    font-size: 1.2rem;
+    color: #333333;
+}
+button.swal2-cancel {
+    border-radius: 30px !important;
+}
+button.swal2-cancel:hover {
+    background-color: #333333 !important;
 }

@@ -37,7 +37,7 @@
         <v-text-field
           outlined
           v-model="nave.numero_empleados"
-          label="Numero de empleados"
+          label="Número de empleados"
           :rules="[rules.required]"
         ></v-text-field>
       </v-col>

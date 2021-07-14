@@ -46,8 +46,8 @@
             <v-col cols="6">
               <v-text-field
                 outlined
-                placeholder="Numero de empleados"
-                label="Numero de empleados *"
+                placeholder="Número de empleados"
+                label="Número de empleados *"
                 v-model="inquilino.num_emp"
                 :rules="[rules.required, rules.phone]"
               ></v-text-field>
@@ -372,9 +372,9 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                label="Numero de empleados *"
+                label="Número de empleados *"
                 outlined
-                placeholder="Numero de empleados"
+                placeholder="Número de empleados"
                 v-model="parquesData.employeds"
                 :rules="[rules.required, rules.phone]"
               ></v-text-field>
@@ -749,8 +749,8 @@
           </v-col>
           <v-col cols="12" md="6">
             <v-text-field
-              label="Telefono del contacto *"
-              placeholder="Telefono del contacto"
+              label="Teléfono del contacto *"
+              placeholder="Teléfono del contacto"
               outlined
               v-model="spaces.contact_phone"
               :rules="[rules.required, rules.phone, rules.phoneTen]"
@@ -1580,7 +1580,7 @@ export default {
             };
             axios(config)
               .then(function() {
-                Swal.fire("Se agrego correctamente");
+                Swal.fire("La información se agregó correctamente");
                 ctx.$router.push("/");
               })
               .catch(function(error) {
