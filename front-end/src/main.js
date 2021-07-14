@@ -7,6 +7,8 @@ import VueCryptojs from 'vue-cryptojs'
 import * as VueGoogleMaps from 'gmap-vue'
 import('./assets/styles/ampip.css')
 
+router.push("/");
+
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyCFdQ7O0MIewEqbyXhW0k9XemMqnYx0aDQ',

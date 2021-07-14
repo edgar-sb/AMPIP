@@ -39,9 +39,8 @@
       </v-btn>
       <v-btn text @click="getEventsButton" id="more">
         Eventos
-        <v-dialog v-model="getEvents" width="80%" :retain-focus="false">
+        <v-dialog v-model="getEvents" width="80%" :retain-focus="false" class="iframes">
           <GoogleCalendar />
-          <AddToCalendar />
         </v-dialog>
       </v-btn>
     </v-toolbar>
@@ -722,4 +721,9 @@ export default {
 .search {
   transform: scale(0.7);
 }
+
+.iframes{
+    width: 100%;
+    height: 10000px !important;
+  }
 </style>

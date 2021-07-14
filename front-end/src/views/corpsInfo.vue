@@ -269,8 +269,8 @@
                     ><v-icon>mdi-navigation</v-icon> <v-spacer></v-spacer
                   ></v-card-actions>
                   <v-card-title>
-                    Espacio disponible
-                    <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                    <p>{{ i.tipo }}</p>
+                    <v-spacer>$ {{ i.precio_promedio }}</v-spacer>
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -299,7 +299,7 @@
           <v-container>
             <v-row>
               <v-col cols="12" sm="12" md="12" v-if="true">
-                <v-cotainer>
+                <!-- <v-cotainer>
                   <v-row align="center" justify="center">
                     <v-col sm="12" md="6">
                       <UploadImages
@@ -315,7 +315,7 @@
                       <v-btn @click="uploadImage">Subir</v-btn>
                     </v-col>
                   </v-row>
-                </v-cotainer>
+                </v-cotainer> -->
               </v-col>
               <v-col cols="12" sm="12" md="6">
                 <v-text-field
@@ -483,7 +483,7 @@ import axios from "axios";
 import plusCard from "../components/plusCard";
 import InfoCard from "../components/infoCard";
 import Swal from "sweetalert2";
-import UploadImages from "vue-upload-drop-images";
+/* import UploadImages from "vue-upload-drop-images"; */
 import headerAmpip from "../components/headerAmpip";
 
 export default {
@@ -523,13 +523,13 @@ export default {
       places: {},
       spaces: false,
       logoUpload: [],
-      nameUpload: null,
+      nameUpload: "sin",
     };
   },
   components: {
     plusCard,
     InfoCard,
-    UploadImages,
+    
     headerAmpip,
   },
   methods: {
