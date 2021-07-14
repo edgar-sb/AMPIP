@@ -117,7 +117,7 @@
                                 </v-list-item>
                                 <v-list-item>
                                   <v-list-item-content>
-                                    <v-list-item-title>{{
+                                    <v-list-item-title v-if="i.fechaDeValidacion != null">Última actualización: {{
                                       i.fechaDeValidacion
                                     }}</v-list-item-title>
                                   </v-list-item-content>

@@ -511,6 +511,7 @@ export default {
       this.getallspacesAction(this.parque.id);
     },
     addUserAction() {
+      console.log(JSON.parse(this.permiso))
       if (
         this.dataUser.name != "" &&
         this.dataUser.lastName != "" &&
@@ -567,6 +568,8 @@ export default {
       axios.get(
         `${this.$store.state.baseUrl}/mailler?email=${this.dataUser.email}&name=${this.dataUser.name}&link=${id[0].id}`
       );
+
+
       var paramsDos = new URLSearchParams();
       paramsDos.append("idUser", id[0].id);
       paramsDos.append("idParque", this.$store.state.parque);

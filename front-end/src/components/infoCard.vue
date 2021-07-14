@@ -51,7 +51,7 @@
       </v-card-text>
 
       <v-text v-if="!id.direccionDeOfficina" class="card_space_alerta">
-        <span>Este usuario aun no llena sus datos</span>
+        <span>El usuario aún no completa sus datos</span>
       </v-text>
       <v-card-actions>
         <v-spacer></v-spacer>

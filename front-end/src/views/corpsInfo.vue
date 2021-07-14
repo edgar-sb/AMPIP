@@ -415,7 +415,7 @@
               <v-text-field
                 disabled
                 v-model="id.fechaDeValidacion"
-                label=" última actualización"
+                label="Última actualización"
                 v-if="id.fechaDeValidacion"
               ></v-text-field>
             </v-col>
