@@ -85,10 +85,6 @@
                     <v-row class="content">
                       <v-col sm="12" md="4" v-for="i in allCorp" :key="i.id">
                         <v-card>
-<<<<<<< HEAD
-                          {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
-                          <v-img
-=======
                           <v-card-actions>
                             <span
                               ><b>Última actualización:</b><br />
@@ -121,8 +117,7 @@
                               </v-icon>
                             </v-btn>
                           </v-card-actions>
-                          <v-img 
->>>>>>> 6260e17af707e5a702f983eb62187cefd0c93248
+                          <v-img
                             :src="imgRoute + 'logos/' + i.nombre_es + '.jpg'"
                             class="white--text align-end img_space"
                             height="200px"
@@ -233,7 +228,7 @@
                               <v-icon large>
                                 mdi-bell
                               </v-icon>
-                            </v-badge>
+                            </v-btn>
                           </v-card-actions>
                           {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
