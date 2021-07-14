@@ -35,8 +35,8 @@ class mapsRepository extends EntityRepository{
             ->where('u.id = ?2')
             ->setParameter(2, $id)
             ->getQuery()
-
             ->getSingleScalarResult();
+            
         return true;
     }
 

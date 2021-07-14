@@ -33,6 +33,8 @@
           Informacion
         </v-tab>
       </v-tabs>
+
+      {{permisosL}}
       <v-tabs-items v-model="tab">
         <v-tab-item>
           <v-container>
@@ -261,7 +263,7 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark" v-if="options.u"
+              <v-btn @click="updatePark" v-if="options.u == 'Editar'"
                 >Guardar Informacion</v-btn
               >
             </v-card-actions>
@@ -275,7 +277,7 @@
 import axios from "axios";
 import plusCard from "../components/plusCard";
 import Swal from "sweetalert2";
-export default { 
+export default {
   name: "parque",
   data() {
     return {
@@ -737,25 +739,14 @@ export default {
   watch: {
     roles() {
       var roles = this.roles.split(",");
+      console.log(roles);
       var findValueEdit = roles.find((i) => i == "Editar");
       var findValueAdd = roles.find((x) => x == "Agregar");
       var findValueDelete = roles.find((y) => y == "Eliminar");
 
-      if (findValueEdit != undefined) {
-        this.options.u = findValueEdit;
-        console.log(roles)
-      }
-
-      if (findValueAdd != undefined) {
-        this.options.i = findValueAdd;
-        console.log(roles)
-      }
-
-      if (findValueDelete != undefined) {
-        this.options.d = findValueDelete;
-        console.log(roles)
-      }
-
+      this.options.u = findValueEdit;
+      this.options.i = findValueAdd;
+      this.options.d = findValueDelete;
 
     },
   },
