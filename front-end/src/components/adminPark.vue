@@ -245,8 +245,8 @@
               </v-col>
             </v-row>
             <v-card-actions>
-              <v-btn @click="updatePark" v-if="options.u"
-                >Guardar Informacion</v-btn
+              <v-btn @click="updatePark" v-if="options.u" class="card_space_general"
+                >Guardar Información</v-btn
               >
             </v-card-actions>
           </v-container>

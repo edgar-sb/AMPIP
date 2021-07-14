@@ -258,7 +258,7 @@
               </v-text-field>
             </v-col>
             <v-card-actions>
-              <v-btn @click="updatecorpAction">Guardar Informacion</v-btn>
+              <v-btn @click="updatecorpAction" class="card_space_general">Guardar Información</v-btn>
             </v-card-actions>
           </v-row>
         </v-container>
