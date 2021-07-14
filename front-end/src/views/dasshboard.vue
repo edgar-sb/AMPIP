@@ -156,17 +156,6 @@
                             </v-list>
 
                             <v-spacer></v-spacer>
-                            <v-badge
-                              content="1"
-                              value="1"
-                              color="green"
-                              overlap
-                              v-if="i.habilitar == 0"
-                            >
-                              <v-icon small>
-                                mdi-bell
-                              </v-icon>
-                            </v-badge>
                           </v-card-actions>
                           <v-dialog
                             v-model="getCorpInfo"
@@ -219,16 +208,6 @@
                             >
 
                             <v-spacer></v-spacer>
-
-                            <v-btn
-                              icon
-                              @click="getInfoCorpAction(i.id)"
-                              v-if="i.habilitar == 0"
-                            >
-                              <v-icon large>
-                                mdi-bell
-                              </v-icon>
-                            </v-btn>
                           </v-card-actions>
                           {{ i.tipoDeSocio }} / {{ i.tipoDeSocio2 }}
                           <v-img
