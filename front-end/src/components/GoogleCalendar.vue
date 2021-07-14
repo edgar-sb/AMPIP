@@ -27,3 +27,9 @@ export default {
   },
 };
 </script>
+<style scoped>
+  .iframes{
+    width: 100%;
+    height: 500px !important;
+  }
+</style>
