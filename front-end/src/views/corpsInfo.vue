@@ -7,8 +7,9 @@
   <componen>
     <!-- Arreglado los dialogs -->
     <v-card-title>
-      <v-btn icon @click="close">
-        <v-icon color="red"> mdi-arrow-left-bold</v-icon>
+      <v-btn icon @click="close" class="conte_regresar_space">
+        <v-icon> mdi-arrow-left-bold</v-icon>
+        Regresar
       </v-btn>
       <v-btn icon @click="getTabId" v-if="tab == 1000">
         <v-icon>
@@ -34,7 +35,11 @@
         ></plusCard>
       </v-dialog>
     </v-card-title>
-     {{id.nombre_es}}
+     <v-row>
+       <v-col cols="12" class="titulo_general_space">
+          {{id.nombre_es}}
+       </v-col> 
+     </v-row>
     <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
       <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
         Usuarios

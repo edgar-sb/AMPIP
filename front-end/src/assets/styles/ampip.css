@@ -74,6 +74,7 @@ h1 {
 }
 .v-sheet.v-card:not(.v-sheet--outlined) {
     box-shadow: 0 2px 4px 4px rgba(0,0,0,.04);
+    padding: 10px 10px 15px 10px;
 }
 ._cont_dash {
     display: flex;
@@ -461,16 +462,56 @@ button.swal2-cancel:hover {
 .conte_mas_space {
     background-color: transparent;
     color:#00afb7;
+    margin-left: 30px !important;
 }
 
 .conte_mas_space span {
     background-color: transparent;
     color:#3ed808;
     font-weight: bold;
-    margin-left: 30px;
     font-size: 1.0rem;
 }
 .conte_mas_space span:hover {
     background-color: transparent !important;
     color:#333333;
+}
+.conte_regresar_space {
+    background-color: transparent;
+    color:#f26e50;
+    margin-left: 30px !important;
+}
+
+.conte_regresar_space span {
+    background-color: transparent;
+    color:#f26e50;
+    font-weight: bold;
+    font-size: 1.0rem;
+}
+.conte_regresar_space span:hover {
+    background-color: transparent !important;
+    color:#333333;
+}
+.titulo_general_space {
+    color:#00afb7;
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: block;
+    text-align: left;
+}
+.lista-space-nombre {
+    font-size: 1.6rem;
+    color: #333333;
+}
+.lista-space-ciudad {
+    color:#00afb7;
+    font-weight: bold;
+}
+.lista-space-ultima {
+    color: #8e8b8b;
+}
+.item_space {
+    display: block;
+    margin: 0 0;
+    padding: 0 0;
+    height: 35px;
 }
