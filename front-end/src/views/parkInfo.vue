@@ -190,7 +190,7 @@
                 <v-card>
                   <v-card-title>
                     {{ JSON.parse(i.extras).name }}
-                    <v-spacer>$ {{ i.precio_promedio }} Km2</v-spacer>
+                    <v-spacer>$ {{ i.precio_promedio }}</v-spacer>
                   </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>

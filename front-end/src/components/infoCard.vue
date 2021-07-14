@@ -99,6 +99,7 @@
               outlined
               v-model="id.region"
               label="Región"
+              disabled
             ></v-text-field>
           </v-col>
           <v-col cols="12" sm="12" md="6">
@@ -212,6 +213,7 @@
             <v-text-field
               outlined
               label="Nombre de inquilino en (Español)"
+              disabled
               v-model="id.nombre_es"
             ></v-text-field>
           </v-col>
