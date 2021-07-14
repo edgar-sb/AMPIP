@@ -3,11 +3,61 @@
     <!-- Header -->
     <headerAmpip> </headerAmpip>
     <!-- END Header -->
-    <componen>
-      <!-- Arreglado los dialogs -->
-      <v-card-title>
-        <v-btn icon @click="close">
-          <v-icon color="red"> mdi-arrow-left-bold</v-icon>
+  <componen>
+    <!-- Arreglado los dialogs -->
+    <v-card-title>
+      <v-btn icon @click="close" class="conte_regresar_space">
+        <v-icon> mdi-arrow-left-bold</v-icon>
+        Regresar
+      </v-btn>
+      <v-btn icon @click="getTabId" v-if="tab == 1000">
+        <v-icon>
+          mdi-plus
+        </v-icon>
+      </v-btn>
+      <!-- Usuario nuevo -->
+      <v-dialog v-model="addUser" width="700" persistent>
+        <plusCard :dialogs="5" @close="closePlusCard"></plusCard>
+      </v-dialog>
+
+      <!-- Parque nuevo-->
+      <v-dialog v-model="addPark" width="700">
+        <plusCard :dialogs="2" @close="closePlusCard"></plusCard>
+      </v-dialog>
+
+      <!-- Nave nueva-->
+      <v-dialog v-model="addNav" width="700">
+        <plusCard
+          :dialogs="1"
+          :id="this.$store.state.id_corp"
+          @close="closePlusCard"
+        ></plusCard>
+      </v-dialog>
+    </v-card-title>
+     <v-row>
+       <v-col cols="12" class="titulo_general_space">
+          {{id.nombre_es}}
+       </v-col> 
+     </v-row>
+    <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio">
+        Usuarios
+      </v-tab>
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+        Parques
+      </v-tab>
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+        Inquilinos
+      </v-tab>
+      <v-tab class="link_sec-space" v-if="id.tipoDeSocio != 'Patrocinador'">
+        Oferta de espacios
+      </v-tab>
+      <v-tab>
+        Información
+        <v-btn icon @click="infoParkAction(i.id)" >
+          <v-badge content="1" value="1" color="green" overlap v-if="id.habilitar == 0">
+            <v-icon>mdi-eye</v-icon>
+          </v-badge>
         </v-btn>
         <v-btn icon @click="getTabId" v-if="tab == 1000">
           <v-icon>
