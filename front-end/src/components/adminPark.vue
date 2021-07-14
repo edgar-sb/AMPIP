@@ -22,15 +22,15 @@
       </c>
     </v-card-actions>
     <v-card-text>
-      <v-tabs v-model="tab">
-        <v-tab>
+      <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
+        <v-tab class="link_sec-space">
           Inquilinos
         </v-tab>
-        <v-tab>
-          Spacio disponible
+        <v-tab class="link_sec-space">
+          Espacio disponible
         </v-tab>
-        <v-tab>
-          Informacion
+        <v-tab class="link_sec-space">
+          Información
         </v-tab>
       </v-tabs>
 
