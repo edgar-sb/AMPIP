@@ -593,7 +593,7 @@ export default {
             .post(`${this.$store.state.url}/activeinactive`, params)
             .then((res) => {
               console.log(res);
-              Swal.fire("Saved!", "", "success");
+              Swal.fire("Listo!", "", "success");
               this.$router.push("/");
             })
             .catch((e) => {
