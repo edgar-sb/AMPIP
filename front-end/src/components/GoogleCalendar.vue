@@ -1,22 +1,29 @@
 <template>
-      <v-card width="100%"  style="height:50vh">
-        <v-card-title>
-            Calendario de eventos
-        </v-card-title>
-      </v-card>
+  <v-card width="100%" style="height:50vh">
+  <v-spacer></v-spacer>
+  <v-icon @click="()=>{this.$router.push('/')}">mdi-close</v-icon>
+    <iframe
+      id="inlineFrameExample"
+      title="Inline Frame Example"
+      width="100%"
+      height="5000"
+      src="http://seccion-socios56789654.bilda.bar/"
+    >
+    </iframe>
+  </v-card>
 </template>
 <script>
 /* import VueGoogleCalendar from "vue-google-calendar/src/vue-google-calendar"
  */
 
-    export default {
-        data () {
-            return {
-                data: 'Hello Vue!'
-            }
-        },
-        components: {
-            /* VueGoogleCalendar */
-        }
-    }
+export default {
+  data() {
+    return {
+      data: "Hello Vue!",
+    };
+  },
+  components: {
+    /* VueGoogleCalendar */
+  },
+};
 </script>

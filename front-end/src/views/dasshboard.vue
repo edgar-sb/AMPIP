@@ -23,7 +23,7 @@
         class="shrink mx-4"
         v-model="keysearch"
         @keyup="key_search"
-        v-if="AdministradorGlobal"
+        v-if="userType == 'AdministradorGlobal'"
       >
       </v-text-field>
       <v-btn text @click="setProfileActionModel" class="perfil_space" id="more">

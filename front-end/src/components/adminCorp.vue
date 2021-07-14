@@ -63,7 +63,7 @@
           <v-row>
             <v-col cols="12" sm="12" class="my-4">
               <span style="color : red" v-if="id.habilitar == 0"
-                >Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite.</span>
+                >Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados.</span>
               <span style="color : green" v-if="id.habilitar != 0"
                 > Última actualización autorizada</span
               >
@@ -137,7 +137,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>{{ id.colonia }}</span>
+              <span> Datos previamente registrados : {{ id.colonia }}</span>
               <v-select
                 :items="cp"
                 label="Colonia"
@@ -151,7 +151,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>{{ id.estado }}</span>
+              <span>Datos previamente registrados : {{ id.estado }}</span>
               <v-text-field
                 v-model="edo"
                 label="Estado"
@@ -163,7 +163,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <spam>{{ id.municipio }}</spam>
+              <spam>Datos previamente registrados : {{ id.municipio }}</spam>
               <v-text-field
                 v-model="mun"
                 label="municipio/alcaldía"
@@ -175,7 +175,7 @@
             </v-col>
 
             <v-col cols="12" sm="12" md="6">
-              <span>Numero celular: </span>
+              <span>Datos previamente registrados : {{id.celular}}</span>
               <v-text-field
                 v-model="id.celular"
                 label="Celular"
@@ -492,7 +492,7 @@ export default {
           .then(() => {
             this.extrasAction();
             Swal.fire(
-              "Aún no se aprueba la última actualización. Te notificaremos cuando esta se habilite."
+              "Este cambio debe ser aprobado por el administrador. Te notificaremos cuando tus cambios hayan sido aprobados."
             );
           })
           .catch((e) => console.log(e));
