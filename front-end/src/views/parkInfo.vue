@@ -89,17 +89,17 @@
       </v-btn>
     </v-card-actions>
     <v-card-text>
-      <v-tabs v-model="tab">
-        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
+      <v-tabs v-model="tab" class="btn_sec-space" background-color="transparent" color="basil" grow>
+        <v-tab class="link_sec-space" v-if="parque.nombre_es != 'Naves sin parques'">
           Usuarios
         </v-tab>
-        <v-tab>
+        <v-tab class="link_sec-space">
           Inquilinos
         </v-tab>
-        <v-tab>
+        <v-tab class="link_sec-space">
           Espacio disponible
         </v-tab>
-        <v-tab v-if="parque.nombre_es != 'Naves sin parques'">
+        <v-tab class="link_sec-space" v-if="parque.nombre_es != 'Naves sin parques'">
           Información
         </v-tab>
       </v-tabs>
