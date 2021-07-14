@@ -113,8 +113,8 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
-              <span>Direccion / Contacto</span>
+            <v-col sm="12" class="titulo_form_space">
+              <span>Dirección / Contacto</span>
             </v-col>
             <v-col cols="12" sm="12" md="6">
               <v-text-field
@@ -184,7 +184,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
+            <v-col sm="12" class="titulo_form_space">
               <span>Inversión: </span>
             </v-col>
             <v-col cols="12" sm="12" md="12">
@@ -217,7 +217,7 @@
               >
               </v-text-field>
             </v-col>
-            <v-col cols="12" sm="12">
+            <v-col cols="12" sm="12" class="titulo_form_space">
               <span>Social: </span>
             </v-col>
             <v-col sm="12" md="12">

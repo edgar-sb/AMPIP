@@ -332,7 +332,7 @@ export default {
           .catch((e) => console.log(e));
       } else {
         Swal.fire({
-          text: "Porfavor ingresa tu contraseña",
+          text: "Por favor ingresa tu contraseña",
         });
       }
 
