@@ -175,7 +175,7 @@
     </v-card-text>
     <v-card-actions>
       <v-btn @click="logout" text color="yellow">
-        Cerrar sesion
+        Cerrar sesión
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn @click="setProfileActionModel" text color="red">
@@ -315,16 +315,13 @@ export default {
                   });
                 }).catch((e) => console.log(e));
             } else{
-              Swal.fire({icon: "error",
-          title: "Oops...",
+              Swal.fire({
           text: "Contraseña incorrecta",})
             }
           })
           .catch((e) => console.log(e));
       } else {
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
           text: "Porfavor ingresa tu contraseña",
         });
       }

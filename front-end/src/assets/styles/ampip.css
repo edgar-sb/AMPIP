@@ -241,7 +241,7 @@ button.yellow--text:hover {
     background-color: #ffffff;
   }
 button.yellow--text span {
-    color: #4166ba;
+    color: #cb1616;
 }
 button.yellow--text span:hover {
     color: #4166ba;
@@ -273,11 +273,14 @@ button.yellow--text span:hover {
     font-weight: bold; 
 }
 .v-tab {
-    color:#00afb7;
+    color:#333333 !important;
+    font-weight:bold;
+    font-size: 1.2rem;
 }
 .v-tab.v-tab--active {
-    color:#00afb7;
+    color:#00afb7 !important;
     font-weight:bold;
+    font-size: 1.2rem;
 }
 .v-tabs-slider {
     background-color: #00afb7;
@@ -292,7 +295,7 @@ button.yellow--text span:hover {
     color: #f26e50 !important;
 }
 /* fin tarjeta */
-.btn_sec-space {
+.btn_sec-space{
     box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
     margin: 20px 0;
     font-weight: bold !important;
@@ -362,4 +365,86 @@ button.yellow--text span:hover {
 }
 span.green {
     color:#ffffff !important;
+}
+/* login */
+.conte_login_space {
+    max-width: 450px;
+    margin: 0 auto;
+}
+button.btn_iniciar-space, button.perfil_space {
+    background-color:#00afb7 !important;
+    padding: 20px;
+}
+button.btn_iniciar-space span, button.perfil_space span {
+    color:#ffffff !important;
+    font-weight: bold;
+}
+button.btn_iniciar-space:hover, button.perfil_space:hover {
+    background-color:#333333 !important;    
+}
+a.olvidaste_space {
+ color: #00afb7;
+}
+a.olvidaste_space:hover {
+    color: #333333;
+}
+.titulo_space_panel {
+    font-size: 1.8rem;
+    color: #00afb7;
+    font-weight: bold;
+    text-align: right;
+}
+/* fin login */
+/* buscador */
+.v-input__slot {
+    min-width: 300px;
+}
+/* fin buscador */
+/*lightbox*/
+.v-card__title {
+    font-size: 1.8rem;
+    color: #00afb7;
+}
+.titulo_form_space {
+    font-size: 1.0rem;
+    text-align: left;
+    font-weight: bold;
+}
+/*fin-lightbox*/
+/*boton general*/
+.card_space_general {
+    background-color: #00afb7 !important;
+    border-radius: 20px;
+    padding: 10px 20px !important; 
+}
+.card_space_general:hover {
+    background-color: #333333 !important;
+}
+.card_space_general span {
+    color:#ffffff; 
+}
+.titu-imagen-space {
+    background-color: rgba(120, 180, 60, .7);
+    color:#ffffff;
+    font-size: 1.2rem;
+}
+.img_space {
+    max-width: 465px;
+    margin: 0 auto;
+}
+.ultima_actualizacion_space {
+    display: block;
+    text-align: left;
+    padding: 10px;
+}
+button.swal2-confirm.swal2-styled {
+    background-color: #00afb7 !important;
+    border-radius: 30px;
+    padding: 10px 30px;
+}
+button.swal2-confirm.swal2-styled:hover {
+    background-color: #333333 !important; 
+}
+.swal2-html-container {
+    color: #00afb7;
 }

@@ -109,8 +109,8 @@
               v-show="i.nombre_es != 'standalone'"
             >
               <v-card>
-                <span v-if="i.edit != 'null'"
-                  >Ultima actualizacion : {{ i.edit }}</span
+                <span class="ultima_actualizacion_space" v-if="i.edit != 'null'"
+                  >Última actualización : {{ i.edit }}</span
                 >
                 <v-card-title v-text="i.nombre_es"></v-card-title>
                 <v-card-actions>
@@ -232,7 +232,7 @@
                     />
                     <br />
                     <v-text-field v-model="nameUpload" placeholder="Nombre de archivo"></v-text-field>
-                    <v-btn @click="uploadImage">Subir</v-btn>
+                    <v-btn class="card_space_general" @click="uploadImage">Subir</v-btn>
                   </v-col>
                 </v-row>
               </v-cotainer>

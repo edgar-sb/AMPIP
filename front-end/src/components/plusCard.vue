@@ -168,8 +168,8 @@
               >
               </v-text-field>
             </v-col>
-            <v-col sm="12">
-              <span>Dirección:</span>
+            <v-col class="titulo_form_space" sm="12">
+              <span class="titulo_form_space">Dirección:</span>
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -468,7 +468,7 @@
             ></v-text-field>
           </v-col>
           <!-- Apartado de direccion -->
-          <v-col cols="12" sm="12">
+          <v-col class="titulo_form_space" cols="12" sm="12">
             <span>Dirección </span>
           </v-col>
           <v-col cols="12" sm="12" md="12">
@@ -518,7 +518,7 @@
               disabled
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="12" md="12">
+          <v-col class="titulo_form_space" cols="12" sm="12" md="12">
             <label>Teléfono de Oficina: {{ officePhone }}</label>
           </v-col>
           <v-col cols="12" sm="3">
@@ -546,7 +546,7 @@
               v-model="corp.cel"
             ></v-text-field>
           </v-col>
-          <v-col cols="12" sm="12">
+          <v-col class="titulo_form_space" cols="12" sm="12">
             <span>Clasificación</span>
           </v-col>
           <v-col cols="12" sm="12" v-if="type_society === 'Desarrollador'">

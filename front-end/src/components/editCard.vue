@@ -6,7 +6,7 @@
         <v-row>
           <v-col cols="6">
             <v-text-field
-              label="Nombre en español"
+              label="Nombre en Español"
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_es"
@@ -14,7 +14,7 @@
           </v-col>
           <v-col cols="6">
             <v-text-field
-              label="Nombre en ingles"
+              label="Nombre en Ingles"
               outlined
               placeholder="Nombre"
               v-model="parquesData.name_en"
